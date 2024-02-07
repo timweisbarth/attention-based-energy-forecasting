@@ -96,8 +96,6 @@ def pipeline(args):
                 args.experiment_name,
             )
 
-            
-
             # Save model
             if args.save_model:
                 
@@ -122,12 +120,6 @@ def pipeline(args):
                 index = df_val.index[args.window_size:]
                 preds, truths = eval.inverse_transformations(preds, truths, args.scaler, h)
                 v.plot_prediction_vs_truths(preds, truths, args.window_size, h, t, index, args.plot_date, args.days, args.stride, folder_path)
-
-                
-                
-
-
-
             
     # Save summary metrics
     eval.print_and_save_benchmark_table(metrics, args)
