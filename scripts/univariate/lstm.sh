@@ -20,6 +20,7 @@ python3 -u run.py \
   --c_out 1 \
   --target "load" \
   --itr 1 \
+  
 
   python3 -u run.py \
   --is_training 1 \
