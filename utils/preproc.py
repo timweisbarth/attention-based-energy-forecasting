@@ -11,18 +11,14 @@ import timefeatures as tf
 
 
 
-def all_preproc_steps(df, cols_to_predict, scaler, from_raw, file_name):
+def all_preproc_steps(df, cols_to_predict, scaler):
     """Apply all preprocessing steps. See docs of individual functions."""
 
-    if from_raw:
-        df = preproc0_rename(df)
-        df = preproc1_nans(df)
-        df = preproc2_time_features(df)
-        df.to_csv(f"./../data/preproc_non_deepl/pp_{file_name}")
-    else:
-        #print("cols", df.columns)
-        #print("index", df.index)
-        ...
+    
+    df = preproc0_rename(df)
+    df = preproc1_nans(df)
+    df = preproc2_time_features(df)
+    
     df_train, df_val, df_test = train_val_test_split(df)
     df_train, df_val, df_test = scale_data(scaler, df_train, df_val, df_test, cols_to_predict)
 

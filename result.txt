@@ -82,3 +82,6 @@ mse:0.049781788140535355, mae:0.1601162552833557
 ftS_smard_load_sl24_ll12_pl24_LSTM_dm96_nh8_el2_dl1_df192_fc3_ebtimeF_dtTrue_Exp0_0  
 mse:0.04885975643992424, mae:0.15994803607463837
 
+ftS_smard_load_sl96_ll12_pl48_LSTM_dm96_nh8_el2_dl1_df192_fc3_ebtimeF_dtTrue_Exp0_0  
+mse:0.06103549152612686, mae:0.17519932985305786
+

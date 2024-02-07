@@ -106,8 +106,9 @@ class Exp_Main(Exp_Basic):
     # Validate after every epoch
     def train(self, setting):
 
-        start_time = time.time()
+        
 
+        print(start_time)
         train_data, train_loader = self._get_data(flag='train')
         vali_data, vali_loader = self._get_data(flag='val')
         #test_data, test_loader = self._get_data(flag='test')
@@ -126,6 +127,8 @@ class Exp_Main(Exp_Basic):
 
         if self.args.use_amp:
             scaler = torch.cuda.amp.GradScaler()
+
+        start_time = time.time()
 
         train_epoch_losses = []
         vali_epoch_losses = []
@@ -186,7 +189,8 @@ class Exp_Main(Exp_Basic):
                 break
 
             adjust_learning_rate(model_optim, epoch + 1, self.args)
-
+            
+        self.train_time = time.time() - start_time
         plt.plot(train_epoch_losses, label="Training loss")
         plt.plot(vali_epoch_losses, label="Validation loss")
         plt.legend()
@@ -197,7 +201,7 @@ class Exp_Main(Exp_Basic):
         best_model_path = path + '/' + 'checkpoint.pth'
         self.model.load_state_dict(torch.load(best_model_path))
 
-        self.train_time = time.time() - start_time
+        
 
         return
 

@@ -1,6 +1,6 @@
 import pandas as pd
 
-def load_data(path, from_raw):
+def load_data(path):
     """
     Load data from the specified path
 
@@ -16,10 +16,10 @@ def load_data(path, from_raw):
     pd.DataFrame
         The data in a DataFrame format
     """
-    if from_raw:
-        df = pd.read_csv(path)
-    else:
-        df = pd.read_csv(path, index_col=0)
-        df.index = pd.to_datetime(df.index)
+    #if from_raw:
+    df = pd.read_csv(path)
+    #else:
+        #df = pd.read_csv(path, index_col=0)
+        #df.index = pd.to_datetime(df.index)
 
     return df

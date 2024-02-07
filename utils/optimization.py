@@ -10,7 +10,8 @@ import torch.nn as nn
 import matplotlib.pyplot as plt
 import numpy as np
 
-def train(X_train, y_train, X_val, y_val, model_name):
+
+def train(X_train, y_train, X_val, y_val, model_name, device):
     
     if model_name == "linreg":
         model = LinearRegression()
@@ -20,7 +21,14 @@ def train(X_train, y_train, X_val, y_val, model_name):
     
     elif model_name == "xgb":
         #print(xgb.__version__)
-        model = xgb.XGBRegressor(n_estimators= 1500, early_stopping_rounds=50, multi_strategy="one_output_per_tree")
+        model = xgb.XGBRegressor(
+            n_estimators= 1000, 
+            early_stopping_rounds=50, 
+            multi_strategy="one_output_per_tree", 
+            tree_method="hist", 
+            device=device
+        )
+        print("XGBoost uses ", model.device)
         #model = xgb.XGBRegressor(
         #    tree_method="hist",
         #    n_estimators=128,
@@ -32,6 +40,8 @@ def train(X_train, y_train, X_val, y_val, model_name):
         model.fit(X_train, y_train,
             eval_set=[(X_train, y_train), (X_val, y_val)],
             verbose=False,)
+        
+        
         
         return model
     
