@@ -1,5 +1,3 @@
-export CUDA_VISIBLE_DEVICES=1
-
 #!/bin/bash
 #SBATCH --job-name="single_v100_job_for_lstm_test"
 #SBATCH --gres=gpu:1
@@ -15,6 +13,8 @@ pwd
 nvidia-smi # only if you requested any gpus
 
 ls $WORK # not necessary just here to illustrate that $WORK is avaible here
+
+#export CUDA_VISIBLE_DEVICES=1
 
 srun python3 -u run.py \
   --is_training 1 \
