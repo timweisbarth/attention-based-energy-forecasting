@@ -2,7 +2,7 @@
 #SBATCH --job-name="single_v100_job_for_tutorial4"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=gpu-v100
-#SBATCH --time 0-00:10:00 # set maximum allowed runtime to 10min
+#SBATCH --time 0-00:20:00 # set maximum allowed runtime to 10min
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=/mnt/qb/work/YOUR_GROUP/YOUR_UID/tutorial_4/%x-%j.out  # note one cannot use env variables like $WORK in #SBATCH statements
