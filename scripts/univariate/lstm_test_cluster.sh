@@ -23,7 +23,7 @@ ls $WORK # not necessary just here to illustrate that $WORK is avaible here
 
 export CUDA_VISIBLE_DEVICES=0
 
-python3 -u run.py \
+srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
