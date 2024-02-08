@@ -108,7 +108,7 @@ class Exp_Main(Exp_Basic):
 
         
 
-        print(start_time)
+        #print(start_time)
         train_data, train_loader = self._get_data(flag='train')
         vali_data, vali_loader = self._get_data(flag='val')
         #test_data, test_loader = self._get_data(flag='test')
