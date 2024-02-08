@@ -5,7 +5,7 @@
 #SBATCH --time 0-00:10:00 # set maximum allowed runtime to 10min
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --output=/mnt/qb/work/ludwig/lq853/tutorial_4/%x-%j.out  # note one cannot use env variables like $WORK in #SBATCH statements
+#SBATCH --output=/mnt/qb/work/ludwig/lqb853/tutorial_4/%x-%j.out  # note one cannot use env variables like $WORK in #SBATCH statements
 
 # useful for debugging
 scontrol show job $SLURM_JOB_ID
