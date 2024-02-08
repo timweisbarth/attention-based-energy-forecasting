@@ -28,7 +28,7 @@ srun python3 -u run.py \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
   --model_id 'load' \
-  --model LSTM \
+  --model Transformer \
   --data smard \
   --features S \
   --seq_len 96 \
@@ -44,4 +44,4 @@ srun python3 -u run.py \
   --d_ff 192 \
   --target "load" \
   --itr 1 \
-  --train_epochs 15\
+  --train_epochs 3\
