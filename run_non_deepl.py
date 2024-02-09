@@ -99,15 +99,17 @@ def pipeline(args):
             # Save model
             if args.save_model:
                 
-                folder_path = "/Users/timw/Documents/University/thesis_2/checkpoints/" + setting + '/'
+                folder_path = "./checkpoints/" + setting + '/'
                 if not os.path.exists(folder_path):
+                    
                     os.makedirs(folder_path)
                 dump(model, folder_path + 'checkpoint.joblib')
-            #print(os.getcwd())
-            folder_path = "/Users/timw/Documents/University/thesis_2/results/" + setting + '/'
-            if not os.path.exists(folder_path):
-                os.makedirs(folder_path)
             
+            if args.save_benchmark or args.plot:
+                folder_path = "./results/" + setting + '/'
+                if not os.path.exists(folder_path):
+                    os.makedirs(folder_path)
+
             if args.save_benchmark:
 
                 np.save(folder_path + '_metrics.npy', np.array([mae, mse, np.nan , train_time]))
