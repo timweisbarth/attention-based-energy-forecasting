@@ -2,7 +2,7 @@
 #SBATCH --job-name="single_v100_job_for_lstm_test"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=gpu-v100
-#SBATCH --time 0-00:20:00 # set maximum allowed runtime to 10min
+#SBATCH --time 0-20::00 # set maximum allowed runtime to 20h
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=/mnt/qb/work/ludwig/lqb853/ftS_autoformer_%x-%j.out  # note one cannot use env variables like $WORK in #SBATCH statements
@@ -135,8 +135,6 @@ srun python3 -u run.py \
   --c_out 1 \
   --target "load" \
   --itr 1 \
-
-  export CUDA_VISIBLE_DEVICES=1
 
 ############### solar_gen #######################
 srun python3 -u run.py \
