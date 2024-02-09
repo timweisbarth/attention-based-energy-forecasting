@@ -20,15 +20,35 @@ def train(X_train, y_train, X_val, y_val, model_name, device):
         return model
     
     elif model_name == "xgb":
+
+    
+
+        # Convert your pandas DataFrame to DMatrix
+        dtrain = xgb.DMatrix(X_train, label=y_train)
+        dval = xgb.DMatrix(X_val, label=y_val)
+
+        # Specify the parameters for your XGBoost model, including 'gpu_hist' as the tree method to use the GPU
+        params = {
+            'tree_method': 'hist',  # Use GPU accelerated tree construction
+            'device': device,
+            'objective': 'reg:squarederror',
+            'multi_strategy': "one_output_per_tree",
+            'eval_metric': ['rmse'] 
+        }
+
+        # Train the model
+        model = xgb.train(params, dtrain, evals=[(dtrain, 'train'), (dval, 'val')], num_boost_round=1000, early_stopping_rounds=50, verbose_eval=False)
+
+        ############################ scikit-learn interface ##################        
         #print(xgb.__version__)
-        model = xgb.XGBRegressor(
-            n_estimators= 1000, 
-            early_stopping_rounds=50, 
-            multi_strategy="one_output_per_tree", 
-            tree_method="hist", 
-            device=device
-        )
-        print("XGBoost uses ", model.device)
+        #model = xgb.XGBRegressor(
+        #    n_estimators= 1000, 
+        #    early_stopping_rounds=50, 
+        #    multi_strategy="one_output_per_tree", 
+        #    tree_method="hist", 
+        #    device=device
+        #)
+        #print("XGBoost uses ", model.device)
         #model = xgb.XGBRegressor(
         #    tree_method="hist",
         #    n_estimators=128,
@@ -37,11 +57,11 @@ def train(X_train, y_train, X_val, y_val, model_name, device):
         #    multi_strategy="multi_output_tree",
         #    subsample=0.6)
         
-        model.fit(X_train, y_train,
-            eval_set=[(X_train, y_train), (X_val, y_val)],
-            verbose=False,)
+        #model.fit(X_train, y_train,
+        #    eval_set=[(X_train, y_train), (X_val, y_val)],
+        #    verbose=False,)
         
-        
+        #####################################################################
         
         return model
     

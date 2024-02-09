@@ -11,7 +11,7 @@ python3 -u run.py \
   --features S \
   --seq_len 96 \
   --label_len 12 \
-  --pred_len 48 \
+  --pred_len 24 \
   --e_layers 2 \
   --d_layers 1 \
   --factor 3 \

@@ -125,9 +125,10 @@ def train_val_test_split(df):
     tuple pd.DataFrame, pd.DataFrame, pd.DataFrame 
         Train, validation and test data
     """
+    # TODO!
     df_train = df[df["year"] < 2021] # 7 years
     df_val = df[(df["year"] == 2021) | (df["year"] == 2022)] # 2 years
-    print(df_val.shape)
+    print("train,val-split", df_val.shape)
     df_test = df[df["year"] > 2022] # 1 year
 
     return df_train, df_val, df_test
@@ -274,13 +275,19 @@ def make_supervised(df_train, df_val, df_test, targets, h, w, stride, cols_to_la
     """
     dfs = []
 
+    print(df_val.shape)
+
+    if len(targets) == 1:
+            cols_to_lag = targets
+
+    # The new shape will be (n_samples_old - w - h + 1), +1 because only w-1 lags are produced due to current lag
     for df in [df_train.copy(), df_val.copy(), df_test.copy()]:
         
         lagged_columns = {}
         shifted_columns = {}
-        if len(targets) == 1:
-            cols_to_lag = [targets[0]]
-            print(cols_to_lag)
+
+
+        
         for col in cols_to_lag:
             # get window_size-1 many lags --> -1 due to current lag
             for lag in range(1,w):

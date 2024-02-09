@@ -9,7 +9,8 @@ import os
 import time
 import argparse
 from sklearn.preprocessing import StandardScaler
-from numba import cuda
+import xgboost as xgb
+#from numba import cuda
 
 
 
@@ -41,15 +42,24 @@ def pipeline(args):
 
 
             # Check if CUDA is available
-            if cuda.is_available():
-                # List all available CUDA devices
-                for device in cuda.list_devices():
-                    print("Found CUDA Device: ", device.name)
-                # Set to use the first CUDA device, if available
-                device = "cuda:0"
+            #if cuda.is_available():
+            #    # List all available CUDA devices
+            #    for device in cuda.list_devices():
+            #        print("Found CUDA Device: ", device.name)
+            #    # Set to use the first CUDA device, if available
+            #    device = "cuda:0"
+            #else:
+            #    print("CUDA is not available. Using CPU instead.")
+            #    device = "cpu"
+
+            
+            if torch.cuda.is_available():
+                os.environ["CUDA_VISIBLE_DEVICES"] = str(0) 
+                device = torch.device('cuda:{}'.format(0))
+                print('Use GPU: cuda:{}'.format(0))
             else:
-                print("CUDA is not available. Using CPU instead.")
                 device = "cpu"
+        
 
             if args.model_type == "deepl":
                 # Reshape data into inout sequence for nn.lstm module
@@ -69,12 +79,17 @@ def pipeline(args):
                 # Reshape data into supervised problem for sklearn module
                 (X_train, y_train), (X_val, y_val), (X_test, y_test) = \
                 pp.make_supervised(df_train, df_val, df_test, t, h, args.window_size, args.stride, args.cols_to_lag)
+                print("after supervision", X_val.shape)
 
                 start_time = time.time()
-
+                #print(type(X_train))
                 # Train and predict
                 model = o.train(X_train, y_train, X_val, y_val, args.model_name, device)
-                preds = model.predict(X_val)
+                if args.model_name == "xgb":
+                    dval = xgb.DMatrix(X_val)
+                    preds = model.predict(dval)
+                else:
+                    preds = model.predict(X_val)
                 truths = y_val
                 #print(preds.shape)
                 #print(y_val.shape)
