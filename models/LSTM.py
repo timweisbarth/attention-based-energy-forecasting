@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 
 class Model(nn.Module):
-    def __init__(self, configs):
+    def __init__(self, configs, device):
         super(Model, self).__init__()
 
 
@@ -11,6 +11,7 @@ class Model(nn.Module):
         self.d_model = configs.d_model
         self.pred_len = configs.pred_len
         self.c_out = configs.c_out
+        self.device = device
 
         # Embedding of data
         self.enc_embedding = DataEmbedding(configs.enc_in, configs.d_model, configs.embed, configs.freq,
@@ -33,10 +34,10 @@ class Model(nn.Module):
         x = self.enc_embedding(x_enc, x_mark_enc) # (B, T, d_model)
         #print("x", x.shape)
         # Initializing hidden state for first input with zeros
-        h0 = torch.zeros(self.e_layers, x.size(0), self.d_model).requires_grad_() # (e_layers, B, d_model)
+        h0 = torch.zeros(self.e_layers, x.size(0), self.d_model, device=self.device).requires_grad_() # (e_layers, B, d_model)
         #print("h0", h0.shape)
         # Initializing cell state for first input with zeros
-        c0 = torch.zeros(self.e_layers, x.size(0), self.d_model).requires_grad_() # (e_layers, B, d_model)
+        c0 = torch.zeros(self.e_layers, x.size(0), self.d_model, device=self.device).requires_grad_() # (e_layers, B, d_model)
 
         # Detaching is not strictly necessary but doesn't hurt aswell
         out, (hn, cn) = self.lstm(x, (h0.detach(), c0.detach()))

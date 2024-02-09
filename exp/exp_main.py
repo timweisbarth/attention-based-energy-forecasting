@@ -36,7 +36,10 @@ class Exp_Main(Exp_Basic):
             'Reformer': Reformer,
             'LSTM': LSTM,
         }
-        model = model_dict[self.args.model].Model(self.args).float()
+        if self.args.model == 'LSTM':
+            model = model_dict[self.args.model].Model(self.args, self.device).float()
+        else:
+            model = model_dict[self.args.model].Model(self.args).float()
         print(f'Number of parameters in network = {sum(p.numel() for p in model.parameters())}\n')
         if self.args.use_multi_gpu and self.args.use_gpu:
             model = nn.DataParallel(model, device_ids=self.args.device_ids)
