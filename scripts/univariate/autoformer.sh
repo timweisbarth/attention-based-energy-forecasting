@@ -2,7 +2,7 @@
 #SBATCH --job-name="single_v100_job_for_lstm_test"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=gpu-v100
-#SBATCH --time 0-20::00 # set maximum allowed runtime to 20h
+#SBATCH --time 0-20:00:00 # set maximum allowed runtime to 20h
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=/mnt/qb/work/ludwig/lqb853/ftS_autoformer_%x-%j.out  # note one cannot use env variables like $WORK in #SBATCH statements
