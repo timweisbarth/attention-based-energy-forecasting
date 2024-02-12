@@ -11,7 +11,7 @@ import timefeatures as tf
 
 
 
-def all_preproc_steps(df, cols_to_predict, scaler):
+def all_preproc_steps(df, cols_to_predict, scaler, w):
     """Apply all preprocessing steps. See docs of individual functions."""
 
     
@@ -19,7 +19,7 @@ def all_preproc_steps(df, cols_to_predict, scaler):
     df = preproc1_nans(df)
     df = preproc2_time_features(df)
     
-    df_train, df_val, df_test = train_val_test_split(df)
+    df_train, df_val, df_test = train_val_test_split(df, w)
     df_train, df_val, df_test = scale_data(scaler, df_train, df_val, df_test, cols_to_predict)
 
     return df_train, df_val, df_test
@@ -110,7 +110,7 @@ def preproc2_time_features(df):
 
     return df
 
-def train_val_test_split(df):
+def train_val_test_split(df, w):
     """
     Split the df in a Train (2015-2017), Validation (2018) 
     and Test (2019) set
@@ -125,11 +125,21 @@ def train_val_test_split(df):
     tuple pd.DataFrame, pd.DataFrame, pd.DataFrame 
         Train, validation and test data
     """
-    # TODO!
+    
+
     df_train = df[df["year"] < 2021] # 7 years
-    df_val = df[(df["year"] == 2021) | (df["year"] == 2022)] # 2 years
-    print("train,val-split", df_val.shape)
-    df_test = df[df["year"] > 2022] # 1 year
+
+    # Validation set consists of years 2021 and 2022
+    # We can take last w elements from train set without information leakage
+    df_val1 = df_train[-w:]
+    df_val2 = df[(df["year"] == 2021) | (df["year"] == 2022)] # 2 years
+    df_val = pd.concat((df_val1, df_val2), axis=0)
+
+    # Test set consists of year 2023
+    # We can take last w elements from val set without information leakage
+    df_test1 = df_val[-w:]
+    df_test2 = df[df["year"] > 2022] # 1 year
+    df_test = pd.concat((df_test1, df_test2), axis=0)
 
     return df_train, df_val, df_test
     
@@ -274,8 +284,6 @@ def make_supervised(df_train, df_val, df_test, targets, h, w, stride, cols_to_la
         len(cols_to_lag).
     """
     dfs = []
-
-    print(df_val.shape)
 
     if len(targets) == 1:
             cols_to_lag = targets

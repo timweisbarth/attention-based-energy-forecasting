@@ -1,7 +1,18 @@
-export CUDA_VISIBLE_DEVICES=0
+#!/bin/bash
+#SBATCH --job-name="ftS_lstm_0"
+#SBATCH --gres=gpu:1
+#SBATCH --partition=a100-galvani
+#SBATCH --time 1-06:00:00 #
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --output=/mnt/qb/work/ludwig/lqb853/slurm_logs/%x-%j.out  # cannot use $WORK 
+#SBATCH --error=/mnt/qb/work/ludwig/lqb853/slurm_logs/%x_%j.err
 
+# useful for debugging
+scontrol show job $SLURM_JOB_ID
+nvidia-smi # only if you requested any gpus
 
-python3 -u run.py \
+srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -22,7 +33,7 @@ python3 -u run.py \
   --itr 1 \
   
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -42,7 +53,7 @@ python3 -u run.py \
   --target "load" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -62,7 +73,7 @@ python3 -u run.py \
   --target "load" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -82,7 +93,7 @@ python3 -u run.py \
   --target "load" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -102,7 +113,7 @@ python3 -u run.py \
   --target "load" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -125,7 +136,7 @@ python3 -u run.py \
   export CUDA_VISIBLE_DEVICES=1
 
 ############### solar_gen #######################
-python3 -u run.py \
+srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -145,7 +156,7 @@ python3 -u run.py \
   --target "solar_gen" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -165,7 +176,7 @@ python3 -u run.py \
   --target "solar_gen" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -185,7 +196,7 @@ python3 -u run.py \
   --target "solar_gen" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -205,7 +216,7 @@ python3 -u run.py \
   --target "solar_gen" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -225,7 +236,7 @@ python3 -u run.py \
   --target "solar_gen" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -246,7 +257,7 @@ python3 -u run.py \
   --itr 1 \
 
   ################## wind_gen ################
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -266,7 +277,7 @@ python3 -u run.py \
   --target "wind_gen" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -286,7 +297,7 @@ python3 -u run.py \
   --target "wind_gen" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -306,7 +317,7 @@ python3 -u run.py \
   --target "wind_gen" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -326,7 +337,7 @@ python3 -u run.py \
   --target "wind_gen" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
@@ -346,7 +357,7 @@ python3 -u run.py \
   --target "wind_gen" \
   --itr 1 \
 
-  python3 -u run.py \
+  srun python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \

@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name="single_v100_job_for_lstm_test"
 #SBATCH --gres=gpu:1
-#SBATCH --partition=gpu-v100
+#SBATCH --partition=a100-galvani
 #SBATCH --time 0-00:10:00 # set maximum allowed runtime to 10min
 #SBATCH --nodes=1
 #SBATCH --ntasks=1

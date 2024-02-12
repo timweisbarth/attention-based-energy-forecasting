@@ -38,7 +38,7 @@ def pipeline(args):
             
             
             # General preprocessing
-            df_train, df_val, df_test = pp.all_preproc_steps(df, t, args.scaler)
+            df_train, df_val, df_test = pp.all_preproc_steps(df, t, args.scaler, args.window_size)
 
 
             # Check if CUDA is available
@@ -79,7 +79,7 @@ def pipeline(args):
                 # Reshape data into supervised problem for sklearn module
                 (X_train, y_train), (X_val, y_val), (X_test, y_test) = \
                 pp.make_supervised(df_train, df_val, df_test, t, h, args.window_size, args.stride, args.cols_to_lag)
-                print("after supervision", X_val.shape)
+                #print("after supervision", X_val.shape)
 
                 start_time = time.time()
                 #print(type(X_train))
