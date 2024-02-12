@@ -1,5 +1,6 @@
 checkpoints/*/checkpoint*
-results/*/*.npy
+results/*/_true.npy
+results/*/_pred.npy
 
 
 ## Ignore Visual Studio temporary files, build results, and

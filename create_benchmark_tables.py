@@ -80,7 +80,9 @@ def main():
     latex_table = metrics_df.to_latex()
     file_path_csv = "./results/benchmark_table_{}.csv".format(args.exp_name)
     file_path_tex = "./results/benchmark_table_{}.tex".format(args.exp_name)
-    metrics_df.to_csv(file_path_csv)
+
+    metrics_df.to_csv(file_path_csv, header=True, index=True)
+
     with open(file_path_tex, 'w') as file:
         file.write(latex_table)
 

@@ -1,6 +1,6 @@
 
-cd $WORK/thesis2
-conda activate $WORK/conda_envs/thesis2
+#cd $WORK/thesis2
+#conda activate $WORK/conda_envs/thesis2
 
 # univariate
 sbatch ./scripts/univariate/lstm.sh
@@ -17,4 +17,4 @@ sbatch ./scripts/multivariate/autoformer.sh
 # Non deepl (uni- and multivariate)
 sbatch ./scripts/xgboost.sh
 
-conda deactivate
+#conda deactivate
