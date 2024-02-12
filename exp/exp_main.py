@@ -123,6 +123,7 @@ class Exp_Main(Exp_Basic):
         time_now = time.time()
 
         train_steps = len(train_loader)
+        print(train_steps)
         early_stopping = EarlyStopping(patience=self.args.patience, verbose=True)
 
         model_optim = self._select_optimizer()
@@ -158,6 +159,8 @@ class Exp_Main(Exp_Basic):
                 if (i + 1) % 100 == 0:
                     print("\titers: {0}, epoch: {1} | train batch loss: {2:.7f}".format(i + 1, epoch + 1, loss.item()))
                     speed = (time.time() - time_now) / iter_count
+
+                    # speed[s/iter] where iter is one batch, train_steps = number of iters/batches
                     left_time = speed * ((self.args.train_epochs - epoch) * train_steps - i)
                     print('\tspeed: {:.4f}s/iter; \t left time: {:.4f}s'.format(speed, left_time))
                     iter_count = 0
@@ -172,9 +175,11 @@ class Exp_Main(Exp_Basic):
                     model_optim.step()
                     #print("End of else")
             # Fore each epoch, do
-            print("Epoch: {} cost time: {}".format(epoch + 1, time.time() - epoch_time))
+            print("Epoch train: {} cost time: {}".format(epoch + 1, time.time() - epoch_time))
+            time_validation_start = time.time()
             train_epoch_loss = np.average(train_batch_losses)
             vali_epoch_loss = self.vali(vali_data, vali_loader, criterion)
+            print("Epoch validation cost time: ", time.time()-time_validation_start)
             train_epoch_losses.append(train_epoch_loss)
             vali_epoch_losses.append(vali_epoch_loss)
 
