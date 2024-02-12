@@ -169,7 +169,7 @@ if __name__ == "__main__":
     args.stride = 1 # Has to be <= min(window_size, forecast_horizon) and stride * integer = window_size,
     # and stride * integer2 = forecast_horizon
     args.lead_time = 0 # TODO: Not working yet
-    args.forecast_horizons = [24, 48, 96, 192] # 336, 720]
+    args.forecast_horizons = [336, 720] #[24, 48, 96, 192, 336, 720]
 
     # Plotting
     args.plot = True
