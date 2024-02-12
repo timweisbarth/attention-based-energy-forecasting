@@ -1,4 +1,5 @@
 
+cd $WORK/thesis2
 conda activate $WORK/conda_envs/thesis2
 
 # univariate

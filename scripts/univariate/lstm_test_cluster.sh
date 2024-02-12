@@ -40,8 +40,8 @@ srun python3 -u run.py \
   --enc_in 1 \
   --dec_in 1 \
   --c_out 1 \
-  --d_model 96 \
-  --d_ff 192 \
+  --d_model 24 \
+  --d_ff 48 \
   --target "load" \
   --itr 1 \
   --train_epochs 3\
