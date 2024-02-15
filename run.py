@@ -40,8 +40,8 @@ def main():
     parser.add_argument('--pred_len', type=int, default=96, help='prediction sequence length')
 
     # model define
-    parser.add_argument('--bucket_size', type=int, default=4, help='for Reformer')
-    parser.add_argument('--n_hashes', type=int, default=4, help='for Reformer')
+    #parser.add_argument('--bucket_size', type=int, default=4, help='for Reformer')
+    #parser.add_argument('--n_hashes', type=int, default=4, help='for Reformer')
     parser.add_argument('--enc_in', type=int, default=7, help='encoder input size')
     parser.add_argument('--dec_in', type=int, default=7, help='decoder input size')
     parser.add_argument('--c_out', type=int, default=7, help='output size')

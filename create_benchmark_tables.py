@@ -19,12 +19,12 @@ def main():
 
     ##################### Create empty MultiIndex DataFrame ################################
     # Define the levels for the MultiIndex of the rows
-    targets = ["multi", "load", "solar", "wind"]  # Customize your targets
-    horizons = ['24', '48', '96', '192', '336', '720']  # Customize your horizons
+    targets = ["multi", "load", "solar", "wind"]  
+    horizons = ['24', '48', '96', '192', '336', '720'] 
 
     # Define the levels for the MultiIndex of the columns
-    models = ['Autoformer', 'Informer', 'Transformer', "LSTM", "XGBoost", "Linear Regression", "Dummy"]  # Customize your transformers
-    metrics = ['MSE', 'MAE']  # Customize your metrics
+    models = ['Autoformer', 'Informer', 'Transformer', "LSTM", "XGBoost", "Linear Regression", "Dummy"]  
+    metrics = ['MSE', 'MAE'] 
 
     # Create the MultiIndex for the rows
     row_index = pd.MultiIndex.from_product([targets, horizons], names=['Target', 'Horizon'])
@@ -32,7 +32,6 @@ def main():
     # Create the MultiIndex for the columns
     column_index = pd.MultiIndex.from_product([models, metrics], names=['Model', 'Metric'])
 
-    # Initialize the DataFrame with MultiIndex for both rows and columns
     metrics_df = pd.DataFrame(index=row_index, columns=column_index).fillna('-')  # 
 
     epoch_time_df = metrics_df.copy()
@@ -78,12 +77,14 @@ def main():
 
     # Save df as .csv and .tex
     latex_table = metrics_df.to_latex()
-    file_path_csv = "./results/benchmark_table_{}.csv".format(args.exp_name)
-    file_path_tex = "./results/benchmark_table_{}.tex".format(args.exp_name)
+    file_path_csv_metrics = "./results/benchmark_table_{}_metrics.csv".format(args.exp_name)
+    file_path_tex_metrics = "./results/benchmark_table_{}_metrics.tex".format(args.exp_name)
+    file_path_csv_epoch_time = "./results/benchmark_table_{}_epoch_time.csv".format(args.exp_name)
 
-    metrics_df.to_csv(file_path_csv, header=True, index=True)
+    metrics_df.to_csv(file_path_csv_metrics, header=True, index=True)
+    epoch_time_df.to_csv(file_path_csv_epoch_time, header=True, index=True)
 
-    with open(file_path_tex, 'w') as file:
+    with open(file_path_tex_metrics, 'w') as file:
         file.write(latex_table)
 
 

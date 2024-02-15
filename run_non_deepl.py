@@ -84,7 +84,9 @@ def pipeline(args):
                 start_time = time.time()
                 #print(type(X_train))
                 # Train and predict
+                
                 model = o.train(X_train, y_train, X_val, y_val, args.model_name, device)
+                
                 if args.model_name == "xgb":
                     dval = xgb.DMatrix(X_val)
                     preds = model.predict(dval)

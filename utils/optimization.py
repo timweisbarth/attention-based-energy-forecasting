@@ -21,8 +21,6 @@ def train(X_train, y_train, X_val, y_val, model_name, device):
     
     elif model_name == "xgb":
 
-    
-
         # Convert your pandas DataFrame to DMatrix
         dtrain = xgb.DMatrix(X_train, label=y_train)
         dval = xgb.DMatrix(X_val, label=y_val)
