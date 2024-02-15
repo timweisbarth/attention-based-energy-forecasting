@@ -36,16 +36,21 @@ class EncoderLayer(nn.Module):
         self.activation = F.relu if activation == "relu" else F.gelu
 
     def forward(self, x, attn_mask=None):
+
+        # Attention
         new_x, attn = self.attention(
             x, x, x,
             attn_mask=attn_mask
         )
+        # Add and norm
         x = x + self.dropout(new_x)
-
         y = x = self.norm1(x)
+
+        # Feed forward
         y = self.dropout(self.activation(self.conv1(y.transpose(-1, 1))))
         y = self.dropout(self.conv2(y).transpose(-1, 1))
 
+        # Add and norm
         return self.norm2(x + y), attn
 
 

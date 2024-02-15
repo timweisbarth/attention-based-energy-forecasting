@@ -22,4 +22,4 @@ python3 -u run.py \
   --d_ff 48 \
   --target "load" \
   --itr 1 \
-  --train_epochs 15\
+  --train_epochs 1\
