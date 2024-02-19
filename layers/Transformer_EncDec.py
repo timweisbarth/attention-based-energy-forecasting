@@ -34,21 +34,24 @@ class EncoderLayer(nn.Module):
         self.norm2 = nn.LayerNorm(d_model)
         self.dropout = nn.Dropout(dropout)
         self.activation = F.relu if activation == "relu" else F.gelu
+        print("activation", self.activation)
 
     def forward(self, x, attn_mask=None):
+        # x is (batch_size, sl, d_model)
 
-        # Attention
+        # Attention 
         new_x, attn = self.attention(
-            x, x, x,
+            x, x, x, 
             attn_mask=attn_mask
-        )
+        ) # new_x is (batch_size, sl, d_model)
+
         # Add and norm
         x = x + self.dropout(new_x)
-        y = x = self.norm1(x)
+        y = x = self.norm1(x) # (batch_size, sl, d_model)
 
-        # Feed forward
-        y = self.dropout(self.activation(self.conv1(y.transpose(-1, 1))))
-        y = self.dropout(self.conv2(y).transpose(-1, 1))
+        # Feed forward, y.T is (batch_size, d_model, sl)
+        y = self.dropout(self.activation(self.conv1(y.transpose(-1, 1)))) # (batch_size, d_ff, sl)
+        y = self.dropout(self.conv2(y).transpose(-1, 1)) # (batch_size, sl, d_model)
 
         # Add and norm
         return self.norm2(x + y), attn
@@ -62,7 +65,7 @@ class Encoder(nn.Module):
         self.norm = norm_layer
 
     def forward(self, x, attn_mask=None):
-        # x [B, L, D]
+        # self.conv_layers is None for Transformer
         attns = []
         if self.conv_layers is not None:
             for attn_layer, conv_layer in zip(self.attn_layers, self.conv_layers):
@@ -72,10 +75,12 @@ class Encoder(nn.Module):
             x, attn = self.attn_layers[-1](x)
             attns.append(attn)
         else:
+            # self.attn_layers is a list of EncoderLayer
             for attn_layer in self.attn_layers:
                 x, attn = attn_layer(x, attn_mask=attn_mask)
                 attns.append(attn)
 
+        # In our Transformer, we have a final normalization layer
         if self.norm is not None:
             x = self.norm(x)
 
@@ -98,17 +103,25 @@ class DecoderLayer(nn.Module):
         self.activation = F.relu if activation == "relu" else F.gelu
 
     def forward(self, x, cross, x_mask=None, cross_mask=None):
+
+        # x is (batch_size, ll+pl, d_model), cross is (batch_size, sl, d_model)
+        #print("x", x.shape)
+        #print("cross", cross.shape)
+        # Self attention (only need first element of tuple with is x)
         x = x + self.dropout(self.self_attention(
             x, x, x,
             attn_mask=x_mask
-        )[0])
+        )[0]) # x is (batch_size, ll+pl, d_model)
+        
         x = self.norm1(x)
 
+        # Cross attention
         x = x + self.dropout(self.cross_attention(
             x, cross, cross,
             attn_mask=cross_mask
         )[0])
 
+        # Position-wise feed forward
         y = x = self.norm2(x)
         y = self.dropout(self.activation(self.conv1(y.transpose(-1, 1))))
         y = self.dropout(self.conv2(y).transpose(-1, 1))
@@ -127,9 +140,11 @@ class Decoder(nn.Module):
         for layer in self.layers:
             x = layer(x, cross, x_mask=x_mask, cross_mask=cross_mask)
 
+        # Used for transformer
         if self.norm is not None:
             x = self.norm(x)
 
+        # Also used for transformer
         if self.projection is not None:
             x = self.projection(x)
         return x

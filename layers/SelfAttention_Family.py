@@ -11,6 +11,7 @@ class FullAttention(nn.Module):
     def __init__(self, mask_flag=True, factor=5, scale=None, attention_dropout=0.1, output_attention=False):
         super(FullAttention, self).__init__()
         self.scale = scale
+        #TODO: mask_flag
         self.mask_flag = mask_flag
         self.output_attention = output_attention
         self.dropout = nn.Dropout(attention_dropout)
@@ -20,7 +21,12 @@ class FullAttention(nn.Module):
         _, S, _, D = values.shape
         scale = self.scale or 1. / sqrt(E)
 
+        # blhe, bshe -> bhle @ bhes -> bhls
+
+        #scores2 = queries.transpose(1, 2) @ keys.transpose(1, 2).transpose(-2, -1)
         scores = torch.einsum("blhe,bshe->bhls", queries, keys)
+        #print("close?", torch.allclose(scores, scores2))
+        # 'pqrs,tuqvr->pstuv'
 
         if self.mask_flag:
             if attn_mask is None:
@@ -143,20 +149,26 @@ class AttentionLayer(nn.Module):
         self.n_heads = n_heads
 
     def forward(self, queries, keys, values, attn_mask):
+        # queries (batch_size, L, d_model)
+        # keys, values (batch_size, S, d_model)
+        # For self attention queries=keys=values=output of layer before
         B, L, _ = queries.shape
         _, S, _ = keys.shape
         H = self.n_heads
-
-        queries = self.query_projection(queries).view(B, L, H, -1)
-        keys = self.key_projection(keys).view(B, S, H, -1)
-        values = self.value_projection(values).view(B, S, H, -1)
-
+        print("---------------------------------")
+        queries = self.query_projection(queries).view(B, L, H, -1) # (batch_size, L, n_heads, d_query)
+        print("queries", queries.shape)
+        keys = self.key_projection(keys).view(B, S, H, -1) # (batch_size, S, n_heads, d_key)
+        print("keys", keys.shape)
+        values = self.value_projection(values).view(B, S, H, -1) # (batch_size, S, n_heads, d_value)
+        print("values", values.shape)
         out, attn = self.inner_attention(
             queries,
             keys,
             values,
             attn_mask
-        )
+        ) # out is shape (batch_size, L, n_heads, d_)
+        print("out", out.shape)
         out = out.view(B, L, -1)
 
         return self.out_projection(out), attn
