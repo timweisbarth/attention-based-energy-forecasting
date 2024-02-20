@@ -6,13 +6,13 @@ python3 -u run.py \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
   --model_id 'load' \
-  --model Transformer \
+  --model Informer \
   --data smard \
   --features S \
   --seq_len 96 \
   --label_len 12 \
   --pred_len 48 \
-  --e_layers 2 \
+  --e_layers 3 \
   --d_layers 1 \
   --factor 3 \
   --enc_in 1 \

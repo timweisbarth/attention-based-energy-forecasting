@@ -41,6 +41,8 @@ class Model(nn.Module):
             ] if configs.distil else None,
             norm_layer=torch.nn.LayerNorm(configs.d_model)
         )
+
+
         # Decoder
         self.decoder = Decoder(
             [

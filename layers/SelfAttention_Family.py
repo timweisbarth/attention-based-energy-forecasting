@@ -22,14 +22,18 @@ class FullAttention(nn.Module):
         scale = self.scale or 1. / sqrt(E)
 
         # blhe, bshe -> bhle @ bhes -> bhls
-
+        print(attn_mask)
+        print(self.mask_flag)
         #scores2 = queries.transpose(1, 2) @ keys.transpose(1, 2).transpose(-2, -1)
         scores = torch.einsum("blhe,bshe->bhls", queries, keys)
         #print("close?", torch.allclose(scores, scores2))
         # 'pqrs,tuqvr->pstuv'
 
+        # Not used for vanilla Transformer
         if self.mask_flag:
             if attn_mask is None:
+                print("Hey I just masked you")
+
                 attn_mask = TriangularCausalMask(B, L, device=queries.device)
 
             scores.masked_fill_(attn_mask.mask, -np.inf)
@@ -113,6 +117,7 @@ class ProbAttention(nn.Module):
         keys = keys.transpose(2, 1)
         values = values.transpose(2, 1)
 
+        # 
         U_part = self.factor * np.ceil(np.log(L_K)).astype('int').item()  # c*ln(L_k)
         u = self.factor * np.ceil(np.log(L_Q)).astype('int').item()  # c*ln(L_q)
 
@@ -155,20 +160,19 @@ class AttentionLayer(nn.Module):
         B, L, _ = queries.shape
         _, S, _ = keys.shape
         H = self.n_heads
-        print("---------------------------------")
         queries = self.query_projection(queries).view(B, L, H, -1) # (batch_size, L, n_heads, d_query)
-        print("queries", queries.shape)
+        #print("queries", queries.shape)
         keys = self.key_projection(keys).view(B, S, H, -1) # (batch_size, S, n_heads, d_key)
-        print("keys", keys.shape)
+        #print("keys", keys.shape)
         values = self.value_projection(values).view(B, S, H, -1) # (batch_size, S, n_heads, d_value)
-        print("values", values.shape)
+        #print("values", values.shape)
         out, attn = self.inner_attention(
             queries,
             keys,
             values,
             attn_mask
         ) # out is shape (batch_size, L, n_heads, d_)
-        print("out", out.shape)
+        #print("out", out.shape)
         out = out.view(B, L, -1)
 
         return self.out_projection(out), attn
