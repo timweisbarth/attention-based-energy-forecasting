@@ -123,7 +123,6 @@ class AutoCorrelation(nn.Module):
         # corr is shape (B, H, E, L) where the lth entry in the L dimension 
         # is the correlation for lag=l
         corr = torch.fft.irfft(res, n=L, dim=-1)
-        print("--------------- Autocorrelation ---------------")
         # time delay agg
         if self.training:
             V = self.time_delay_agg_full(values.permute(0, 2, 3, 1).contiguous(), corr).permute(0, 3, 1, 2)
