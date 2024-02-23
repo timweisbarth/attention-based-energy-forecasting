@@ -74,23 +74,33 @@ class AutoCorrelation(nn.Module):
         """
         Standard version of Autocorrelation
         """
+        # corr and values are shape (B, H, E, L) 
         batch = values.shape[0]
         head = values.shape[1]
         channel = values.shape[2]
         length = values.shape[3]
-        # index init
+
+        # index init [0, 1, 2, ..., L-1] for all dimensions
         init_index = torch.arange(length).unsqueeze(0).unsqueeze(0).unsqueeze(0)\
-            .repeat(batch, head, channel, 1).to(values.device)
+            .repeat(batch, head, channel, 1).to(values.device) # (B, H, E, L)
+    
         # find top k
         top_k = int(self.factor * math.log(length))
-        weights, delay = torch.topk(corr, top_k, dim=-1)
+    
+        weights, delay = torch.topk(corr, top_k, dim=-1) # (B, H, E, top_k)
         # update corr
+        
         tmp_corr = torch.softmax(weights, dim=-1)
-        # aggregation
-        tmp_values = values.repeat(1, 1, 1, 2)
+
+        # aggregation (2L because of the addition of init_index and delay which are both <= L)
+        tmp_values = values.repeat(1, 1, 1, 2) # (B, H, E, 2L) 
+        
         delays_agg = torch.zeros_like(values).float()
         for i in range(top_k):
+            # The index of the values to be aggregated for all batches, heads, and channels
             tmp_delay = init_index + delay[..., i].unsqueeze(-1)
+            
+            # The aggregation
             pattern = torch.gather(tmp_values, dim=-1, index=tmp_delay)
             delays_agg = delays_agg + pattern * (tmp_corr[..., i].unsqueeze(-1))
         return delays_agg
@@ -110,11 +120,15 @@ class AutoCorrelation(nn.Module):
         q_fft = torch.fft.rfft(queries.permute(0, 2, 3, 1).contiguous(), dim=-1)
         k_fft = torch.fft.rfft(keys.permute(0, 2, 3, 1).contiguous(), dim=-1)
         res = q_fft * torch.conj(k_fft)
+        # corr is shape (B, H, E, L) where the lth entry in the L dimension 
+        # is the correlation for lag=l
         corr = torch.fft.irfft(res, n=L, dim=-1)
-
+        print("--------------- Autocorrelation ---------------")
         # time delay agg
         if self.training:
-            V = self.time_delay_agg_training(values.permute(0, 2, 3, 1).contiguous(), corr).permute(0, 3, 1, 2)
+            V = self.time_delay_agg_full(values.permute(0, 2, 3, 1).contiguous(), corr).permute(0, 3, 1, 2)
+            # TODO: Change back to training
+            #V = self.time_delay_agg_training(values.permute(0, 2, 3, 1).contiguous(), corr).permute(0, 3, 1, 2)
         else:
             V = self.time_delay_agg_inference(values.permute(0, 2, 3, 1).contiguous(), corr).permute(0, 3, 1, 2)
 

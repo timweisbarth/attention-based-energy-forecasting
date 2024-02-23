@@ -161,6 +161,7 @@ class Decoder(nn.Module):
         self.projection = projection
 
     def forward(self, x, cross, x_mask=None, cross_mask=None, trend=None):
+        print("-------------- Decoder --------------")
         for layer in self.layers:
             x, residual_trend = layer(x, cross, x_mask=x_mask, cross_mask=cross_mask)
             trend = trend + residual_trend

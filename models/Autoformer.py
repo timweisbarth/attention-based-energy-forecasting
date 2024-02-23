@@ -42,7 +42,7 @@ class Model(nn.Module):
                     moving_avg=configs.moving_avg,
                     dropout=configs.dropout,
                     activation=configs.activation
-                ) for l in range(configs.e_layers)
+                ) for l in range(int(configs.e_layers))
             ],
             norm_layer=my_Layernorm(configs.d_model)
         )

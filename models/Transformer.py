@@ -30,7 +30,7 @@ class Model(nn.Module):
                     configs.d_ff,
                     dropout=configs.dropout,
                     activation=configs.activation
-                ) for l in range(configs.e_layers)
+                ) for l in range(int(configs.e_layers))
             ],
             norm_layer=torch.nn.LayerNorm(configs.d_model)
         )

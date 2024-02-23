@@ -1,21 +1,24 @@
 import torch.nn as nn
 import torch.nn.functional as F
+import torch
 
 
 class ConvLayer(nn.Module):
     def __init__(self, c_in):
         super(ConvLayer, self).__init__()
+        padding = 1 if torch.__version__>='1.5.0' else 2
         self.downConv = nn.Conv1d(in_channels=c_in,
                                   out_channels=c_in,
                                   kernel_size=3,
-                                  padding=2,
+                                  padding=padding, # changed from 2 to 1 s.t.dimensions are really L/2
                                   padding_mode='circular')
         self.norm = nn.BatchNorm1d(c_in)
         self.activation = nn.ELU()
         self.maxPool = nn.MaxPool1d(kernel_size=3, stride=2, padding=1)
 
     def forward(self, x):
-        x = self.downConv(x.permute(0, 2, 1))
+        # x is (batch_size, sl, d_model)
+        x = self.downConv(x.permute(0, 2, 1)) # (batch_size, d_model, sl)
         x = self.norm(x)
         x = self.activation(x)
         x = self.maxPool(x)
@@ -34,7 +37,7 @@ class EncoderLayer(nn.Module):
         self.norm2 = nn.LayerNorm(d_model)
         self.dropout = nn.Dropout(dropout)
         self.activation = F.relu if activation == "relu" else F.gelu
-        print("activation", self.activation)
+        #print("activation", self.activation)
 
     def forward(self, x, attn_mask=None):
         # x is (batch_size, sl, d_model)
@@ -66,19 +69,17 @@ class Encoder(nn.Module):
 
     def forward(self, x, attn_mask=None):
         # self.conv_layers is None for Transformer
-        print("Conv-layer", True if self.conv_layers is not None else False)
+        #print("Conv-layer", True if self.conv_layers is not None else False)
         attns = []
         if self.conv_layers is not None:
-            print(len(self.attn_layers), len(self.conv_layers))
+            #print(len(self.attn_layers), len(self.conv_layers))
             for attn_layer, conv_layer in zip(self.attn_layers, self.conv_layers):
-                print("x_before attn_layer", x.shape)
+                
                 x, attn = attn_layer(x, attn_mask=attn_mask)
-                print("x after attn_layer", x.shape)
                 x = conv_layer(x)
-                print("x after conv_layer", x.shape)
                 attns.append(attn)
             x, attn = self.attn_layers[-1](x)
-            print("x after for loop", x.shape)
+            #print("x after for loop", x.shape)
             attns.append(attn)
         else:
             # self.attn_layers is a list of EncoderLayer
@@ -91,6 +92,27 @@ class Encoder(nn.Module):
             x = self.norm(x)
 
         return x, attns
+
+class EncoderStack(nn.Module):
+    def __init__(self, encoders, inp_lens):
+        super(EncoderStack, self).__init__()
+        self.encoders = nn.ModuleList(encoders)
+        self.inp_lens = inp_lens
+
+    def forward(self, x, attn_mask=None):
+        #print("--------------- Encoder -------------------")
+        attns = []
+        x_stack = []
+        for i_len, encoder in zip(self.inp_lens, self.encoders):
+            inp_len = x.shape[1] // (2**i_len)
+            x_s, attn = encoder(x[:, -inp_len:, :], attn_mask=attn_mask)
+            attns.append(attn)
+            x_stack.append(x_s)
+            #print("x_s", x_s.shape)
+        x_stack = torch.cat(x_stack, dim=-2)
+        #print("x_stack", x_stack.shape)
+        #print("--------------- Encoder End -------------------")
+        return x_stack, attns
 
 
 class DecoderLayer(nn.Module):
@@ -114,14 +136,14 @@ class DecoderLayer(nn.Module):
         #print("x", x.shape)
         #print("cross", cross.shape)
         # Self attention (only need first element of tuple with is x)
-        print("--------------- Decoder -------------------")
+        
         x = x + self.dropout(self.self_attention(
             x, x, x,
             attn_mask=x_mask
         )[0]) # x is (batch_size, ll+pl, d_model)
         
         x = self.norm1(x)
-        print("Cross attention")
+        
         # Cross attention
         x = x + self.dropout(self.cross_attention(
             x, cross, cross,
@@ -132,7 +154,7 @@ class DecoderLayer(nn.Module):
         y = x = self.norm2(x)
         y = self.dropout(self.activation(self.conv1(y.transpose(-1, 1))))
         y = self.dropout(self.conv2(y).transpose(-1, 1))
-        print("--------------- Decoder End -------------------")
+        
         return self.norm3(x + y)
 
 
