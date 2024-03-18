@@ -12,8 +12,8 @@ class my_Layernorm(nn.Module):
         self.layernorm = nn.LayerNorm(channels)
 
     def forward(self, x):
-        x_hat = self.layernorm(x)
-        bias = torch.mean(x_hat, dim=1).unsqueeze(1).repeat(1, x.shape[1], 1)
+        x_hat = self.layernorm(x) # (B, L, D_model)
+        bias = torch.mean(x_hat, dim=1).unsqueeze(1).repeat(1, x.shape[1], 1) # (B, L, D_model)
         return x_hat - bias
 
 
@@ -91,6 +91,8 @@ class Encoder(nn.Module):
 
     def forward(self, x, attn_mask=None):
         attns = []
+        print("ConvLayer", True if self.conv_layers is not None else False)
+        # For standard Autoformer, CovLayers is None
         if self.conv_layers is not None:
             for attn_layer, conv_layer in zip(self.attn_layers, self.conv_layers):
                 x, attn = attn_layer(x, attn_mask=attn_mask)
@@ -102,7 +104,7 @@ class Encoder(nn.Module):
             for attn_layer in self.attn_layers:
                 x, attn = attn_layer(x, attn_mask=attn_mask)
                 attns.append(attn)
-
+        print("self.norm", True if self.norm is not None else False)
         if self.norm is not None:
             x = self.norm(x)
 
@@ -168,7 +170,8 @@ class Decoder(nn.Module):
 
         if self.norm is not None:
             x = self.norm(x)
-
+        print("DecNorm", True if self.norm is not None else False)
+        print("DecProj", True if self.projection is not None else False)
         if self.projection is not None:
             x = self.projection(x)
         return x, trend

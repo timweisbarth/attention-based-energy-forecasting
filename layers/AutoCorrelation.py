@@ -23,21 +23,27 @@ class AutoCorrelation(nn.Module):
         SpeedUp version of Autocorrelation (a batch-normalization style design)
         This is for the training phase.
         """
+        # Same as full aggregation but with  average over all N, H and E 
         head = values.shape[1]
         channel = values.shape[2]
         length = values.shape[3]
+        # corr is of shape (B, H, E, L)
         # find top k
         top_k = int(self.factor * math.log(length))
-        mean_value = torch.mean(torch.mean(corr, dim=1), dim=1)
-        index = torch.topk(torch.mean(mean_value, dim=0), top_k, dim=-1)[1]
-        weights = torch.stack([mean_value[:, index[i]] for i in range(top_k)], dim=-1)
+        # Averaging over all heads and channels
+        mean_value = torch.mean(torch.mean(corr, dim=1), dim=1) # (B, L)
+        # Average over all batches, then find top k
+        index = torch.topk(torch.mean(mean_value, dim=0), top_k, dim=-1)[1] # (top_k)
+        weights = torch.stack([mean_value[:, index[i]] for i in range(top_k)], dim=-1) # (B, top_k)
         # update corr
-        tmp_corr = torch.softmax(weights, dim=-1)
+        tmp_corr = torch.softmax(weights, dim=-1) # (B, top_k)
         # aggregation
-        tmp_values = values
-        delays_agg = torch.zeros_like(values).float()
+        tmp_values = values # (B, H, E, L)
+        delays_agg = torch.zeros_like(values).float() # (B, H, E, L)
         for i in range(top_k):
-            pattern = torch.roll(tmp_values, -int(index[i]), -1)
+
+            # Gather time delayed values (same delay accross all batches, heads, and channels)
+            pattern = torch.roll(tmp_values, -int(index[i]), -1) # (B, H, E, L)
             delays_agg = delays_agg + pattern * \
                          (tmp_corr[:, i].unsqueeze(1).unsqueeze(1).unsqueeze(1).repeat(1, head, channel, length))
         return delays_agg
@@ -47,15 +53,18 @@ class AutoCorrelation(nn.Module):
         SpeedUp version of Autocorrelation (a batch-normalization style design)
         This is for the inference phase.
         """
+        # Same as full aggregation but with averaging over all heads and channels
         batch = values.shape[0]
         head = values.shape[1]
         channel = values.shape[2]
         length = values.shape[3]
+
         # index init
         init_index = torch.arange(length).unsqueeze(0).unsqueeze(0).unsqueeze(0)\
             .repeat(batch, head, channel, 1).to(values.device)
         # find top k
         top_k = int(self.factor * math.log(length))
+        # Averaging over all heads and channels
         mean_value = torch.mean(torch.mean(corr, dim=1), dim=1)
         weights, delay = torch.topk(mean_value, top_k, dim=-1)
         # update corr
@@ -100,8 +109,9 @@ class AutoCorrelation(nn.Module):
             # The index of the values to be aggregated for all batches, heads, and channels
             tmp_delay = init_index + delay[..., i].unsqueeze(-1)
             
-            # The aggregation
+            # Gather the values according to the indices
             pattern = torch.gather(tmp_values, dim=-1, index=tmp_delay)
+            # Aggregate the gathered values weighted by tmp_corr
             delays_agg = delays_agg + pattern * (tmp_corr[..., i].unsqueeze(-1))
         return delays_agg
 
@@ -125,9 +135,8 @@ class AutoCorrelation(nn.Module):
         corr = torch.fft.irfft(res, n=L, dim=-1)
         # time delay agg
         if self.training:
-            V = self.time_delay_agg_full(values.permute(0, 2, 3, 1).contiguous(), corr).permute(0, 3, 1, 2)
-            # TODO: Change back to training
-            #V = self.time_delay_agg_training(values.permute(0, 2, 3, 1).contiguous(), corr).permute(0, 3, 1, 2)
+            #V = self.time_delay_agg_full(values.permute(0, 2, 3, 1).contiguous(), corr).permute(0, 3, 1, 2)
+            V = self.time_delay_agg_training(values.permute(0, 2, 3, 1).contiguous(), corr).permute(0, 3, 1, 2)
         else:
             V = self.time_delay_agg_inference(values.permute(0, 2, 3, 1).contiguous(), corr).permute(0, 3, 1, 2)
 
