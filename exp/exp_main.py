@@ -5,7 +5,7 @@ logging.basicConfig(format='%(asctime)s,%(msecs)03d %(levelname)-8s [%(filename)
 
 from data_provider.data_factory import data_provider
 from exp.exp_basic import Exp_Basic
-from models import Informer, Autoformer, Transformer, Reformer, LSTM
+from models import Informer, Autoformer, Transformer, LSTM, DLinear
 from utils.tools import EarlyStopping, adjust_learning_rate, visual
 from utils.metrics import metric
 import matplotlib.pyplot as plt
@@ -33,8 +33,8 @@ class Exp_Main(Exp_Basic):
             'Autoformer': Autoformer,
             'Transformer': Transformer,
             'Informer': Informer,
-            'Reformer': Reformer,
             'LSTM': LSTM,
+            'DLinear': DLinear,
         }
         if self.args.model == 'LSTM':
             model = model_dict[self.args.model].Model(self.args, self.device).float()
@@ -66,10 +66,14 @@ class Exp_Main(Exp_Basic):
         # encoder - decoder
 
         def _run_model():
-            outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
-            #print("batch_x in predict", batch_x.shape)
-            if self.args.output_attention:
-                outputs = outputs[0]
+            if 'Linear' in self.args.model or 'TST' in self.args.model:
+                outputs = self.model(batch_x)
+                #print(outputs.shape)
+            else:
+                outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
+                #print("batch_x in predict", batch_x.shape)
+                if self.args.output_attention:
+                    outputs = outputs[0]
             return outputs
 
         if self.args.use_amp:
@@ -77,7 +81,7 @@ class Exp_Main(Exp_Basic):
                 outputs = _run_model()
         else:
             outputs = _run_model()
-
+        #print(outputs.shape)
         f_dim = -1 if self.args.features == 'MS' else 0
         outputs = outputs[:, -self.args.pred_len:, f_dim:]
         batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)

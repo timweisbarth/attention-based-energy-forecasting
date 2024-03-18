@@ -442,3 +442,6 @@ mse:1.4199079275131226, mae:0.9568524956703186
 ftS_smard_wind_gen_sl96_ll48_pl720_Autoformer_dm512_nh8_el2_dl1_df2048_fc3_ebtimeF_dtTrue_Exp0_0  
 mse:1.4952045679092407, mae:0.9577779173851013
 
+ftS_smard_load_sl96_ll48_pl48_DLinear_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_test_0  
+mse:0.3143009543418884, mae:0.4289906322956085
+

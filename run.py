@@ -62,6 +62,9 @@ def main():
     parser.add_argument('--output_attention', action='store_true', help='whether to output attention in encoder')
     parser.add_argument('--do_predict', action='store_true', help='whether to predict unseen future data')
 
+    # Additional arguments from DLinear and PatchTST
+    parser.add_argument('--individual', type=int, default=0, help='individual head; True 1 False 0')
+
     # optimization
     parser.add_argument('--num_workers', type=int, default=10, help='data loader num workers')
     parser.add_argument('--itr', type=int, default=2, help='experiments times')
