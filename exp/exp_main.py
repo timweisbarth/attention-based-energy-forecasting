@@ -5,7 +5,7 @@ logging.basicConfig(format='%(asctime)s,%(msecs)03d %(levelname)-8s [%(filename)
 
 from data_provider.data_factory import data_provider
 from exp.exp_basic import Exp_Basic
-from models import Informer, Autoformer, Transformer, LSTM, DLinear
+from models import Informer, Autoformer, Transformer, LSTM, DLinear, PatchTST
 from utils.tools import EarlyStopping, adjust_learning_rate, visual
 from utils.metrics import metric
 import matplotlib.pyplot as plt
@@ -14,6 +14,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch import optim
+from torch.optim import lr_scheduler 
 
 import os
 import time
@@ -35,6 +36,7 @@ class Exp_Main(Exp_Basic):
             'Informer': Informer,
             'LSTM': LSTM,
             'DLinear': DLinear,
+            'PatchTST': PatchTST,
         }
         if self.args.model == 'LSTM':
             model = model_dict[self.args.model].Model(self.args, self.device).float()
@@ -129,11 +131,17 @@ class Exp_Main(Exp_Basic):
         time_now = time.time()
 
         train_steps = len(train_loader)
-        print(train_steps)
+        print("train_steps", train_steps)
         early_stopping = EarlyStopping(patience=self.args.patience, verbose=True)
 
         model_optim = self._select_optimizer()
         criterion = self._select_criterion()
+
+        scheduler = lr_scheduler.OneCycleLR(optimizer = model_optim,
+                                            steps_per_epoch = train_steps,
+                                            pct_start = self.args.pct_start,
+                                            epochs = self.args.train_epochs,
+                                            max_lr = self.args.learning_rate)
 
         if self.args.use_amp:
             scaler = torch.cuda.amp.GradScaler()
@@ -171,6 +179,8 @@ class Exp_Main(Exp_Basic):
                     print('\tspeed: {:.4f}s/iter; \t left time: {:.4f}s'.format(speed, left_time))
                     iter_count = 0
                     time_now = time.time()
+                    for param_group in model_optim.param_groups:
+                        print(param_group['lr'])
 
                 if self.args.use_amp:
                     scaler.scale(loss).backward()
@@ -180,6 +190,9 @@ class Exp_Main(Exp_Basic):
                     loss.backward()
                     model_optim.step()
                     #print("End of else")
+                if self.args.lradj == 'TST':
+                    adjust_learning_rate(model_optim, scheduler, epoch + 1, self.args, printout=False)
+                    scheduler.step()
             # Fore each epoch, do
             print("Epoch train: {} cost time: {}".format(epoch + 1, time.time() - epoch_time))
             time_validation_start = time.time()
@@ -201,8 +214,9 @@ class Exp_Main(Exp_Basic):
                 self.stop_after_epoch = epoch + 1
                 print("Early stopping")
                 break
-
-            adjust_learning_rate(model_optim, epoch + 1, self.args)
+            if self.args.lradj != 'TST':
+                # In this case the scheduler is not used by the method
+                adjust_learning_rate(model_optim, scheduler, epoch + 1, self.args, printout=True)
             
         self.train_time = time.time() - start_time
         plt.plot(train_epoch_losses, label="Training loss")

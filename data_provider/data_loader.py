@@ -62,7 +62,7 @@ class SMARD(Dataset):
 
         assert num_test > 0
         assert num_train  > num_vali > num_test
-        print(num_vali)
+        print("num_vali", num_vali)
         border1s = [0, num_train - self.seq_len, len(df_raw) - num_test - self.seq_len]
         border2s = [num_train, num_train + num_vali, len(df_raw)]
         border1 = border1s[self.set_type]

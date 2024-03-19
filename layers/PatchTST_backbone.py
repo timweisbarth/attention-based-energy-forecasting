@@ -33,6 +33,7 @@ class PatchTST_backbone(nn.Module):
         self.stride = stride
         self.padding_patch = padding_patch
         patch_num = int((context_window - patch_len)/stride + 1)
+        print("padding_patch", padding_patch)
         if padding_patch == 'end': # can be modified to general case
             self.padding_patch_layer = nn.ReplicationPad1d((0, stride)) 
             patch_num += 1
@@ -57,7 +58,8 @@ class PatchTST_backbone(nn.Module):
             self.head = Flatten_Head(self.individual, self.n_vars, self.head_nf, target_window, head_dropout=head_dropout)
         
     
-    def forward(self, z):                                                                   # z: [bs x nvars x seq_len]
+    def forward(self, z):   
+        print("z", z.shape)                                                                # z: [bs x nvars x seq_len]
         # norm
         if self.revin: 
             z = z.permute(0,2,1)
@@ -93,7 +95,7 @@ class Flatten_Head(nn.Module):
         
         self.individual = individual
         self.n_vars = n_vars
-        
+        print("individual head", individual)
         if self.individual:
             self.linears = nn.ModuleList()
             self.dropouts = nn.ModuleList()
