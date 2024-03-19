@@ -6,12 +6,13 @@ python3 -u run.py \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
   --model_id 'load' \
-  --model DLinear \
+  --model TSMixer \
   --data smard \
   --features S \
-  --seq_len 96 \
+  --seq_len 300 \
   --pred_len 48 \
   --enc_in 1 \
   --target "load" \
+  --c_out 1 \
   --itr 1 \
-  --train_epochs 1\
+  --train_epochs 10\

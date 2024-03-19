@@ -5,7 +5,7 @@ logging.basicConfig(format='%(asctime)s,%(msecs)03d %(levelname)-8s [%(filename)
 
 from data_provider.data_factory import data_provider
 from exp.exp_basic import Exp_Basic
-from models import Informer, Autoformer, Transformer, LSTM, DLinear, PatchTST
+from models import Informer, Autoformer, Transformer, LSTM, DLinear, PatchTST, TSMixer
 from utils.tools import EarlyStopping, adjust_learning_rate, visual
 from utils.metrics import metric
 import matplotlib.pyplot as plt
@@ -37,6 +37,7 @@ class Exp_Main(Exp_Basic):
             'LSTM': LSTM,
             'DLinear': DLinear,
             'PatchTST': PatchTST,
+            'TSMixer': TSMixer,
         }
         if self.args.model == 'LSTM':
             model = model_dict[self.args.model].Model(self.args, self.device).float()
@@ -179,8 +180,8 @@ class Exp_Main(Exp_Basic):
                     print('\tspeed: {:.4f}s/iter; \t left time: {:.4f}s'.format(speed, left_time))
                     iter_count = 0
                     time_now = time.time()
-                    for param_group in model_optim.param_groups:
-                        print(param_group['lr'])
+                    #for param_group in model_optim.param_groups:
+                    #    print(param_group['lr'])
 
                 if self.args.use_amp:
                     scaler.scale(loss).backward()
