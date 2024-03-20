@@ -123,7 +123,7 @@ def pipeline(args):
                 dump(model, folder_path + 'checkpoint.joblib')
             
             if args.save_benchmark or args.plot:
-                folder_path = "./results/" + setting + '/'
+                folder_path = "./results/" + setting + '/' + setting + '/'
                 if not os.path.exists(folder_path):
                     os.makedirs(folder_path)
 

@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 
 
 def main():
+    exp_name = "Exp0"
     fix_seed = 2024
     random.seed(fix_seed)
     torch.manual_seed(fix_seed)
@@ -32,7 +33,7 @@ def main():
     parser.add_argument('--target', type=str, default='load', help='target feature in S or MS task, always choose load in M task ')
     parser.add_argument('--freq', type=str, default='h',
                         help='freq for time features encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly], you can also use more detailed freq like 15min or 3h')
-    parser.add_argument('--checkpoints', type=str, default='./checkpoints/', help='location of model checkpoints')
+    parser.add_argument('--checkpoints', type=str, default=f'./{exp_name}/checkpoints/', help='location of model checkpoints')
 
     # forecasting task
     parser.add_argument('--seq_len', type=int, default=96, help='input sequence length')
@@ -86,7 +87,7 @@ def main():
     parser.add_argument('--batch_size', type=int, default=32, help='batch size of train input data')
     parser.add_argument('--patience', type=int, default=3, help='early stopping patience')
     parser.add_argument('--learning_rate', type=float, default=0.0001, help='optimizer learning rate')
-    parser.add_argument('--des', type=str, default='Exp_test', help='exp description')
+    parser.add_argument('--des', type=str, default=f'{exp_name}', help='exp description')
     parser.add_argument('--loss', type=str, default='mse', help='loss function')
     parser.add_argument('--lradj', type=str, default='type1', help='adjust learning rate')
     parser.add_argument('--use_amp', action='store_true', help='use automatic mixed precision training', default=False)
@@ -116,7 +117,7 @@ def main():
     if args.is_training:
         for ii in range(args.itr):
             # setting record of experiments
-            setting = 'ft{}_{}_{}_sl{}_ll{}_pl{}_{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}'.format(
+            setting = 'ft{}_{}_{}_sl{}_ll{}_pl{}_{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_iter{}'.format(
                 args.features,
                 args.data,
                 args.model_id,

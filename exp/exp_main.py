@@ -245,9 +245,12 @@ class Exp_Main(Exp_Basic):
 
         preds = []
         trues = []
-        folder_path = './results/' + setting + '/'
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
+        folder_path = './results/' + self.args.des + '/' + setting.split("_iter", 1)[0] + '/'
+        #if not os.path.exists(folder_path):
+        #    os.makedirs(folder_path)
+        subfolder_path = './results/' + self.args.des + '/' + setting.split("_iter", 1)[0] + '/' + setting + '/'
+        if not os.path.exists(subfolder_path):
+            os.makedirs(subfolder_path)
 
         self.model.eval()
         with torch.no_grad():
@@ -268,7 +271,7 @@ class Exp_Main(Exp_Basic):
 
                 preds.append(pred)
                 trues.append(true)
-                if i % 20 == 0:
+                if i % 150 == 0:
                     # If features is M, then only the target will be plotted
                     input = batch_x.detach().cpu().numpy()
                     if self.args.features == 'M':
@@ -281,7 +284,7 @@ class Exp_Main(Exp_Basic):
                         # Choose 0th batch element and -jth column (sl,) with (pl,) --> (sl+pl,)
                         gt = np.concatenate((input[0, :, -j], true[0, :, -j]), axis=0)
                         pd = np.concatenate((input[0, :, -j], pred[0, :, -j]), axis=0)
-                        visual(gt, pd, os.path.join(folder_path, str(i) + '_' + str(j) + '.pdf'))
+                        visual(gt, pd, os.path.join(subfolder_path, str(i) + '_' + str(j) + '.pdf'))
 
         preds = np.concatenate(preds, axis=0)
         trues = np.concatenate(trues, axis=0)
@@ -291,11 +294,13 @@ class Exp_Main(Exp_Basic):
         print('{0} shape:'.format(flag), preds.shape, trues.shape)
 
         # result save
-        folder_path = './results/' + setting + '/'
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
+        #folder_path = './results/' + setting + '/'
+        #if not os.path.exists(folder_path):
+        #    os.makedirs(folder_path)
 
         mae, mse, rmse, mape, mspe = metric(preds, trues)
+        max_memory = torch.cuda.max_memory_allocated() / 1024.0 / 1024.0 # MB
+        model_size = sum(p.numel() for p in self.model.parameters())
         print('mse:{}, mae:{}'.format(mse, mae))
         f = open("result.txt", 'a')
         f.write(setting + "  \n")
@@ -304,9 +309,11 @@ class Exp_Main(Exp_Basic):
         f.write('\n')
         f.close()
 
-        np.save(folder_path + '_metrics.npy', np.array([mae, mse, rmse, mape, mspe, self.stop_after_epoch, self.train_time]))
-        np.save(folder_path + '_pred.npy', preds)
-        np.save(folder_path + '_true.npy', trues)
+
+
+        np.save(subfolder_path + '_metrics.npy', np.array([mae, mse, rmse, mape, mspe, model_size, max_memory, self.stop_after_epoch, self.train_time]))
+        np.save(subfolder_path + '_pred.npy', preds)
+        np.save(subfolder_path + '_true.npy', trues)
 
         return
 

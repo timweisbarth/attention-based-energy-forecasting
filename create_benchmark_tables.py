@@ -6,10 +6,10 @@ import pandas as pd
 def main():
 
     parser = argparse.ArgumentParser(description='Autoformer & Transformer family for Time Series Forecasting')
-    parser.add_argument('--exp_name', type=str, required=True, default="Exp", help='Which experiment do you want to create the table of?')
+    parser.add_argument('--exp_name', type=str, required=True, default="Exp0", help='Which experiment do you want to create the table of?')
     args = parser.parse_args()
 
-    root_dir = str(os.getcwd()) + "/results/"
+    root_dir = str(os.getcwd()) + f"/results/{args.exp_name}/"
 
     # Get directories
     dirs = [dirnames for dipath, dirnames, filenames in os.walk(root_dir)][0]
@@ -47,7 +47,6 @@ def main():
     #metrics_df.loc[('multi', '96'), ('Informer', 'MAE')] = 2.3124
     #print(metrics_df)
     for dir in dirs:
-
         for t, t_file_name in zip(targets, targets_file_name):
             if t_file_name in dir:
                  target = t
@@ -57,20 +56,27 @@ def main():
         for m, m_file_name in zip(models, models_file_name):
             if m_file_name in dir:
                  model = m
+        maes = []
+        mses = []
+        number_of_epochs_for_trainings = []
+        total_train_times = []
+        for i, subdir in enumerate([dirnames for dipath, dirnames, filenames in os.walk(root_dir)][0]):
+            metrics = np.load(root_dir + dir + subdir + "/_metrics.npy")
+            maes[i] = metrics[0]
+            mses[i] = metrics[1]
+            number_of_epochs_for_trainings[i] = metrics[-2]
+            total_train_times[i] = metrics[-1]
 
-        metrics = np.load(root_dir + dir + "/_metrics.npy")
-
-        # MAE, MSE
-        mae = metrics[0]
-        mse = metrics[1]
-        metrics_df.loc[(target, horizon), (model, 'MAE')] = round(mae, 3)
-        metrics_df.loc[(target, horizon), (model, 'MSE')] = round(mse, 3)
+        
+        metrics_df.loc[(target, horizon), (model, 'MAE')] = round(sum(maes)/len(maes), 3)
+        metrics_df.loc[(target, horizon), (model, 'MSE')] = round(sum(mses)/len(mses), 3)
 
         # Early stop
-        number_of_epochs_for_training = metrics[-2]
-        total_train_time = metrics[-1]
-        epoch_time_df.loc[(target, horizon), (model, 'epochs')] = number_of_epochs_for_training
-        epoch_time_df.loc[(target, horizon), (model, 'time[min]')] = round(total_train_time / 60)
+        avg_epochs_for_training = int(sum(number_of_epochs_for_trainings)/len(number_of_epochs_for_trainings))
+        avg_total_train_time = sum(total_train_times)/len(total_train_times)
+        epoch_time_df.loc[(target, horizon), (model, 'epochs')] = avg_epochs_for_training
+        epoch_time_df.loc[(target, horizon), (model, 'time[min]')] = round(avg_total_train_time / 60)
+
         
     print(metrics_df)
     print(epoch_time_df)
