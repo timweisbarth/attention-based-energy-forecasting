@@ -457,3 +457,6 @@ mse:0.9290764927864075, mae:0.8127009868621826
 ftS_smard_load_sl96_ll48_pl48_TSMixer_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_test_0  
 mse:0.7244608402252197, mae:0.7035258412361145
 
+ftS_smard_load_sl300_ll48_pl48_TSMixer_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_test_0  
+mse:0.1330675184726715, mae:0.2984437942504883
+
