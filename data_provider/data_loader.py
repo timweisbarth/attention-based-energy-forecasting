@@ -37,7 +37,7 @@ class SMARD(Dataset):
         self.__read_data__()
 
     def __read_data__(self):
-        #print("Hello from data loader")
+        
         self.scaler = StandardScaler()
         df_raw = pd.read_csv(os.path.join(self.root_path,
                                           self.data_path))
@@ -89,8 +89,8 @@ class SMARD(Dataset):
         df_stamp = df_raw[['date']][border1:border2]
         df_stamp['date'] = pd.to_datetime(df_stamp.date)
 
-        #print(type(df_stamp))
-        #print(type(pd.to_datetime(df_stamp['date'].values)))
+        
+        
 
         # timeenc = 1 if args.embed == timeF
         if self.timeenc == 0:

@@ -168,12 +168,12 @@ def scale_data(scaler, df_train, df_val, df_test, col_to_pred):
     y_train = df_train[col_to_pred]
     y_val = df_val[col_to_pred]
     y_test = df_test[col_to_pred]
-    #print(y_train.shape)
+    
 
     X_train = df_train.drop(columns=col_to_pred, axis=1)
     X_val = df_val.drop(col_to_pred, axis=1)
     X_test = df_test.drop(col_to_pred, axis=1)
-    #print(X_train.shape)
+    
 
 
     # Apply scaling on features and labels seperately. This is useful later
@@ -196,7 +196,7 @@ def scale_data(scaler, df_train, df_val, df_test, col_to_pred):
     df_train = pd.concat([X_train, y_train], axis=1)
     df_val = pd.concat([X_val, y_val], axis=1)  
     df_test = pd.concat([X_test, y_test], axis=1)  
-    #print(df_train.shape)  
+    
 
     return df_train, df_val, df_test
 
@@ -240,7 +240,7 @@ def create_inout_sequence(df_train, df_val, df_test, target, h, w, stride):
             
             in_seq = df.iloc[i:i+w].values
             #if i == 0:
-                #print(in_seq[0:5, -1])
+                
             out_seq = df[target].iloc[i+w:i+w+h].values
 
             in_seq = in_seq[np.newaxis, :, :]
@@ -299,7 +299,7 @@ def make_supervised(df_train, df_val, df_test, targets, h, w, stride, cols_to_la
         for col in cols_to_lag:
             # get window_size-1 many lags --> -1 due to current lag
             for lag in range(1,w):
-                #print(lag, end=", ")
+                
                 lagged_columns[f"{col}_lag{lag}"] = df[f"{col}"].shift(lag)
 
         for col in targets:

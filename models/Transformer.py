@@ -60,7 +60,7 @@ class Model(nn.Module):
         # x_enc (batch_size, sl, enc_in), x_mark_enc (batch_size, sl, time_f)
         # x_dec (batch_size, ll+pl, dec_in), x_mark_dec (batch_size, ll+pl, time_f)
         # masks = None, None, None
-        print("x_mark", x_mark_dec.shape)
+        
         
         enc_out = self.enc_embedding(x_enc, x_mark_enc) # (batch_size, sl, d_model)
         enc_out, attns = self.encoder(enc_out, attn_mask=enc_self_mask) # (batch_size, sl, d_model)

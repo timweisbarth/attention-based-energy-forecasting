@@ -157,7 +157,7 @@ class Transformer(nn.Module):
 
         if y_true != None:
             # y_true is (B, h)
-            #print(y_true)
+            
             y_true = y_true[:,:,None]
 
             x_dec = torch.cat((x_dec, y_true), dim=-2) # (B, h+1, 1)

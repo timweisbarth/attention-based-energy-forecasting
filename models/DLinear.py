@@ -71,7 +71,7 @@ class Model(nn.Module):
             # self.Linear_Trend.weight = nn.Parameter((1/self.seq_len)*torch.ones([self.pred_len,self.seq_len]))
 
     def forward(self, x):
-        #print(x.shape)
+        
         # x: [Batch, Input length, Channel]
         seasonal_init, trend_init = self.decompsition(x)
         seasonal_init, trend_init = seasonal_init.permute(0,2,1), trend_init.permute(0,2,1)
@@ -86,5 +86,5 @@ class Model(nn.Module):
             trend_output = self.Linear_Trend(trend_init)
 
         x = seasonal_output + trend_output
-        #print(x.shape, type(x))
+        
         return x.permute(0,2,1) # to [Batch, Output length, Channel]

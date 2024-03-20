@@ -61,7 +61,7 @@ class DayOfMonth(TimeFeature):
 
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
         out = ((index.day - 1) / 30.0 - 0.5).to_numpy()
-        #print("Month", type(out), out.shape)
+        
         return out
 
 
@@ -70,7 +70,7 @@ class DayOfYear(TimeFeature):
 
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
         dayofyear = index.dayofyear.to_numpy()
-        #print(dayofyear.min(),dayofyear.max())
+        
         dayofyear_sin = np.sin(2 * np.pi * dayofyear / 366).reshape(1,-1)
         dayofyear_cos = np.cos(2 * np.pi * dayofyear / 366).reshape(1,-1)
         dayofyear = np.vstack((dayofyear_sin, dayofyear_cos))
@@ -82,7 +82,7 @@ class MonthOfYear(TimeFeature):
 
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
         out = (index.month - 1) / 11.0 - 0.5
-        #print("Month", type(out), out.shape)
+        
         return (index.month - 1) / 11.0 - 0.5
 
 
@@ -97,7 +97,7 @@ class WeekOfYear(TimeFeature):
 class Year(TimeFeature):
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
         out = ((index.year - 2015) / 8.0 - 0.5).to_numpy().reshape(1, -1)
-        #print("Year", type(out), out.shape, out.min(), out.max())
+        
         return out
 class IsHoliday(TimeFeature):
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
@@ -105,7 +105,7 @@ class IsHoliday(TimeFeature):
         holidays_GER = [holiday for holiday in holidays.Germany(years=years)]
         df_dates = pd.DataFrame(index.date)
         out = (df_dates.isin(holidays_GER).values.astype(int) - 0.5).reshape(1, -1)
-        #print("Holiday", type(out), out.shape, out.min(), out.max())
+        
         return out
 
 class IsWeekend(TimeFeature):
@@ -114,7 +114,7 @@ class IsWeekend(TimeFeature):
         is_saturday = df_dayofweek.isin([5]).values.astype(int)
         is_sunday = df_dayofweek.isin([6]).values.astype(int)
         out = (is_saturday + is_sunday - 0.5).reshape(1, -1)
-        #print("Weekend", type(out), out.shape, out.min(), out.max())
+        
         return out
 
 

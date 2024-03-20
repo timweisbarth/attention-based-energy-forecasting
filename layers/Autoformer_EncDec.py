@@ -91,7 +91,7 @@ class Encoder(nn.Module):
 
     def forward(self, x, attn_mask=None):
         attns = []
-        print("ConvLayer", True if self.conv_layers is not None else False)
+        
         # For standard Autoformer, CovLayers is None
         if self.conv_layers is not None:
             for attn_layer, conv_layer in zip(self.attn_layers, self.conv_layers):
@@ -104,7 +104,7 @@ class Encoder(nn.Module):
             for attn_layer in self.attn_layers:
                 x, attn = attn_layer(x, attn_mask=attn_mask)
                 attns.append(attn)
-        print("self.norm", True if self.norm is not None else False)
+        
         if self.norm is not None:
             x = self.norm(x)
 
@@ -163,15 +163,15 @@ class Decoder(nn.Module):
         self.projection = projection
 
     def forward(self, x, cross, x_mask=None, cross_mask=None, trend=None):
-        print("-------------- Decoder --------------")
+        
         for layer in self.layers:
             x, residual_trend = layer(x, cross, x_mask=x_mask, cross_mask=cross_mask)
             trend = trend + residual_trend
 
         if self.norm is not None:
             x = self.norm(x)
-        print("DecNorm", True if self.norm is not None else False)
-        print("DecProj", True if self.projection is not None else False)
+        
+        
         if self.projection is not None:
             x = self.projection(x)
         return x, trend

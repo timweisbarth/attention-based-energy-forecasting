@@ -34,19 +34,19 @@ class Model(nn.Module):
         head_dropout = configs.head_dropout
         
         individual = configs.individual
-        print("individual", individual)
+        
     
         patch_len = configs.patch_len
         stride = configs.stride
         padding_patch = configs.padding_patch
         
         revin = configs.revin
-        print("revin", revin)
+        
         affine = configs.affine
         subtract_last = configs.subtract_last
         
         decomposition = configs.decomposition
-        print("decomp", decomposition)
+        
         kernel_size = configs.kernel_size
         
         

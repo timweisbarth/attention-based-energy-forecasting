@@ -4,12 +4,12 @@ import pandas as pd
 
 def plot_prediction_vs_truths(preds, truths, window_size, forecast_horizon, cols_to_pred, index, plot_date, days, stride, folder_path):
     """Plot the truths vs predictions"""
-    #print("plot truth", truths.shape)
+    
     if len(cols_to_pred) > 1:
         
         truths = truths[:,:forecast_horizon]
         preds = preds[:,:forecast_horizon]
-        #print("plot truth", truths.shape)
+        
     # Select rows, if the forecast_horizon is larger than the stride. 
     if forecast_horizon > stride:
         truths = truths[::int(forecast_horizon/stride)]
@@ -23,8 +23,8 @@ def plot_prediction_vs_truths(preds, truths, window_size, forecast_horizon, cols
 
     # Get index of the plot_date and index of "days" later days
     length_of_interval = 24 * days
-    #print("index", index.shape)
-    #print(np.where(index == plot_date))
+    
+    
     start = np.where(index == plot_date)[0][0]
     stop = start + length_of_interval
 

@@ -37,7 +37,7 @@ class EncoderLayer(nn.Module):
         self.norm2 = nn.LayerNorm(d_model)
         self.dropout = nn.Dropout(dropout)
         self.activation = F.relu if activation == "relu" else F.gelu
-        #print("activation", self.activation)
+        
 
     def forward(self, x, attn_mask=None):
         # x is (batch_size, sl, d_model)
@@ -69,17 +69,17 @@ class Encoder(nn.Module):
 
     def forward(self, x, attn_mask=None):
         # self.conv_layers is None for Transformer
-        #print("Conv-layer", True if self.conv_layers is not None else False)
+        
         attns = []
         if self.conv_layers is not None:
-            #print(len(self.attn_layers), len(self.conv_layers))
+            
             for attn_layer, conv_layer in zip(self.attn_layers, self.conv_layers):
                 
                 x, attn = attn_layer(x, attn_mask=attn_mask)
                 x = conv_layer(x)
                 attns.append(attn)
             x, attn = self.attn_layers[-1](x)
-            #print("x after for loop", x.shape)
+            
             attns.append(attn)
         else:
             # self.attn_layers is a list of EncoderLayer
@@ -100,7 +100,7 @@ class EncoderStack(nn.Module):
         self.inp_lens = inp_lens
 
     def forward(self, x, attn_mask=None):
-        #print("--------------- Encoder -------------------")
+        
         attns = []
         x_stack = []
         for i_len, encoder in zip(self.inp_lens, self.encoders):
@@ -108,10 +108,10 @@ class EncoderStack(nn.Module):
             x_s, attn = encoder(x[:, -inp_len:, :], attn_mask=attn_mask)
             attns.append(attn)
             x_stack.append(x_s)
-            #print("x_s", x_s.shape)
+            
         x_stack = torch.cat(x_stack, dim=-2)
-        #print("x_stack", x_stack.shape)
-        #print("--------------- Encoder End -------------------")
+        
+        
         return x_stack, attns
 
 
@@ -133,8 +133,8 @@ class DecoderLayer(nn.Module):
     def forward(self, x, cross, x_mask=None, cross_mask=None):
 
         # x is (batch_size, ll+pl, d_model), cross is (batch_size, sl, d_model)
-        #print("x", x.shape)
-        #print("cross", cross.shape)
+        
+        
         # Self attention (only need first element of tuple with is x)
         
         x = x + self.dropout(self.self_attention(

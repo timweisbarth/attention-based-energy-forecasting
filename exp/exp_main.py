@@ -62,8 +62,8 @@ class Exp_Main(Exp_Basic):
 
     def _predict(self, batch_x, batch_y, batch_x_mark, batch_y_mark):
         # decoder input
-        #print(batch_y.shape)
-        #print(batch_x_mark.shape)
+        
+        
         dec_inp = torch.zeros_like(batch_y[:, -self.args.pred_len:, :]).float()
         dec_inp = torch.cat([batch_y[:, :self.args.label_len, :], dec_inp], dim=1).float().to(self.device)
         # encoder - decoder
@@ -71,10 +71,10 @@ class Exp_Main(Exp_Basic):
         def _run_model():
             if 'Linear' in self.args.model or 'TST' in self.args.model:
                 outputs = self.model(batch_x)
-                #print(outputs.shape)
+                
             else:
                 outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
-                #print("batch_x in predict", batch_x.shape)
+                
                 if self.args.output_attention:
                     outputs = outputs[0]
             return outputs
@@ -84,7 +84,7 @@ class Exp_Main(Exp_Basic):
                 outputs = _run_model()
         else:
             outputs = _run_model()
-        #print(outputs.shape)
+        
         f_dim = -1 if self.args.features == 'MS' else 0
         outputs = outputs[:, -self.args.pred_len:, f_dim:]
         batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)
@@ -120,7 +120,7 @@ class Exp_Main(Exp_Basic):
 
         
 
-        #print(start_time)
+        
         train_data, train_loader = self._get_data(flag='train')
         vali_data, vali_loader = self._get_data(flag='val')
         #test_data, test_loader = self._get_data(flag='test')
@@ -190,7 +190,7 @@ class Exp_Main(Exp_Basic):
                 else:
                     loss.backward()
                     model_optim.step()
-                    #print("End of else")
+                    
                 if self.args.lradj == 'TST':
                     adjust_learning_rate(model_optim, scheduler, epoch + 1, self.args, printout=False)
                     scheduler.step()
@@ -206,7 +206,7 @@ class Exp_Main(Exp_Basic):
             #test_loss = self.vali(test_data, test_loader, criterion)
             print("Epoch: {0}, Steps: {1} | Train Loss: {2:.7f} Vali Loss: {3:.7f}".format(
                 epoch + 1, train_steps, train_epoch_loss, vali_epoch_loss))
-            #print("Epoch: {0}, Steps: {1} | Train Loss: {2:.7f} Vali Loss: {3:.7f} Test Loss: {4:.7f}".format(
+            
             #    epoch + 1, train_steps, train_loss, vali_loss, test_loss))
 
 

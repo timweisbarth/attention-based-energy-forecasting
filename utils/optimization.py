@@ -38,7 +38,7 @@ def train(X_train, y_train, X_val, y_val, model_name, device):
         model = xgb.train(params, dtrain, evals=[(dtrain, 'train'), (dval, 'val')], num_boost_round=1000, early_stopping_rounds=50, verbose_eval=False)
 
         ############################ scikit-learn interface ##################        
-        #print(xgb.__version__)
+        
         #model = xgb.XGBRegressor(
         #    n_estimators= 1000, 
         #    early_stopping_rounds=50, 
@@ -46,7 +46,7 @@ def train(X_train, y_train, X_val, y_val, model_name, device):
         #    tree_method="hist", 
         #    device=device
         #)
-        #print("XGBoost uses ", model.device)
+        
         #model = xgb.XGBRegressor(
         #    tree_method="hist",
         #    n_estimators=128,

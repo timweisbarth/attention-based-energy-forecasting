@@ -45,7 +45,7 @@ def main():
     horizons_file_name = ['pl24', 'pl48','pl96','pl192','pl336','pl720']
     models_file_name = ['Autoformer', 'Informer', 'Transformer', "LSTM", "xgb", "linreg", "dummy"]
     #metrics_df.loc[('multi', '96'), ('Informer', 'MAE')] = 2.3124
-    #print(metrics_df)
+    
     for dir in dirs:
         for t, t_file_name in zip(targets, targets_file_name):
             if t_file_name in dir:

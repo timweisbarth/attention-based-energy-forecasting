@@ -52,15 +52,15 @@ def inverse_transformations(preds, truths, scaler, h):
     truths = truths.to_numpy()
     preds_inv = np.copy(preds)
     truths_inv = np.copy(truths)
-    #print(preds.shape, type(preds))
-    #print("truths", truths.shape, type(truths))
+    
+    
     for i in range(h):
-        #print("i,h", i, h, preds[:,i::h].shape)
+        
         preds_inv[:,i::h] = scaler.inverse_transform(preds[:,i::h])
-        #print("i,h", i, h, truths[:,i::h].shape)
+        
         truths_inv[:,i::h] = scaler.inverse_transform(truths[:,i::h])
     #truths_inv = scaler.inverse_transform(truths)
-    #print(truths_inv.shape)
+    
     return preds_inv, truths_inv
 
 def print_and_save_benchmark_table(metrics, args):

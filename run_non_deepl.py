@@ -79,10 +79,10 @@ def pipeline(args):
                 # Reshape data into supervised problem for sklearn module
                 (X_train, y_train), (X_val, y_val), (X_test, y_test) = \
                 pp.make_supervised(df_train, df_val, df_test, t, h, args.window_size, args.stride, args.cols_to_lag)
-                #print("after supervision", X_val.shape)
+                
 
                 start_time = time.time()
-                #print(type(X_train))
+                
                 # Train and predict
                 
                 model = o.train(X_train, y_train, X_val, y_val, args.model_name, device)
@@ -93,8 +93,8 @@ def pipeline(args):
                 else:
                     preds = model.predict(X_val)
                 truths = y_val
-                #print(preds.shape)
-                #print(y_val.shape)
+                
+                
             
             train_time = time.time() - start_time
             # Evaluate
@@ -116,14 +116,14 @@ def pipeline(args):
             # Save model
             if args.save_model:
                 
-                folder_path = "./checkpoints/" + setting + '/'
+                folder_path = "./checkpoints/" + args.exp_name + '/' + setting + '/'
                 if not os.path.exists(folder_path):
                     
                     os.makedirs(folder_path)
                 dump(model, folder_path + 'checkpoint.joblib')
             
             if args.save_benchmark or args.plot:
-                folder_path = "./results/" + setting + '/' + setting + '/'
+                folder_path = "./results/" + args.exp_name + '/' + setting + '/' + setting + '/'
                 if not os.path.exists(folder_path):
                     os.makedirs(folder_path)
 
@@ -150,7 +150,7 @@ if __name__ == "__main__":
     args.model_params = dotdict({})
     args.train_params = dotdict({})
 
-    args.experiment_name = "Exp0"
+    args.experiment_name = "Exp1"
 
     # Data loading
     args.from_raw = True
