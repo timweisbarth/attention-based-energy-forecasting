@@ -1,8 +1,8 @@
 #!/bin/bash
-#SBATCH --job-name="ftS_and_M_xgboost_0"
+#SBATCH --job-name="ftS_and_M_xgboost_1"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=a100-galvani
-#SBATCH --time 1-06:00:00 #
+#SBATCH --time 1-12:00:00 #
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=/mnt/qb/work/ludwig/lqb853/slurm_logs/%x-%j.out  # cannot use $WORK 
