@@ -35,6 +35,7 @@ def train(X_train, y_train, X_val, y_val, model_name, device):
         }
 
         # Train the model
+        # num_boost_round is the number of boosting rounds or trees to build, early_stopping determines how many will actually be built
         model = xgb.train(params, dtrain, evals=[(dtrain, 'train'), (dval, 'val')], num_boost_round=1000, early_stopping_rounds=50, verbose_eval=False)
 
         ############################ scikit-learn interface ##################        

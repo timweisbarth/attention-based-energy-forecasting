@@ -69,6 +69,7 @@ class Exp_Main(Exp_Basic):
         # encoder - decoder
 
         def _run_model():
+            # DLinear and PatchTST get a lot less information (but longer context^^)
             if 'Linear' in self.args.model or 'TST' in self.args.model:
                 outputs = self.model(batch_x)
                 
@@ -168,15 +169,18 @@ class Exp_Main(Exp_Basic):
                 loss = criterion(outputs, batch_y)
                 train_batch_losses.append(loss.item())
 
-                if (i + 1) % 100 == 0:
+                if (i + 1) % 200 == 0:
                     print("\titers: {0}, epoch: {1} | train batch loss: {2:.7f}".format(i + 1, epoch + 1, loss.item()))
                     speed = (time.time() - time_now) / iter_count
 
                     # speed[s/iter] where iter is one batch, train_steps = number of iters/batches
                     left_time = speed * ((self.args.train_epochs - epoch) * train_steps - i)
-                    print('\tspeed: {:.4f}s/iter; \t left time: {:.4f}s'.format(speed, left_time))
+                    max_memory = torch.cuda.max_memory_allocated() / (1024**2)
+                    print('\tspeed: {:.4f}s/iter; \t left time: {:.4f}s \tmax_memory: {:.2f}'.format(speed, left_time, max_memory))
                     iter_count = 0
                     time_now = time.time()
+                    #device_properties = torch.cuda.get_device_properties()
+                    #print("Memory capacity: ", device_properties.total_memory / (1024**3))
                     #for param_group in model_optim.param_groups:
                     #    print(param_group['lr'])
 
@@ -295,6 +299,7 @@ class Exp_Main(Exp_Basic):
 
         mae, mse, rmse, mape, mspe = metric(preds, trues)
         max_memory = torch.cuda.max_memory_allocated() / 1024.0 / 1024.0 # MB
+        print("Max memory of training and testing: ", max_memory)
         model_size = sum(p.numel() for p in self.model.parameters())
         print('mse:{}, mae:{}'.format(mse, mae))
         f = open("result.txt", 'a')

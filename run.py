@@ -148,9 +148,9 @@ def main():
             #if args.do_predict:
             #    print('>>>>>>>predicting : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
             #    exp.predict(setting, True)
-
-            torch.cuda.empty_cache()
-            torch.cuda.reset_max_memory_allocated()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+                torch.cuda.reset_max_memory_allocated()
         
     else:
         ii = 0
@@ -174,9 +174,8 @@ def main():
         exp = Exp(args)  # set experiments
         print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
         exp.test(setting, test=1)
-        torch.cuda.empty_cache()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
         
-
-
 if __name__ == "__main__":
     main()
