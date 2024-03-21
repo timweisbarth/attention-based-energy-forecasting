@@ -136,7 +136,7 @@ class DecoderLayer(nn.Module):
         
         
         # Self attention (only need first element of tuple with is x)
-        
+    
         x = x + self.dropout(self.self_attention(
             x, x, x,
             attn_mask=x_mask

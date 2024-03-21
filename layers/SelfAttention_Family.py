@@ -28,11 +28,9 @@ class FullAttention(nn.Module):
         
         # 'pqrs,tuqvr->pstuv'
 
-        # Not used for vanilla Transformer
+        # Used in Decoder
         if self.mask_flag:
             if attn_mask is None:
-                
-
                 attn_mask = TriangularCausalMask(B, L, device=queries.device)
 
             scores.masked_fill_(attn_mask.mask, -np.inf)

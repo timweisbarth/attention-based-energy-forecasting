@@ -33,7 +33,7 @@ def main():
     parser.add_argument('--target', type=str, default='load', help='target feature in S or MS task, always choose load in M task ')
     parser.add_argument('--freq', type=str, default='h',
                         help='freq for time features encoding, options:[s:secondly, t:minutely, h:hourly, d:daily, b:business days, w:weekly, m:monthly], you can also use more detailed freq like 15min or 3h')
-    parser.add_argument('--checkpoints', type=str, default=f'./{exp_name}/checkpoints/', help='location of model checkpoints')
+    parser.add_argument('--checkpoints', type=str, default=f'./checkpoints/{exp_name}', help='location of model checkpoints')
 
     # forecasting task
     parser.add_argument('--seq_len', type=int, default=96, help='input sequence length')
@@ -150,6 +150,7 @@ def main():
             #    exp.predict(setting, True)
 
             torch.cuda.empty_cache()
+            torch.cuda.reset_max_memory_allocated()
         
     else:
         ii = 0
@@ -174,6 +175,7 @@ def main():
         print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
         exp.test(setting, test=1)
         torch.cuda.empty_cache()
+        
 
 
 if __name__ == "__main__":

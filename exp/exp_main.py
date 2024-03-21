@@ -118,9 +118,6 @@ class Exp_Main(Exp_Basic):
     # Validate after every epoch
     def train(self, setting):
 
-        
-
-        
         train_data, train_loader = self._get_data(flag='train')
         vali_data, vali_loader = self._get_data(flag='val')
         #test_data, test_loader = self._get_data(flag='test')
@@ -209,7 +206,6 @@ class Exp_Main(Exp_Basic):
             
             #    epoch + 1, train_steps, train_loss, vali_loss, test_loss))
 
-
             early_stopping(vali_epoch_loss, self.model, path)
             if early_stopping.early_stop:
                 self.stop_after_epoch = epoch + 1
@@ -246,8 +242,7 @@ class Exp_Main(Exp_Basic):
         preds = []
         trues = []
         folder_path = './results/' + self.args.des + '/' + setting.split("_iter", 1)[0] + '/'
-        #if not os.path.exists(folder_path):
-        #    os.makedirs(folder_path)
+        
         subfolder_path = './results/' + self.args.des + '/' + setting.split("_iter", 1)[0] + '/' + setting + '/'
         if not os.path.exists(subfolder_path):
             os.makedirs(subfolder_path)
@@ -308,8 +303,6 @@ class Exp_Main(Exp_Basic):
         f.write('\n')
         f.write('\n')
         f.close()
-
-
 
         np.save(subfolder_path + '_metrics.npy', np.array([mae, mse, rmse, mape, mspe, model_size, max_memory, self.stop_after_epoch, self.train_time]))
         np.save(subfolder_path + '_pred.npy', preds)
