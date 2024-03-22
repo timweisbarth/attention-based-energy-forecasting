@@ -225,7 +225,9 @@ class Exp_Main(Exp_Basic):
         plt.legend()
         plt.title("Losses")
 
-        plt.savefig(path + "/train_val_loss.pdf", format="pdf", bbox_inches="tight") 
+        plt.savefig(path + "/train_val_loss.pdf", format="pdf", bbox_inches="tight")
+        np.save(path + '/train_loss.npy', np.array(train_epoch_losses))
+        np.save(path + '/val_loss.npy', np.array(vali_epoch_losses)) 
         
         best_model_path = path + '/' + 'checkpoint.pth'
         self.model.load_state_dict(torch.load(best_model_path))
@@ -283,6 +285,8 @@ class Exp_Main(Exp_Basic):
                         # Choose 0th batch element and -jth column (sl,) with (pl,) --> (sl+pl,)
                         gt = np.concatenate((input[0, :, -j], true[0, :, -j]), axis=0)
                         pd = np.concatenate((input[0, :, -j], pred[0, :, -j]), axis=0)
+                        np.save(os.path.join(subfolder_path, str(i) + '_' + str(j) + '_gt.npy'), gt)
+                        np.save(os.path.join(subfolder_path, str(i) + '_' + str(j) + '_pd.npy'), pd)
                         visual(gt, pd, os.path.join(subfolder_path, str(i) + '_' + str(j) + '.pdf'))
 
         preds = np.concatenate(preds, axis=0)

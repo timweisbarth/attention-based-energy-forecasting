@@ -154,6 +154,7 @@ class DataEmbedding(nn.Module):
         self.dropout = nn.Dropout(p=dropout)
 
     def forward(self, x, x_mark):
+        
         # val:(B, L, d_model), temp: (B, L, d_model), position: (1, 24, d_model)
         # Broadcasts to (B, L, d_model)
         x = self.value_embedding(x) + self.temporal_embedding(x_mark) + self.position_embedding(x)
