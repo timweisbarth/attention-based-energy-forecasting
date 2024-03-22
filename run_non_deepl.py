@@ -167,11 +167,11 @@ if __name__ == "__main__":
     # Prediction
     args.cols_to_lag = ['load', 'solar_gen', 'wind_gen']
     args.targets = [['load'], ['solar_gen'], ['wind_gen'], ['load', 'solar_gen', 'wind_gen']]
-    args.window_size = 96
+    args.window_size = 336
     args.stride = 1 # Has to be <= min(window_size, forecast_horizon) and stride * integer = window_size,
     # and stride * integer2 = forecast_horizon
     args.lead_time = 0 # TODO: Not working yet
-    args.forecast_horizons = [336, 720] #[24, 48, 96, 192, 336, 720]
+    args.forecast_horizons = [24, 96, 192, 336, 720]
 
     # Plotting
     args.plot = True

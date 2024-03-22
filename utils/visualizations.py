@@ -37,4 +37,7 @@ def plot_prediction_vs_truths(preds, truths, window_size, forecast_horizon, cols
     plt.legend()
     plt.grid(True)
     plt.savefig(folder_path + "{}_{}.pdf".format(plot_date, days), format="pdf", bbox_inches="tight") 
+
+    np.save(folder_path + '_pred.npy', preds[start:stop])
+    np.save(folder_path + '_true.npy', truths[start:stop])
     #plt.show()
