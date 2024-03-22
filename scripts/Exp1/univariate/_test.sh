@@ -4,7 +4,7 @@ python3 -u run.py \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
   --model_id 'load' \
-  --model Transformer \
+  --model TSMixer \
   --data smard \
   --features S \
   --seq_len 48 \
