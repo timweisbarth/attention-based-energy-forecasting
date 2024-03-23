@@ -1,6 +1,6 @@
 #cd $WORK/thesis2
 #conda activate $WORK/conda_envs/thesis2
-exp_name = 'Exp1'
+exp_name='Exp1'
 
 # multivariate
 sbatch ./scripts/$exp_name/multivariate/lstm.sh
