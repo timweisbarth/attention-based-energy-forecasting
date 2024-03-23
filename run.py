@@ -140,6 +140,8 @@ def main():
 
             exp = Exp(args)  # set experiments
             print('>>>>>>>start training : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))
+            max_memory = torch.cuda.max_memory_allocated() / (1024**2)
+            print("Max_memory before start: ", max_memory)
             exp.train(setting)
 
             print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))

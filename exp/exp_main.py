@@ -176,7 +176,7 @@ class Exp_Main(Exp_Basic):
                     # speed[s/iter] where iter is one batch, train_steps = number of iters/batches
                     left_time = speed * ((self.args.train_epochs - epoch) * train_steps - i)
                     max_memory = torch.cuda.max_memory_allocated() / (1024**2)
-                    print('\tspeed: {:.4f}s/iter; \t left time: {:.4f}s \tmax_memory: {:.2f}'.format(speed, left_time, max_memory))
+                    print('\tspeed: {:.4f}s/iter; \t left time: {:.4f}s \tmax_memory: {:.2f}MB'.format(speed, left_time, max_memory))
                     iter_count = 0
                     time_now = time.time()
                     #device_properties = torch.cuda.get_device_properties()
