@@ -14,32 +14,32 @@ nvidia-smi # only if you requested any gpus
 
 for pred_len in 24 96 192 336 720
 do
-    srun python3 -u run.py \
-      --is_training 1 \
-      --root_path ./data/preproc/ \
-      --data_path smard_data.csv \
-      --model_id '' \
-      --model PatchTST \
-      --data smard \
-      --features M \
-      --seq_len 336 \
-      --pred_len $pred_len \
-      --e_layers 3 \
-      --enc_in 3 \
-      --c_out 3 \
-      --target "load" \
-      --itr 3 \
-      --n_heads 16 \
-      --d_model 128 \
-      --d_ff 256 \
-      --dropout 0.2 \
-      --fc_dropout 0.2 \
-      --train_epochs 100 \
-      --patience 10 \
-      --lradj 'TST' \
-      --pct_start 0.2 \
-      --batch_size 32 \
-      --learning_rate 0.0001 \
+  srun python3 -u run.py \
+    --is_training 1 \
+    --root_path ./data/preproc/ \
+    --data_path smard_data.csv \
+    --model_id '' \
+    --model PatchTST \
+    --data smard \
+    --features M \
+    --seq_len 336 \
+    --pred_len $pred_len \
+    --e_layers 3 \
+    --enc_in 3 \
+    --c_out 3 \
+    --target "load" \
+    --itr 3 \
+    --n_heads 16 \
+    --d_model 128 \
+    --d_ff 256 \
+    --dropout 0.2 \
+    --fc_dropout 0.2 \
+    --train_epochs 100 \
+    --patience 10 \
+    --lradj 'TST' \
+    --pct_start 0.2 \
+    --batch_size 32 \
+    --learning_rate 0.0001 \
 
 done
  

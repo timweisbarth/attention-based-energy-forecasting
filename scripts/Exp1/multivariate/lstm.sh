@@ -14,24 +14,24 @@ nvidia-smi # only if you requested any gpus
 
 for pred_len in 24 96 192 336 720
 do
-   srun python3 -u run.py \
-     --is_training 1 \
-     --root_path ./data/preproc/ \
-     --data_path smard_data.csv \
-     --model_id '' \
-     --model LSTM \
-     --data smard \
-     --features M \
-     --seq_len 96 \
-     --label_len 48 \
-     --pred_len $pred_len \
-     --e_layers 2 \
-     --d_layers 1 \
-     --factor 3 \
-     --enc_in 3 \
-     --dec_in 3 \
-     --c_out 3 \
-     --target "load" \
-     --itr 3 \
+  srun python3 -u run.py \
+    --is_training 1 \
+    --root_path ./data/preproc/ \
+    --data_path smard_data.csv \
+    --model_id '' \
+    --model LSTM \
+    --data smard \
+    --features M \
+    --seq_len 96 \
+    --label_len 48 \
+    --pred_len $pred_len \
+    --e_layers 2 \
+    --d_layers 1 \
+    --factor 3 \
+    --enc_in 3 \
+    --dec_in 3 \
+    --c_out 3 \
+    --target "load" \
+    --itr 3 \
 
 done
