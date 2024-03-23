@@ -2,7 +2,7 @@
 #SBATCH --job-name="single_a100_job_for_test"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=a100-galvani
-#SBATCH --time 0-00:50:00 # set maximum allowed runtime to 10min
+#SBATCH --time 0-00:30:00 # set maximum allowed runtime to 10min
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=/mnt/qb/work/ludwig/lqb853/%x-%j.out  # note one cannot use env variables like $WORK in #SBATCH statements
