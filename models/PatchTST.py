@@ -25,7 +25,7 @@ class Model(nn.Module):
         context_window = configs.seq_len
         target_window = configs.pred_len
         
-        n_layers = configs.e_layers
+        n_layers = int(configs.e_layers)
         n_heads = configs.n_heads
         d_model = configs.d_model
         d_ff = configs.d_ff

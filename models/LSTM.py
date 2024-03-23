@@ -7,7 +7,7 @@ class Model(nn.Module):
         super(Model, self).__init__()
 
 
-        self.e_layers = configs.e_layers
+        self.e_layers = int(configs.e_layers)
         self.d_model = configs.d_model
         self.pred_len = configs.pred_len
         self.c_out = configs.c_out
@@ -19,7 +19,7 @@ class Model(nn.Module):
 
         # LSTM layers
         self.lstm = nn.LSTM(
-            configs.d_model, configs.d_model, configs.e_layers, batch_first=True, dropout=configs.dropout
+            configs.d_model, configs.d_model, self.e_layers, batch_first=True, dropout=configs.dropout
         )
 
         # Fully connected layer

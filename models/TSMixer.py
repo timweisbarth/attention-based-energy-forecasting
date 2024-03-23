@@ -21,7 +21,7 @@ class Model(nn.Module):
             prediction_length=configs.pred_len,
             input_channels=configs.enc_in + 9,
             output_channels=configs.c_out,
-            num_blocks=configs.e_layers,
+            num_blocks=int(configs.e_layers),
             dropout_rate=configs.dropout,
             ff_dim=configs.d_model,
         )

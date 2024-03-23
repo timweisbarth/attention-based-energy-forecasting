@@ -4,9 +4,9 @@ python3 -u run.py \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
   --model_id 'load' \
-  --model TSMixer \
+  --model LSTM \
   --data smard \
-  --features S \
+  --features M \
   --seq_len 48 \
   --pred_len 24 \
   --d_model 12 \
@@ -17,4 +17,5 @@ python3 -u run.py \
   --dec_in 1 \
   --c_out 1 \
   --itr 1 \
+  --e_layers 1 \
   --train_epochs 1\
