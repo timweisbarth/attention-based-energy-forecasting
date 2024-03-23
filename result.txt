@@ -466,3 +466,6 @@ mse:0.7636248469352722, mae:0.7125720381736755
 ftS_smard_load_sl48_ll48_pl24_Transformer_dm12_nh4_el2_dl1_df48_fc1_ebtimeF_dtTrue_Exp1_iter0  
 mse:0.7636248469352722, mae:0.7125720381736755
 
+ftS_smard_load_sl336_ll48_pl60_DLinear_dm48_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Test_iter0  
+mse:0.08958908170461655, mae:0.20620097219944
+
