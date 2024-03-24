@@ -116,14 +116,14 @@ def pipeline(args):
             # Save model
             if args.save_model:
                 
-                folder_path = "./checkpoints/" + args.exp_name + '/' + setting + '/'
+                folder_path = "./checkpoints/" + args.experiment_name + '/' + setting + '/'
                 if not os.path.exists(folder_path):
                     
                     os.makedirs(folder_path)
                 dump(model, folder_path + 'checkpoint.joblib')
             
             if args.save_benchmark or args.plot:
-                folder_path = "./results/" + args.exp_name + '/' + setting + '/' + setting + '/'
+                folder_path = "./results/" + args.experiment_name + '/' + setting + '/' + setting + '/'
                 if not os.path.exists(folder_path):
                     os.makedirs(folder_path)
 

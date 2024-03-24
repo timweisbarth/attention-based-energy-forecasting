@@ -12,6 +12,6 @@ sbatch ./scripts/$exp_name/multivariate/patchtst.sh
 sbatch ./scripts/$exp_name/multivariate/tsmixer.sh
 
 # Non deepl (uni- and multivariate)
-sbatch ./scripts/xgboost.sh
+sbatch ./scripts/$exp_name/xgboost.sh
 
 #conda deactivate
