@@ -24,7 +24,8 @@ import visualizations as v
 
 def pipeline(args):
     """Run the entire pipeline as specified by the args"""
-    fix_seed = 2024
+    # Fix seed for reproducibility
+    fix_seed = args.fix_seed
     random.seed(fix_seed)
     torch.manual_seed(fix_seed)
     np.random.seed(fix_seed)
@@ -151,6 +152,7 @@ if __name__ == "__main__":
     args.train_params = dotdict({})
 
     args.experiment_name = "Exp1"
+    args.fix_seed = 2024
 
     # Data loading
     args.from_raw = True
