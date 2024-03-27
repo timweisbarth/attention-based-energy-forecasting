@@ -87,3 +87,5 @@ def visual(true, preds=None, name='./pic/test.pdf'):
     
     plt.legend()
     plt.savefig(name, bbox_inches='tight')
+    plt.close()
+    #plt.show()

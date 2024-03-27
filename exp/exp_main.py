@@ -228,6 +228,7 @@ class Exp_Main(Exp_Basic):
         plt.savefig(path + "/train_val_loss.pdf", format="pdf", bbox_inches="tight")
         np.save(path + '/train_loss.npy', np.array(train_epoch_losses))
         np.save(path + '/val_loss.npy', np.array(vali_epoch_losses)) 
+        plt.close()
         
         best_model_path = path + '/' + 'checkpoint.pth'
         self.model.load_state_dict(torch.load(best_model_path))
