@@ -2,7 +2,7 @@
 #SBATCH --job-name="ftM_itransformer_2"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=a100-galvani
-#SBATCH --time 1-12:00:00 #
+#SBATCH --time 1-05:00:00 #
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=/mnt/qb/work/ludwig/lqb853/slurm_logs/%x-%j.out  # cannot use $WORK 
@@ -20,7 +20,7 @@ do
     --root_path ./data/preproc/ \
     --data_path smard_data.csv \
     --model_id '' \
-    --model Transformer \
+    --model iTransformer \
     --data smard \
     --features M \
     --seq_len 96 \
@@ -33,7 +33,7 @@ do
     --target "load" \
     --d_model 512 \
     --d_ff 512 \
-    --batch_size 16 \
+    --batch_size 32 \
     --learning_rate 0.0005 \
     --itr 3 \
 
