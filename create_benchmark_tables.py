@@ -20,10 +20,10 @@ def main():
     ##################### Create empty MultiIndex DataFrame ################################
     # Define the levels for the MultiIndex of the rows
     targets = ["multi", "load", "solar", "wind"]  
-    horizons = ['24', '48', '96', '192', '336', '720'] 
+    horizons = ['24', '96', '192', '336', '720'] 
 
     # Define the levels for the MultiIndex of the columns
-    models = ['Autoformer', 'Informer', 'Transformer', "LSTM", "XGBoost", "Linear Regression", "Dummy"]  
+    models = ['PatchTST', 'Autoformer', 'Informer', 'Transformer', 'TSMixer', "DLinear", "LSTM", "XGBoost", "Linear Regression", "Dummy"]  
     metrics = ['MSE', 'MAE'] 
 
     # Create the MultiIndex for the rows
@@ -42,11 +42,14 @@ def main():
     ################ Fill DataFrame with mae and mse #############################
 
     targets_file_name = ['ftM', 'load', 'solar', 'wind']
-    horizons_file_name = ['pl24', 'pl48','pl96','pl192','pl336','pl720']
-    models_file_name = ['Autoformer', 'Informer', 'Transformer', "LSTM", "xgb", "linreg", "dummy"]
+    horizons_file_name = ['pl24','pl96','pl192','pl336','pl720']
+    models_file_name = ['PatchTST', 'Autoformer', 'Informer', 'Transformer', 'TSMixer', 'DLinear', "LSTM", "xgb", "linreg", "dummy"]
     #metrics_df.loc[('multi', '96'), ('Informer', 'MAE')] = 2.3124
-    
+    #print(metrics_df)
+    #print(epoch_time_df)
+    #print(len(dirs))
     for dir in dirs:
+        
         for t, t_file_name in zip(targets, targets_file_name):
             if t_file_name in dir:
                  target = t
@@ -56,28 +59,38 @@ def main():
         for m, m_file_name in zip(models, models_file_name):
             if m_file_name in dir:
                  model = m
+        #print("dir:" + dir)
+        #print("\t", target, horizon, model)
+        
         maes = []
         mses = []
         number_of_epochs_for_trainings = []
         total_train_times = []
-        for i, subdir in enumerate([dirnames for dipath, dirnames, filenames in os.walk(root_dir)][0]):
-            metrics = np.load(root_dir + dir + subdir + "/_metrics.npy")
-            maes[i] = metrics[0]
-            mses[i] = metrics[1]
-            number_of_epochs_for_trainings[i] = metrics[-2]
-            total_train_times[i] = metrics[-1]
+        for i, subdir in enumerate([dirnames for dipath, dirnames, filenames in os.walk(root_dir + dir + "/")][0]):
+            #print("\t", subdir)
+            #if "xgb" in dir and "pl96" in dir and "load" in dir:
+            #    print("subdir", subdir)
+            metrics = np.load(root_dir + dir + "/" + subdir + "/_metrics.npy")
+            maes.append(metrics[0])
+            mses.append(metrics[1])
+            number_of_epochs_for_trainings.append(metrics[-2])
+            total_train_times.append(metrics[-1])
+            #if "xgb" in subdir and "pl96" in subdir and "load" in subdir:
+            #    print(number_of_epochs_for_trainings)
+            #    print(total_train_times)
 
         
         metrics_df.loc[(target, horizon), (model, 'MAE')] = round(sum(maes)/len(maes), 3)
         metrics_df.loc[(target, horizon), (model, 'MSE')] = round(sum(mses)/len(mses), 3)
 
         # Early stop
-        avg_epochs_for_training = int(sum(number_of_epochs_for_trainings)/len(number_of_epochs_for_trainings))
+        avg_epochs_for_training = sum(number_of_epochs_for_trainings)/len(number_of_epochs_for_trainings)
         avg_total_train_time = sum(total_train_times)/len(total_train_times)
-        epoch_time_df.loc[(target, horizon), (model, 'epochs')] = avg_epochs_for_training
+        epoch_time_df.loc[(target, horizon), (model, 'epochs')] = int(avg_epochs_for_training) if not np.isnan(avg_epochs_for_training) else '-'
         epoch_time_df.loc[(target, horizon), (model, 'time[min]')] = round(avg_total_train_time / 60)
+        #print("\t epochs:", epoch_time_df.loc[("multi", "96"), ("XGBoost", 'epochs')])
 
-        
+    #print("epochs:", epoch_time_df.loc[("multi", "96"), ("XGBoost", 'epochs')])
     print(metrics_df)
     print(epoch_time_df)
 

@@ -10,4 +10,16 @@ Autoformer all as in autoformer paper
 DLinear
 PatchTST both as in PatchTST paper
 
+- DLinear: Individual vs non- individual, window: 192, 336, 720, learning rate(batch_size ): 0.001(16), 0.005 (32), 
+(currently non-individual and 336)
+- PatchTST: H = 16, D = 138, F = 256, but depends strongly on data set size (H=4…16, D=16…128, F=128…256), 
+they also vary the learning rate and the batch size, and the patience (10..20u?)
+
 TSMixer average values of HPO of TSMixer paper
+
+- TSMixer: chose: Lookback=336, lr=0.0002, blocks=4, dropout=0.5, hidden size: 256, activation: relu
+TSMixer: Lookback: 96…720, lr=0.001,0.0001, Blocks=1…8, Dropout=0.1…0.9, Hidden size = 64…512, activation: relu
+
+
+
+Result:
