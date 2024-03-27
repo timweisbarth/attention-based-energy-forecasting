@@ -1633,3 +1633,9 @@ mse:1.5603442192077637, mae:0.9530917406082153
 ftS_smard_wind_gen_sl96_ll48_pl720_Autoformer_dm512_nh8_el2.0_dl1_df2048_fc3_ebtimeF_dtTrue_Exp1_iter2  
 mse:1.5959727764129639, mae:0.9695153832435608
 
+ftM_smard__sl48_ll48_pl50_PatchTST_dm48_nh2_el3.0_dl1_df48_fc1_ebtimeF_dtTrue_Test_iter0  
+mse:0.48195207118988037, mae:0.4680464565753937
+
+ftM_smard__sl48_ll48_pl50_PatchTST_dm48_nh2_el3.0_dl1_df48_fc1_ebtimeF_dtTrue_Test_iter1  
+mse:0.4862197935581207, mae:0.4698021709918976
+

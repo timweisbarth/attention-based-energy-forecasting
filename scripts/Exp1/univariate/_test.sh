@@ -10,13 +10,13 @@ do
       --model PatchTST \
       --data smard \
       --features M \
-      --seq_len 336 \
+      --seq_len 48 \
       --pred_len $pred_len \
       --e_layers 3 \
       --enc_in 3 \
       --c_out 3 \
       --target "load" \
-      --itr 1 \
+      --itr 3 \
       --n_heads 2 \
       --d_model 48 \
       --d_ff 48 \

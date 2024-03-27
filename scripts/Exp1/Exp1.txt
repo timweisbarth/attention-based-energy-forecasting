@@ -1,0 +1,13 @@
+This experiment runs all models in their default setting
+Dummy
+LR
+xgb (num_boost_round=1000, early_stopping_rounds=50)
+
+Transformer
+Informer
+Autoformer all as in autoformer paper
+
+DLinear
+PatchTST both as in PatchTST paper
+
+TSMixer average values of HPO of TSMixer paper
