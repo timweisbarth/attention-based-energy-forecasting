@@ -46,6 +46,19 @@ def main():
     # DLinear
     #parser.add_argument('--individual', action='store_true', default=False, help='DLinear: a linear layer for each variate(channel) individually')
 
+    # iTransformer
+    #parser.add_argument('--exp_name', type=str, required=False, default='MTSF',
+    #                    help='experiemnt name, options:[MTSF, partial_train]')
+    parser.add_argument('--channel_independence', type=bool, default=False, help='whether to use channel_independence mechanism')
+    parser.add_argument('--inverse', action='store_true', help='inverse output data', default=False)
+    parser.add_argument('--class_strategy', type=str, default='projection', help='projection/average/cls_token')
+    parser.add_argument('--target_root_path', type=str, default='./data/electricity/', help='root path of the data file')
+    parser.add_argument('--target_data_path', type=str, default='electricity.csv', help='data file')
+    parser.add_argument('--efficient_training', type=bool, default=False, help='whether to use efficient_training (exp_name should be partial train)') # See Figure 8 of our paper for the detail
+    parser.add_argument('--use_norm', type=int, default=True, help='use norm and denorm')
+    parser.add_argument('--partial_start_index', type=int, default=0, help='the start index of variates for partial training, '
+                                                                           'you can select [partial_start_index, min(enc_in + partial_start_index, N)]')
+
     # PatchTST
     parser.add_argument('--fc_dropout', type=float, default=0.05, help='fully connected dropout')
     parser.add_argument('--head_dropout', type=float, default=0.0, help='head dropout')
@@ -73,7 +86,7 @@ def main():
     parser.add_argument('--distil', action='store_false',
                         help='whether to use distilling in encoder, using this argument means not using distilling',
                         default=True)
-    parser.add_argument('--dropout', type=float, default=0.05, help='dropout')
+    parser.add_argument('--dropout', type=float, default=0.05, help='dropout') #iTransformer default 0.1
     parser.add_argument('--embed', type=str, default='timeF',
                         help='time features encoding, options:[timeF, fixed, learned]')
     parser.add_argument('--activation', type=str, default='gelu', help='activation')
@@ -82,7 +95,7 @@ def main():
     # optimization
     parser.add_argument('--num_workers', type=int, default=10, help='data loader num workers')
     parser.add_argument('--itr', type=int, default=2, help='experiments times')
-    parser.add_argument('--train_epochs', type=int, default=15, help='train epochs') # Caution changed from Autoformer to 15, 100 for PatchTST
+    parser.add_argument('--train_epochs', type=int, default=15, help='train epochs') # Caution changed from Autoformer to 15, 100 for PatchTST, iTrans 10
     parser.add_argument('--batch_size', type=int, default=32, help='batch size of train input data') #Caution 128 for PatchTST
     parser.add_argument('--patience', type=int, default=3, help='early stopping patience') # Caution 100 for PatchTST
     parser.add_argument('--learning_rate', type=float, default=0.0001, help='optimizer learning rate')

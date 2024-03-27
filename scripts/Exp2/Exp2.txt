@@ -3,3 +3,5 @@ Experiment 2:
 xgb: Test whether results vary for args.itr > 1
 patchtst: Didnt finish due to time out (weirdly enough stopped after 1 day but cluster had issues in general)
             ftS for solar and wind
+iTransformer: Test on univariate and multivariate aswell
+setting taken from ECL, weather(except here batch size different), traffic(except there it has 4 enc layers)

@@ -5,7 +5,7 @@ logging.basicConfig(format='%(asctime)s,%(msecs)03d %(levelname)-8s [%(filename)
 
 from data_provider.data_factory import data_provider
 from exp.exp_basic import Exp_Basic
-from models import Informer, Autoformer, Transformer, LSTM, DLinear, PatchTST, TSMixer
+from models import Informer, Autoformer, Transformer, LSTM, DLinear, PatchTST, TSMixer, iTransformer
 from utils.tools import EarlyStopping, adjust_learning_rate, visual
 from utils.metrics import metric
 import matplotlib.pyplot as plt
@@ -38,6 +38,7 @@ class Exp_Main(Exp_Basic):
             'DLinear': DLinear,
             'PatchTST': PatchTST,
             'TSMixer': TSMixer,
+            'iTransformer': iTransformer,
         }
         if self.args.model == 'LSTM':
             model = model_dict[self.args.model].Model(self.args, self.device).float()

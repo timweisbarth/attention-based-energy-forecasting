@@ -1729,3 +1729,6 @@ mse:0.22806183993816376, mae:0.26966801285743713
 ftS_smard_solar_gen_sl336_ll48_pl720_PatchTST_dm128_nh16_el3.0_dl1_df256_fc1_ebtimeF_dtTrue_Exp2_iter2  
 mse:0.22912101447582245, mae:0.26562172174453735
 
+ftS_smard_load_sl96_ll12_pl48_iTransformer_dm24_nh8_el3.0_dl1_df48_fc3_ebtimeF_dtTrue_Exp2_iter0  
+mse:0.8078893423080444, mae:0.7586920261383057
+

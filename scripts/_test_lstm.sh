@@ -6,7 +6,7 @@ python3 -u run.py \
   --root_path ./data/preproc/ \
   --data_path smard_data.csv \
   --model_id 'load' \
-  --model Autoformer \
+  --model iTransformer \
   --data smard \
   --features S \
   --seq_len 96 \
