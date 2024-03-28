@@ -23,7 +23,7 @@ def main():
     horizons = ['24', '96', '192', '336', '720'] 
 
     # Define the levels for the MultiIndex of the columns
-    models = ['PatchTST', 'Autoformer', 'Informer', 'Transformer', 'TSMixer', "DLinear", "LSTM", "XGBoost", "Linear Regression", "Dummy"]  
+    models = ['iTransformer', 'PatchTST', 'Autoformer', 'Informer', 'Transformer', 'TSMixer', "DLinear", "LSTM", "XGBoost", "Linear Regression", "Dummy"]  
     metrics = ['MSE', 'MAE'] 
 
     # Create the MultiIndex for the rows
@@ -49,7 +49,7 @@ def main():
 
     targets_file_name = ['ftM', 'load', 'solar', 'wind']
     horizons_file_name = ['pl24','pl96','pl192','pl336','pl720']
-    models_file_name = ['PatchTST', 'Autoformer', 'Informer', 'Transformer', 'TSMixer', 'DLinear', "LSTM", "xgb", "linreg", "dummy"]
+    models_file_name = ['iTransformer', 'PatchTST', 'Autoformer', 'Informer', 'Transformer', 'TSMixer', 'DLinear', "LSTM", "xgb", "linreg", "dummy"]
 
     for dir in dirs:
         
