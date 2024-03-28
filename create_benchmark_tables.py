@@ -62,6 +62,7 @@ def main():
         for m, m_file_name in zip(models, models_file_name):
             if m_file_name in dir:
                  model = m
+                 break
         
         maes = []
         mses = []
@@ -71,7 +72,6 @@ def main():
         max_memorys = []
 
         for i, subdir in enumerate([dirnames for dipath, dirnames, filenames in os.walk(root_dir + dir + "/")][0]):
-
             metrics = np.load(root_dir + dir + "/" + subdir + "/_metrics.npy")
             maes.append(metrics[0])
             mses.append(metrics[1])
