@@ -72,13 +72,13 @@ def main():
         max_memorys = []
 
         for i, subdir in enumerate([dirnames for dipath, dirnames, filenames in os.walk(root_dir + dir + "/")][0]):
-            metrics = np.load(root_dir + dir + "/" + subdir + "/_metrics.npy")
-            maes.append(metrics[0])
-            mses.append(metrics[1])
-            number_of_epochs_for_trainings.append(metrics[-2])
-            total_train_times.append(metrics[-1])
-            max_memorys.append(metrics[-3])
-            modelsizes.append(metrics[-4])
+            metrics_vals = np.load(root_dir + dir + "/" + subdir + "/_metrics.npy")
+            maes.append(metrics_vals[0])
+            mses.append(metrics_vals[1])
+            number_of_epochs_for_trainings.append(metrics_vals[-2])
+            total_train_times.append(metrics_vals[-1])
+            max_memorys.append(metrics_vals[-3])
+            modelsizes.append(metrics_vals[-4])
 
         
         # metrics_df
@@ -104,16 +104,49 @@ def main():
 
 
     #print("epochs:", epoch_time_df.loc[("multi", "96"), ("XGBoost", 'epochs')])
-    print(metrics_df)
-    print(epoch_time_df)
-    print(modelsize_maxmemory_df)
-    print(std_df)
+    #print(metrics_df)
+    #print(epoch_time_df)
+    #print(modelsize_maxmemory_df)
+    #print(std_df)
 
     # Save df as .csv and .tex
     latex_table = metrics_df.to_latex()
+    
+
+    def apply_formatting(val, lowest, second_lowest):
+        if val == lowest:
+            return r'\textbf{' + str(val) + '}'
+        elif val == second_lowest:
+            return r'\underline{' + str(val) + '}'
+        else:
+            return str(val)
+    
+    for row in metrics_df.index:
+        for metric in metrics:
+            #print(metric)
+            values = metrics_df.loc[row, (slice(None), metric)]
+            sorted_values = values.sort_values()
+            if len(sorted_values) > 1:
+                lowest, second_lowest = sorted_values[:2]
+                formatted_values = values.apply(lambda x: apply_formatting(x, lowest, second_lowest))
+                metrics_df.loc[row, (slice(None), metric)] = formatted_values
+    # Convert the modified DataFrame to LaTeX
+                
+    stacked_df = metrics_df.stack(level=0)
+
+    # Step 3: Unstack the previously stacked level
+    final_df = stacked_df.unstack(level=0)
+
+    final_df = final_df.swaplevel(axis=1).sort_index(axis=1)
+    final_df = final_df.swaplevel(axis=0).sort_index(axis=0)
+    #final_df = metrics_df.transpose()
+    latex_table_formatted = final_df.to_latex(escape=False)
+
+
 
     file_path_csv_metrics = "./results/benchmark_table_{}_metrics.csv".format(args.exp_name)
     file_path_tex_metrics = "./results/benchmark_table_{}_metrics.tex".format(args.exp_name)
+    file_path_tex_metrics_formatted = "./results/benchmark_table_{}_metrics_formatted.tex".format(args.exp_name)
 
     file_path_csv_epoch_time = "./results/benchmark_table_{}_epoch_time.csv".format(args.exp_name)
 
@@ -128,7 +161,8 @@ def main():
 
     with open(file_path_tex_metrics, 'w') as file:
         file.write(latex_table)
-
+    with open(file_path_tex_metrics_formatted, 'w') as file:
+        file.write(latex_table_formatted)
 
 if __name__ == "__main__":
     main()
