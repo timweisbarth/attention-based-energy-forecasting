@@ -9,6 +9,26 @@ import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
 import numpy as np
+from sklearn.base import BaseEstimator, RegressorMixin
+import numpy as np
+
+class LastValueNaiveRegressor(BaseEstimator, RegressorMixin):
+    """Naive regressor that predicts the last value of each input sequence."""
+    
+    def fit(self, X, y=None):
+        """Fit method doesn't need to do anything as the model is naive.
+        """
+        # No fitting process as the model is naive
+        self.horizon = y.shape[1]
+        return self
+    
+    def predict(self, X):
+        """Return predictions.
+        
+        """
+        # Take the last value from each sequence in X and repeat it n_steps times
+        out = np.repeat(X["wind_gen"].values.reshape(-1,1), self.horizon, axis=1)
+        return out
 
 
 def train(X_train, y_train, X_val, y_val, model_name, device):
@@ -69,6 +89,11 @@ def train(X_train, y_train, X_val, y_val, model_name, device):
         model.fit(X_train, y_train)
 
         return model
+    elif model_name == "repeat":
+        model = LastValueNaiveRegressor()
+        model.fit(X_train, y_train)
+        return model
+
 
 class Optimization:
     def __init__(self, args, train_loader, val_loader):

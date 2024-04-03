@@ -88,18 +88,18 @@ def main():
         # epoch_train_time_df
         avg_epochs_for_training = sum(number_of_epochs_for_trainings)/len(number_of_epochs_for_trainings)
         avg_total_train_time = sum(total_train_times)/len(total_train_times)
-        epoch_time_df.loc[(target, horizon), (model, 'epochs')] = int(avg_epochs_for_training) if not np.isnan(avg_epochs_for_training) else '-'
+        epoch_time_df.loc[(target, horizon), (model, 'epochs')] = int(avg_epochs_for_training) if not np.isnan(avg_epochs_for_training) else np.nan
         epoch_time_df.loc[(target, horizon), (model, 'time[min]')] = round(avg_total_train_time / 60)
 
         # modelsize_maxmemory_df
         avg_modelsize = sum(modelsizes)/len(modelsizes)
         avg_max_memory = sum(max_memorys)/len(max_memorys)
-        modelsize_maxmemory_df.loc[(target, horizon), (model, 'params[Mio.]')] = round(avg_modelsize/10**6,1) if not np.isnan(avg_modelsize) else '-'
-        modelsize_maxmemory_df.loc[(target, horizon), (model, 'max_mem[MB]')] = int(avg_max_memory) if not np.isnan(avg_max_memory) else '-'
+        modelsize_maxmemory_df.loc[(target, horizon), (model, 'params[Mio.]')] = round(avg_modelsize/10**6,1) if not np.isnan(avg_modelsize) else np.nan
+        modelsize_maxmemory_df.loc[(target, horizon), (model, 'max_mem[MB]')] = int(avg_max_memory) if not np.isnan(avg_max_memory) else np.nan
 
         # std_df
-        std_df.loc[(target, horizon), (model, 'std_MAE')] = round(np.std(maes), 3) if len(maes) > 1 else '-'
-        std_df.loc[(target, horizon), (model, 'std_MSE')] = round(np.std(mses), 3) if len(mses) > 1 else '-'
+        std_df.loc[(target, horizon), (model, 'std_MAE')] = round(np.std(maes), 3) if len(maes) > 1 else np.nan
+        std_df.loc[(target, horizon), (model, 'std_MSE')] = round(np.std(mses), 3) if len(mses) > 1 else np.nan
 
 
 
@@ -113,6 +113,7 @@ def main():
     latex_table = metrics_df.to_latex()
     
 
+    metrics_df_for_latex_formatting = metrics_df.copy()
     def apply_formatting(val, lowest, second_lowest):
         if val == lowest:
             return r'\textbf{' + str(val) + '}'
@@ -121,18 +122,18 @@ def main():
         else:
             return str(val)
     
-    for row in metrics_df.index:
+    for row in metrics_df_for_latex_formatting.index:
         for metric in metrics:
             #print(metric)
-            values = metrics_df.loc[row, (slice(None), metric)]
+            values = metrics_df_for_latex_formatting.loc[row, (slice(None), metric)]
             sorted_values = values.sort_values()
             if len(sorted_values) > 1:
                 lowest, second_lowest = sorted_values[:2]
                 formatted_values = values.apply(lambda x: apply_formatting(x, lowest, second_lowest))
-                metrics_df.loc[row, (slice(None), metric)] = formatted_values
+                metrics_df_for_latex_formatting.loc[row, (slice(None), metric)] = formatted_values
     # Convert the modified DataFrame to LaTeX
                 
-    stacked_df = metrics_df.stack(level=0)
+    stacked_df = metrics_df_for_latex_formatting.stack(level=0)
 
     # Step 3: Unstack the previously stacked level
     final_df = stacked_df.unstack(level=0)
