@@ -4,9 +4,9 @@ export CUDA_VISIBLE_DEVICES=0
 python3 -u run.py \
   --is_training 1 \
   --root_path ./data/preproc/ \
-  --data_path smard_data.csv \
+  --data_path smard_data_DE.csv \
   --model_id 'load' \
-  --model iTransformer \
+  --model EncOnlyTransformer \
   --data smard \
   --features S \
   --seq_len 96 \
@@ -22,4 +22,4 @@ python3 -u run.py \
   --d_ff 48 \
   --target "load" \
   --itr 1 \
-  --train_epochs 1\
+  --train_epochs 2\
