@@ -130,7 +130,7 @@ def main():
     if args.is_training:
         for ii in range(args.itr):
             # setting record of experiments
-            setting = 'ft{}_{}_{}_sl{}_ll{}_pl{}_{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_iter{}'.format(
+            setting = 'ft{}_{}_{}_sl{}_ll{}_pl{}_{}_dm{}_lr{}_bs{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_iter{}'.format(
                 args.features,
                 args.data,
                 args.model_id,
@@ -141,6 +141,8 @@ def main():
                 args.model,
                 
                 args.d_model,
+                args.learning_rate,
+                args.batch_size,
                 args.n_heads,
                 args.e_layers,
                 args.d_layers,
