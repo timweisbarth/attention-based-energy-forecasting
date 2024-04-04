@@ -168,7 +168,6 @@ if __name__ == "__main__":
     # TODO: check horizon and target args
 
     # Data loading
-    args.from_raw = True
     args.file_name = "smard_data.csv"
 
     # Preprocessing
@@ -198,8 +197,7 @@ if __name__ == "__main__":
     args.save_benchmark = True
 
     # Composition of arguments given
-    from_raw_folder = "raw" if args.from_raw else "preproc_non_deepl"
-    args.path = f"./data/{from_raw_folder}/{args.file_name}"
+    args.path = f"./data/preproc/{args.file_name}"
     args.scaler = {"std":StandardScaler()}[args.scaler_name]
 
     pipeline(args)
