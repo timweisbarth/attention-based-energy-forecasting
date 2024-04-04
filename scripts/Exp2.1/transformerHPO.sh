@@ -40,7 +40,7 @@ for pred_len in 96; do
                   --learning_rate $learning_rate \
                   --train_epochs 30 \
                   --batch_size $batch_size \
-                  --patience 3 \
+                  --patience 3
             done  
         done
     done
