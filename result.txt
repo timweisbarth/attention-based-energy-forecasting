@@ -1912,3 +1912,84 @@ mse:1.4318757057189941, mae:0.9177690148353577
 ftS_smard_wind_gen_sl96_ll48_pl720_iTransformer_dm512_nh8_el3.0_dl1_df512_fc1_ebtimeF_dtTrue_Exp2_iter2  
 mse:1.4422829151153564, mae:0.9162485003471375
 
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr1e-05_bs32_nh8_el2.0_dl1_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.08222665637731552, mae:0.21523931622505188
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr1e-05_bs32_nh8_el3.0_dl2_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.07193218916654587, mae:0.1983029544353485
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm512_lr1e-05_bs32_nh8_el2.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.05799584835767746, mae:0.17660757899284363
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr1e-05_bs64_nh8_el2.0_dl1_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.10440224409103394, mae:0.24828732013702393
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr1e-05_bs64_nh8_el3.0_dl2_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.08791867643594742, mae:0.22604668140411377
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm512_lr1e-05_bs64_nh8_el2.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.065294548869133, mae:0.187562495470047
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr1e-05_bs128_nh8_el2.0_dl1_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.15433046221733093, mae:0.3125742971897125
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr1e-05_bs128_nh8_el3.0_dl2_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.13544802367687225, mae:0.2910913825035095
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm512_lr1e-05_bs128_nh8_el2.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.07147352397441864, mae:0.19792550802230835
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr0.0001_bs32_nh8_el2.0_dl1_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.05695623904466629, mae:0.17557157576084137
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr0.0001_bs32_nh8_el3.0_dl2_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.05452471598982811, mae:0.16924387216567993
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm512_lr0.0001_bs32_nh8_el2.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.056266650557518005, mae:0.17624159157276154
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr0.0001_bs64_nh8_el2.0_dl1_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.05912534520030022, mae:0.17831984162330627
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr0.0001_bs64_nh8_el3.0_dl2_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.055278707295656204, mae:0.17074453830718994
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm512_lr0.0001_bs64_nh8_el2.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.04920566827058792, mae:0.16225653886795044
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr0.0001_bs128_nh8_el2.0_dl1_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.06705592572689056, mae:0.1897379755973816
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr0.0001_bs128_nh8_el3.0_dl2_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.06104428693652153, mae:0.18058662116527557
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm512_lr0.0001_bs128_nh8_el2.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.052180707454681396, mae:0.16832242906093597
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr0.001_bs32_nh8_el2.0_dl1_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.05017164349555969, mae:0.16484247148036957
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr0.001_bs32_nh8_el3.0_dl2_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.05544416606426239, mae:0.1711825579404831
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm512_lr0.001_bs32_nh8_el2.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.06053432449698448, mae:0.1809530407190323
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr0.001_bs64_nh8_el2.0_dl1_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.05465465411543846, mae:0.16940078139305115
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr0.001_bs64_nh8_el3.0_dl2_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.05320746824145317, mae:0.16970372200012207
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm512_lr0.001_bs64_nh8_el2.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.05955132469534874, mae:0.17835484445095062
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr0.001_bs128_nh8_el2.0_dl1_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.05526621267199516, mae:0.17043590545654297
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm128_lr0.001_bs128_nh8_el3.0_dl2_df512_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.055740367621183395, mae:0.17162081599235535
+
+ftS_smard_load_sl96_ll48_pl96_Transformer_dm512_lr0.001_bs128_nh8_el2.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.1_iter0  
+mse:0.07275893539190292, mae:0.20091234147548676
+
