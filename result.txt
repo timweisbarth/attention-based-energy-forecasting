@@ -1993,3 +1993,21 @@ mse:0.055740367621183395, mae:0.17162081599235535
 ftS_smard_load_sl96_ll48_pl96_Transformer_dm512_lr0.001_bs128_nh8_el2.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.1_iter0  
 mse:0.07275893539190292, mae:0.20091234147548676
 
+ftS_smard_load_sl96_ll48_pl24_EncOnlyTransformer_dm512_lr0.0001_bs32_nh8_el3.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.2_iter0  
+mse:0.03613269701600075, mae:0.1380501538515091
+
+ftS_smard_load_sl192_ll96_pl24_EncOnlyTransformer_dm512_lr0.0001_bs32_nh8_el3.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.2_iter0  
+mse:0.03543615713715553, mae:0.13650120794773102
+
+ftS_smard_load_sl96_ll48_pl96_EncOnlyTransformer_dm512_lr0.0001_bs32_nh8_el3.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.2_iter0  
+mse:0.078717440366745, mae:0.20580540597438812
+
+ftS_smard_load_sl192_ll96_pl96_EncOnlyTransformer_dm512_lr0.0001_bs32_nh8_el3.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.2_iter0  
+mse:0.07167717814445496, mae:0.19585247337818146
+
+ftS_smard_load_sl96_ll48_pl336_EncOnlyTransformer_dm512_lr0.0001_bs32_nh8_el3.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.2_iter0  
+mse:0.13273859024047852, mae:0.2757125496864319
+
+ftS_smard_load_sl192_ll96_pl336_EncOnlyTransformer_dm512_lr0.0001_bs32_nh8_el3.0_dl1_df2048_fc3_ebtimeF_dtTrue_2.2_iter0  
+mse:0.1139594167470932, mae:0.24982255697250366
+
