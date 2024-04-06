@@ -16,7 +16,7 @@ for pred_len in 96 336
 do
     for hpos in "2 1 " "3 2" "4 3"
     do
-        for d_model in 32 64 128 256 512
+        for d_model in 32 64 128 256 512 #Watch out for n_heads!
         do
             read e_layers d_layers <<< $hpos
             srun python3 -u run.py \
