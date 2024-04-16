@@ -1,0 +1,3 @@
+1. Create new folder Expxx
+2. Change sbatch file name
+3. Change Exp name in run.py

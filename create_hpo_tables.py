@@ -65,11 +65,18 @@ def main():
             #print(metrics_df)
             #print(pd.DataFrame.from_dict(values))
             metrics_df = pd.concat([metrics_df, pd.DataFrame.from_dict(values)])
-    print(metrics_df)
+    #print(metrics_df)
     metrics_df = metrics_df.sort_values(by=column_param_index)
+    metrics_df = metrics_df.reset_index(drop=True)
     print(metrics_df)
+    file_path_csv_metrics = "./results/hpo_table_Exp{}_metrics.csv".format(args.exp_name)
+    metrics_df.to_csv(file_path_csv_metrics, header=True, index=True)
+
+    print("\n ------------------ Sorted according to MSE ------------------ \n")
     metrics_df.sort_values(by="MSE", inplace=True)
     print(metrics_df)
+
+    
 
 if __name__ == "__main__":
     main()

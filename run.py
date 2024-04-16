@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 
 def main():
-    exp_name = "2.2"
+    exp_name = "Exp2.3"
     fix_seed = 2024
     random.seed(fix_seed)
     torch.manual_seed(fix_seed)

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name="ftS_transformerHP03_2_1"
+#SBATCH --job-name="ftS_transformerHP02_2_1"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=a100-galvani
 #SBATCH --time 1-20:00:00 #
@@ -11,14 +11,13 @@
 # useful for debugging
 scontrol show job $SLURM_JOB_ID
 nvidia-smi # only if you requested any gpus
-# TODO: hpos: which model size?
+
 for pred_len in 96 336
 do
-    for hpos in "2 1 " "3 2" "4 3"
+    for hpos in "2 1" "3 2" "4 3"
     do
-        for seq_len in 48, 96, 192, 366
+        for d_model in 32 64 128 256 512 #Watch out for n_heads!
         do
-            d_model=512
             read e_layers d_layers <<< $hpos
             srun python3 -u run.py \
               --is_training 1 \
@@ -28,8 +27,8 @@ do
               --model Transformer \
               --data smard \
               --features S \
-              --seq_len $seq_len \
-              --label_len $(($seq_len / 2)) \
+              --seq_len 96 \
+              --label_len 48 \
               --pred_len $pred_len \
               --e_layers $e_layers \
               --d_layers $d_layers \
