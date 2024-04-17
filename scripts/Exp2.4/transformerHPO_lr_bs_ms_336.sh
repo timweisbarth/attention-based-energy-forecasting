@@ -11,12 +11,16 @@
 # useful for debugging
 scontrol show job $SLURM_JOB_ID
 nvidia-smi # only if you requested any gpus
+
+current_folder=$(echo "${0}" | awk -F'/' '{for(i=1; i<=NF; i++) if($i ~ /^Exp/) print $i}')
+
 for pred_len in 336; do
     for learning_rate in 0.00001 0.0001 0.0005 0.001; do
         for batch_size in 32 64 128; do 
             for hpos in "2 1 32 4" "2 1 128 8" "4 3 128 8" "2 1 512 8"; do
                 read e_layers d_layers d_model n_heads <<< $hpos
                 srun python3 -u run.py \
+                  --checkpoints ./checkpoints/$current_folder \
                   --is_training 1 \
                   --root_path ./data/preproc/ \
                   --data_path smard_data_DE.csv \
