@@ -1,3 +1,4 @@
-1. Create new folder Expxx
+1. Create new folder Expx.x
+2. Copy similar .sh file
 2. Change sbatch file name
-3. Change Exp name in run.py
+3. Do modifications as needed

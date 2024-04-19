@@ -12,7 +12,7 @@ def main():
     args = parser.parse_args()
 
     root_dir = str(os.getcwd()) + f"/results/{args.exp_name}/"
-
+    print(root_dir)
     # Get directories
     dirs = [dirnames for dipath, dirnames, filenames in os.walk(root_dir)][0]
 
@@ -69,7 +69,7 @@ def main():
     metrics_df = metrics_df.sort_values(by=column_param_index)
     metrics_df = metrics_df.reset_index(drop=True)
     print(metrics_df)
-    file_path_csv_metrics = "./results/hpo_table_Exp{}_metrics.csv".format(args.exp_name)
+    file_path_csv_metrics = "./results/hpo_table_{}_metrics.csv".format(args.exp_name)
     metrics_df.to_csv(file_path_csv_metrics, header=True, index=True)
 
     print("\n ------------------ Sorted according to MSE ------------------ \n")
