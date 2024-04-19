@@ -2299,3 +2299,9 @@ mse:0.06767549365758896, mae:0.19174671173095703
 ftS_smard_load_sl96_ll48_pl336_Transformer_dm512_lr0.001_bs128_nh8_el2.0_dl1_df2048_fc3_ebtimeF_dtTrue_Exp2.3_iter0  
 mse:0.08820057660341263, mae:0.21901698410511017
 
+ftS_smard_load_sl96_ll12_pl48_Transformer_dm24_lr0.0001_bs32_nh8_el3.0_dl1_df48_fc3_ebtimeF_dtTrue_Test/Exp2.4_iter0  
+mse:0.7114307880401611, mae:0.7148044109344482
+
+ftS_smard_load_sl96_ll16_pl48_Transformer_dm24_lr0.0001_bs32_nh8_el3.0_dl1_df48_fc3_ebtimeF_dtTrue_ExpTest_iter0  
+mse:0.7148360013961792, mae:0.7161130905151367
+
