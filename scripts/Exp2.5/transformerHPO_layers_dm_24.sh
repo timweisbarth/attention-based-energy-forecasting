@@ -25,9 +25,10 @@ do
             read e_layers d_layers d_model n_heads lr bs <<< $hpos
             srun python3 -u run.py \
               --is_training 1 \
+              --des $current_folder \
+              --checkpoints ./checkpoints/$current_folder \
               --root_path ./data/preproc/ \
               --data_path smard_data.csv \
-              --checkpoints ./checkpoints/$current_folder \
               --model_id 'load' \
               --model Transformer \
               --data smard \

@@ -20,6 +20,7 @@ for pred_len in 336; do
             for hpos in "2 1 32 4" "2 1 128 8" "4 3 128 8" "2 1 512 8"; do
                 read e_layers d_layers d_model n_heads <<< $hpos
                 srun python3 -u run.py \
+                  --des $current_folder \
                   --checkpoints ./checkpoints/$current_folder \
                   --is_training 1 \
                   --root_path ./data/preproc/ \
