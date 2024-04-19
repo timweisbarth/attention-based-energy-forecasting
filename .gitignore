@@ -1,4 +1,5 @@
 checkpoints/*/*/checkpoint*
+checkpoints/*/checkpoint*
 results/*/*/*/_true.npy
 results/*/*/*/_pred.npy
 
