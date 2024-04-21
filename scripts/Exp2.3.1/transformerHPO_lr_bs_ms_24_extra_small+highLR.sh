@@ -2,7 +2,7 @@
 #SBATCH --job-name="ftS_transformerHP0_2_3_1"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=a100-galvani
-#SBATCH --time 1-20:00:00 #
+#SBATCH --time 0-01:00:00 #
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=/mnt/qb/work/ludwig/lqb853/slurm_logs/%x-%j.out  # cannot use $WORK 
@@ -13,6 +13,7 @@ scontrol show job $SLURM_JOB_ID
 nvidia-smi # only if you requested any gpus
 
 current_folder=$(echo "${0}" | awk -F'/' '{for(i=1; i<=NF; i++) if($i ~ /^Exp/) print $i}')
+echo $current_folder
 
 for pred_len in 24; do
     for learning_rate in 0.001 0.005 0.01; do
