@@ -13,6 +13,7 @@ scontrol show job $SLURM_JOB_ID
 nvidia-smi # only if you requested any gpus
 
 current_folder=$(echo "${0}" | awk -F'/' '{for(i=1; i<=NF; i++) if($i ~ /^Exp/) print $i}')
+echo $current_folder
 
 for pred_len in 24; do
     for learning_rate in 0.00001 0.0001 0.0005 0.001; do
