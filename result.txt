@@ -2305,3 +2305,12 @@ mse:0.7114307880401611, mae:0.7148044109344482
 ftS_smard_load_sl96_ll16_pl48_Transformer_dm24_lr0.0001_bs32_nh8_el3.0_dl1_df48_fc3_ebtimeF_dtTrue_ExpTest_iter0  
 mse:0.7148360013961792, mae:0.7161130905151367
 
+ftMS_smard_load_sl24_ll24_pl24_PatchTST_dm32_lr0.001_bs32_nh4_el3.0_dl3_df64_fc3_ebtimeF_dtTrue_ExpTest_iter0  
+mse:1.041738748550415, mae:0.8149672150611877
+
+ftMS_smard_load_sl24_ll24_pl24_Transformer_dm32_lr0.001_bs32_nh4_el2.0_dl2_df64_fc3_ebtimeF_dtTrue_ExpTest_iter0  
+mse:0.002492848550900817, mae:0.03807361051440239
+
+ftMS_smard_load_sl24_ll24_pl24_PatchTST_dm64_lr0.001_bs32_nh4_el3.0_dl3_df128_fc3_ebtimeF_dtTrue_ExpTest_iter0  
+mse:1.0407514572143555, mae:0.8145194053649902
+
