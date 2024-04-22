@@ -1,8 +1,8 @@
 #!/bin/bash
-#SBATCH --job-name="ftS_transformerHP0_2_5"
+#SBATCH --job-name="ftS_transformerHP0_2_6"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=a100-galvani
-#SBATCH --time 1-22:00:00 #
+#SBATCH --time 1-20:00:00 #
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=/mnt/qb/work/ludwig/lqb853/slurm_logs/%x-%j.out  # cannot use $WORK 
@@ -13,9 +13,9 @@ scontrol show job $SLURM_JOB_ID
 nvidia-smi # only if you requested any gpus
 
 #current_folder=$(echo "${0}" | awk -F'/' '{for(i=1; i<=NF; i++) if($i ~ /^Exp/) print $i}')
-current_folder="Exp2.5"
+current_folder="Exp2.6"
 
-for pred_len in 24; do
+for pred_len in 336; do
     for layer in "2 1" "3 3" "6 6"; do
         for dim in "32 4" "64 8" "128 8" "256 8" "512 8"; do
             for seq_len in 96 336; do
@@ -41,7 +41,7 @@ for pred_len in 24; do
                       --d_ff $(($d_model * 4)) \
                       --n_heads $n_heads \
                       --learning_rate $lr \
-                      --batch_size 32 \
+                      --batch_size 64 \
                       --factor 3 \
                       --enc_in 1 \
                       --dec_in 1 \

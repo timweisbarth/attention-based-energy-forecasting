@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name="ftS_transformerHP0_3"
+#SBATCH --job-name="ftS_transformerHPO_2_7"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=a100-galvani
 #SBATCH --time 1-20:00:00 #
@@ -12,8 +12,8 @@
 scontrol show job $SLURM_JOB_ID
 nvidia-smi # only if you requested any gpus
 
-current_folder=$(echo "${0}" | awk -F'/' '{for(i=1; i<=NF; i++) if($i ~ /^Exp/) print $i}')
-
+#current_folder=$(echo "${0}" | awk -F'/' '{for(i=1; i<=NF; i++) if($i ~ /^Exp/) print $i}')
+current_folder="Exp2.7"
 
 srun python3 -u run.py \
   --is_training 1 \
