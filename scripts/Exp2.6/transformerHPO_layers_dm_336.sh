@@ -27,7 +27,7 @@ for pred_len in 336; do
                       --des $current_folder \
                       --checkpoints ./checkpoints/$current_folder \
                       --root_path ./data/preproc/ \
-                      --data_path smard_data.csv \
+                      --data_path smard_data_DE.csv \
                       --model_id 'load' \
                       --model Transformer \
                       --data smard \
