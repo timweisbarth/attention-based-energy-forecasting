@@ -18,7 +18,7 @@ current_folder="Exp2.10"
 
 #Needs modification! Check LSTM and TSMixer to be consistent with prior experiments
 for pred_len in 192; do
-    for layers in 1 3; do
+    for layers in 2 4; do
         for dim in 256 512; do
             for seq_len in 96 336; do
                 for lr in 0.001 0.0005 0.0001; do
@@ -29,7 +29,7 @@ for pred_len in 192; do
                       --des $current_folder \
                       --checkpoints ./checkpoints/$current_folder \
                       --root_path ./data/preproc/ \
-                      --data_path smard_data.csv \
+                      --data_path smard_data_DE.csv \
                       --model_id 'load' \
                       --model LSTM \
                       --data smard \
@@ -54,7 +54,7 @@ for pred_len in 192; do
 done
 
 for pred_len in 192; do
-    for layers in 1 3; do
+    for layers in 2 4; do
         for dim in 256 512; do
             for seq_len in 96 336; do
                 for lr in 0.001 0.0005 0.0001; do
@@ -65,7 +65,7 @@ for pred_len in 192; do
                       --des $current_folder \
                       --checkpoints ./checkpoints/$current_folder \
                       --root_path ./data/preproc/ \
-                      --data_path smard_data.csv \
+                      --data_path smard_data_DE.csv \
                       --model_id 'load' \
                       --model TSMixer \
                       --data smard \

@@ -2,7 +2,7 @@
 #SBATCH --job-name="ftS_itransformerHP0_2_8"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=a100-galvani
-#SBATCH --time 1-20:00:00 #
+#SBATCH --time 1-23:00:00 #
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=/mnt/qb/work/ludwig/lqb853/slurm_logs/%x-%j.out  # cannot use $WORK 
@@ -28,7 +28,7 @@ for pred_len in 24; do
                       --des $current_folder \
                       --checkpoints ./checkpoints/$current_folder \
                       --root_path ./data/preproc/ \
-                      --data_path smard_data.csv \
+                      --data_path smard_data_DE.csv \
                       --model_id 'load' \
                       --model iTransformer \
                       --data smard \
