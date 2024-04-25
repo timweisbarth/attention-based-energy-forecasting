@@ -1,0 +1,74 @@
+\begin{tabular}{llllllllll}
+\toprule
+ & Target & \multicolumn{2}{r}{load} & \multicolumn{2}{r}{multi} & \multicolumn{2}{r}{solar} & \multicolumn{2}{r}{wind} \\
+ & Metric & std_MAE & std_MSE & std_MAE & std_MSE & std_MAE & std_MSE & std_MAE & std_MSE \\
+Model & Horizon &  &  &  &  &  &  &  &  \\
+\midrule
+\multirow[t]{5}{*}{Autoformer} & 192 & 0.01 & 0.006 & 0.009 & 0.01 & 0.011 & 0.004 & 0.011 & 0.038 \\
+ & 24 & 0.006 & 0.003 & 0.036 & 0.076 & 0.008 & 0.006 & 0.005 & 0.015 \\
+ & 336 & 0.014 & 0.012 & 0.012 & 0.01 & 0.047 & 0.049 & 0.01 & 0.025 \\
+ & 720 & 0.009 & 0.009 & 0.007 & 0.018 & 0.016 & 0.012 & 0.019 & 0.018 \\
+ & 96 & 0.004 & 0.002 & 0.009 & 0.019 & 0.016 & 0.01 & 0.006 & 0.008 \\
+\cline{1-10}
+\multirow[t]{5}{*}{DLinear} & 192 & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.001} \\
+ & 24 & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} \\
+ & 336 & \textbf{0.0} & \textbf{0.0} & \underline{0.001} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} \\
+ & 720 & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.001} \\
+ & 96 & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.0} & \textbf{0.001} \\
+\cline{1-10}
+\multirow[t]{5}{*}{Dummy} & 192 & nan & nan & nan & nan & nan & nan & nan & nan \\
+ & 24 & nan & nan & nan & nan & nan & nan & nan & nan \\
+ & 336 & nan & nan & nan & nan & nan & nan & nan & nan \\
+ & 720 & nan & nan & nan & nan & nan & nan & nan & nan \\
+ & 96 & nan & nan & nan & nan & nan & nan & nan & nan \\
+\cline{1-10}
+\multirow[t]{5}{*}{Informer} & 192 & 0.005 & 0.004 & 0.011 & 0.003 & 0.003 & \textbf{0.0} & 0.015 & 0.021 \\
+ & 24 & 0.001 & 0.001 & \underline{0.001} & \underline{0.001} & 0.001 & 0.001 & 0.006 & 0.007 \\
+ & 336 & 0.004 & \underline{0.002} & 0.008 & 0.009 & 0.004 & 0.001 & 0.031 & 0.023 \\
+ & 720 & 0.014 & 0.012 & 0.006 & 0.005 & 0.006 & 0.005 & nan & nan \\
+ & 96 & 0.003 & 0.002 & 0.008 & 0.005 & \underline{0.001} & \underline{0.001} & 0.004 & 0.011 \\
+\cline{1-10}
+\multirow[t]{5}{*}{LSTM} & 192 & 0.005 & 0.005 & 0.007 & 0.02 & 0.006 & 0.005 & 0.006 & \underline{0.003} \\
+ & 24 & 0.001 & \textbf{0.0} & 0.004 & \underline{0.001} & 0.001 & 0.001 & 0.003 & 0.005 \\
+ & 336 & 0.003 & 0.003 & 0.004 & 0.013 & \underline{0.001} & 0.001 & 0.003 & 0.003 \\
+ & 720 & 0.007 & 0.005 & 0.006 & 0.012 & \underline{0.002} & 0.003 & 0.008 & 0.01 \\
+ & 96 & 0.008 & 0.005 & \textbf{0.0} & 0.004 & 0.002 & 0.002 & \underline{0.001} & \underline{0.002} \\
+\cline{1-10}
+\multirow[t]{5}{*}{Linear Regression} & 192 & nan & nan & nan & nan & nan & nan & nan & nan \\
+ & 24 & nan & nan & nan & nan & nan & nan & nan & nan \\
+ & 336 & nan & nan & nan & nan & nan & nan & nan & nan \\
+ & 720 & nan & nan & nan & nan & nan & nan & nan & nan \\
+ & 96 & nan & nan & nan & nan & nan & nan & nan & nan \\
+\cline{1-10}
+\multirow[t]{5}{*}{PatchTST} & 192 & 0.001 & \textbf{0.0} & \underline{0.001} & 0.003 & 0.002 & 0.002 & \underline{0.001} & \underline{0.003} \\
+ & 24 & \textbf{0.0} & \textbf{0.0} & 0.002 & \underline{0.001} & 0.001 & \textbf{0.0} & 0.003 & 0.003 \\
+ & 336 & 0.003 & \underline{0.002} & \textbf{0.0} & \underline{0.001} & 0.002 & \textbf{0.0} & \underline{0.002} & \underline{0.002} \\
+ & 720 & \underline{0.001} & \underline{0.001} & 0.003 & \underline{0.004} & \underline{0.002} & 0.002 & \underline{0.001} & 0.003 \\
+ & 96 & \underline{0.001} & \textbf{0.0} & 0.003 & \underline{0.002} & \underline{0.001} & \underline{0.001} & \underline{0.001} & \underline{0.002} \\
+\cline{1-10}
+\multirow[t]{5}{*}{TSMixer} & 192 & 0.035 & 0.028 & 0.037 & 0.044 & \underline{0.001} & 0.002 & 0.006 & 0.011 \\
+ & 24 & 0.031 & 0.017 & 0.03 & 0.027 & 0.012 & 0.004 & 0.006 & 0.005 \\
+ & 336 & 0.028 & 0.027 & 0.024 & 0.025 & 0.006 & 0.002 & 0.016 & 0.038 \\
+ & 720 & 0.042 & 0.041 & 0.006 & 0.006 & 0.003 & 0.003 & 0.023 & 0.049 \\
+ & 96 & 0.069 & 0.058 & 0.018 & 0.02 & 0.01 & 0.003 & 0.007 & 0.008 \\
+\cline{1-10}
+\multirow[t]{5}{*}{Transformer} & 192 & 0.007 & 0.003 & 0.003 & 0.003 & 0.002 & 0.002 & 0.023 & 0.035 \\
+ & 24 & 0.002 & 0.001 & 0.002 & 0.003 & 0.004 & 0.002 & 0.013 & 0.011 \\
+ & 336 & 0.008 & 0.004 & 0.003 & \underline{0.001} & 0.002 & \textbf{0.0} & 0.011 & 0.022 \\
+ & 720 & 0.006 & 0.004 & 0.005 & 0.01 & \underline{0.002} & \underline{0.001} & 0.002 & \underline{0.002} \\
+ & 96 & 0.006 & 0.002 & 0.004 & 0.004 & 0.012 & 0.002 & 0.011 & 0.011 \\
+\cline{1-10}
+\multirow[t]{5}{*}{XGBoost} & 192 & nan & nan & nan & nan & nan & nan & nan & nan \\
+ & 24 & nan & nan & nan & nan & nan & nan & nan & nan \\
+ & 336 & nan & nan & nan & nan & nan & nan & nan & nan \\
+ & 720 & nan & nan & nan & nan & nan & nan & nan & nan \\
+ & 96 & nan & nan & nan & nan & nan & nan & nan & nan \\
+\cline{1-10}
+\multirow[t]{5}{*}{iTransformer} & 192 & \textbf{0.0} & \textbf{0.0} & \underline{0.001} & \underline{0.002} & 0.002 & 0.002 & 0.003 & 0.004 \\
+ & 24 & \textbf{0.0} & \textbf{0.0} & 0.005 & \underline{0.001} & \textbf{0.0} & \textbf{0.0} & \underline{0.002} & \underline{0.002} \\
+ & 336 & \underline{0.002} & \underline{0.002} & 0.002 & 0.004 & \underline{0.001} & 0.001 & 0.005 & 0.004 \\
+ & 720 & 0.002 & 0.003 & \underline{0.002} & 0.005 & 0.003 & 0.004 & \underline{0.001} & 0.006 \\
+ & 96 & \underline{0.001} & 0.001 & 0.007 & 0.004 & 0.002 & \underline{0.001} & 0.002 & 0.009 \\
+\cline{1-10}
+\bottomrule
+\end{tabular}

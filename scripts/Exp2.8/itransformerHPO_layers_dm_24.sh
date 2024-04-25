@@ -15,6 +15,7 @@ nvidia-smi # only if you requested any gpus
 #current_folder=$(echo "${0}" | awk -F'/' '{for(i=1; i<=NF; i++) if($i ~ /^Exp/) print $i}')
 current_folder="Exp2.8"
 
+
 for pred_len in 24; do
     for layers in 3 6 12; do
         for dim in "32 4" "64 8" "128 8" "256 8" "512 8"; do
