@@ -129,7 +129,7 @@ def main():
 
     # Step 3: Unstack the previously stacked level
     final_df = stacked_df.unstack(level=0)
-
+    # TODO Also doesnt work as expected.. (For git reversion: 25 Apr 10o'clock, one hour prior it was working)
     final_df = final_df.swaplevel(axis=1).sort_index(axis=1)
     final_df = final_df.swaplevel(axis=0).sort_index(axis=0)
     latex_table_formatted = final_df.to_latex(escape=False)
@@ -137,22 +137,16 @@ def main():
 
 
     ########## Apply formatting to the std DataFrame ####################
+    # TODO Doesnt work as expected
     std_df_for_latex_formatting = std_df.copy()
-    def apply_formatting(val, lowest, second_lowest):
-        if val == lowest:
-            return r'\textbf{' + str(val) + '}'
-        elif val == second_lowest:
-            return r'\underline{' + str(val) + '}'
-        else:
-            return str(val)
     
     for row in std_df_for_latex_formatting.index:
         for metric in ["std_MAE", "std_MSE"]:
             values = std_df_for_latex_formatting.loc[row, (slice(None), metric)]
             sorted_values = values.sort_values()
             if len(sorted_values) > 1:
-                lowest, second_lowest = sorted_values[:2]
-                formatted_values = values.apply(lambda x: apply_formatting(x, lowest, second_lowest))
+                highest, second_highest = sorted_values[-2:]
+                formatted_values = values.apply(lambda x: apply_formatting(x, highest, second_highest))
                 std_df_for_latex_formatting.loc[row, (slice(None), metric)] = formatted_values
    
     stacked_df = std_df_for_latex_formatting.stack(level=0)

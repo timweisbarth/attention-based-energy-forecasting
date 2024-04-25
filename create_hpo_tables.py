@@ -20,12 +20,12 @@ def main():
     dirs = [dir for dir in dirs if args.exp_name in dir]
 
     ##################### Create empty MultiIndex DataFrame ################################
-    param_name_map = {"learning_rate": "lr", "batch_size": "bs", "e_layers": "el", "d_layers": "dl", "d_model": "dm"}
+    param_name_map = {"learning_rate": "lr", "batch_size": "bs", "e_layers": "el", "d_layers": "dl", "d_model": "dm", "seq_len": "sl"}
     inv_param_name_map = {v: k for k, v in param_name_map.items()}
     column_metrics_index = ["MSE", "MAE", "Epochs", "Time[min]", "Params[Mio.]", "Max_mem[MB]"]
 
     # columns for the hpo table in the order that they will be displayed
-    column_param_index = ["learning_rate", "batch_size", "e_layers", "d_layers", "d_model"]
+    column_param_index = ["learning_rate", "batch_size", "e_layers", "d_layers", "d_model", "seq_len"]
 
     column_index = column_param_index + column_metrics_index
         

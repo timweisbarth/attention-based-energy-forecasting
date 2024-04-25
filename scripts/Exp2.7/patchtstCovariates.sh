@@ -26,7 +26,7 @@ srun python3 -u run.py \
   --data smard \
   --features MS \
   --seq_len 24 \
-  --label_len 48 \
+  --label_len 24 \
   --pred_len 24 \
   --e_layers 3 \
   --d_layers 3 \
