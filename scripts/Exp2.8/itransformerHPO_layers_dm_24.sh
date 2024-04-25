@@ -38,7 +38,7 @@ for pred_len in 24; do
                       --pred_len $pred_len \
                       --e_layers $layers \
                       --d_model $d_model \
-                      --d_ff $(($d_model * 4)) \
+                      --d_ff $d_model \
                       --n_heads $n_heads \
                       --learning_rate $lr \
                       --batch_size 32 \
