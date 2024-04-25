@@ -2,7 +2,7 @@
 #SBATCH --job-name="ftS_transformerHP0_2_6_1"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=a100-galvani
-#SBATCH --time 0-20:00:00 #
+#SBATCH --time 0-11:00:00 #
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=/mnt/qb/work/ludwig/lqb853/slurm_logs/%x-%j.out  # cannot use $WORK 
