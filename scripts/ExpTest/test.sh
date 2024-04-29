@@ -8,4 +8,9 @@ echo "hello/$current_folder"
 seq_len=336
 echo $(expr $seq_len / 2)
 
+for i in "1" \
+         "2"; do
+    echo $i
+done
+
 

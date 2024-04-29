@@ -57,7 +57,7 @@ def main():
             params_values_dict = {inv_param_name_map[k]: [v] for k, v in param_values_dict.items()}
             metrics_values_dict = {"MSE": metrics_vals[1], "MAE": metrics_vals[0], 
                               "Epochs": int(metrics_vals[-2]), "Time[min]": int(metrics_vals[-1]/60), 
-                              "Params[Mio.]": round(metrics_vals[-4]/(1000**2),1), "Max_mem[MB]": round(metrics_vals[-3], 2)}
+                              "Params[Mio.]": round(metrics_vals[-4]/(1000**2),2), "Max_mem[MB]": round(metrics_vals[-3], 2)}
 
             #print(params_values_dict)
             #print(metrics_values_dict)
