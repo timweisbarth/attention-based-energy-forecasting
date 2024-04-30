@@ -3829,3 +3829,147 @@ mse:0.09366536140441895, mae:0.22005420923233032
 ftS_smard_load_sl336_ll168_pl336_iTransformer_dm512_lr0.0001_bs32_nh8_el12.0_dl1_df512_fc3_ebtimeF_dtTrue_Exp2.9_iter0  
 mse:0.07379505038261414, mae:0.19691061973571777
 
+ftS_smard_load_sl96_ll48_pl24_LSTM_dm512_lr0.0001_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.03421303629875183, mae:0.12723219394683838
+
+ftS_smard_load_sl96_ll48_pl24_LSTM_dm512_lr0.0001_bs32_nh8_el1.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.033499278128147125, mae:0.1268233358860016
+
+ftS_smard_load_sl96_ll48_pl24_LSTM_dm512_lr0.0001_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.038369614630937576, mae:0.1334703266620636
+
+ftS_smard_load_sl96_ll48_pl24_LSTM_dm256_lr0.0001_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.036772094666957855, mae:0.13504892587661743
+
+ftS_smard_load_sl96_ll48_pl24_LSTM_dm1024_lr0.0001_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.035120751708745956, mae:0.12956880033016205
+
+ftS_smard_load_sl96_ll48_pl24_LSTM_dm512_lr0.001_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.03518843650817871, mae:0.13063928484916687
+
+ftS_smard_load_sl96_ll48_pl24_LSTM_dm512_lr0.0005_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.03410104289650917, mae:0.12901043891906738
+
+ftS_smard_load_sl96_ll48_pl24_LSTM_dm512_lr5e-05_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.03541960567235947, mae:0.1303911805152893
+
+ftS_smard_load_sl336_ll48_pl24_LSTM_dm512_lr0.0001_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.03539810702204704, mae:0.13024066388607025
+
+ftS_smard_load_sl96_ll48_pl336_LSTM_dm512_lr0.0001_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.10330511629581451, mae:0.23483560979366302
+
+ftS_smard_load_sl96_ll48_pl336_LSTM_dm512_lr0.0001_bs32_nh8_el1.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.09857236593961716, mae:0.2298378199338913
+
+ftS_smard_load_sl96_ll48_pl336_LSTM_dm512_lr0.0001_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.09986834228038788, mae:0.23111875355243683
+
+ftS_smard_load_sl96_ll48_pl336_LSTM_dm256_lr0.0001_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.10256423056125641, mae:0.23224025964736938
+
+ftS_smard_load_sl96_ll48_pl336_LSTM_dm1024_lr0.0001_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.09341266751289368, mae:0.22201362252235413
+
+ftS_smard_load_sl96_ll48_pl336_LSTM_dm512_lr0.001_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.09654348343610764, mae:0.22620142996311188
+
+ftS_smard_load_sl96_ll48_pl336_LSTM_dm512_lr0.0005_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.09996114671230316, mae:0.22793860733509064
+
+ftS_smard_load_sl96_ll48_pl336_LSTM_dm512_lr5e-05_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.11062891036272049, mae:0.2431715726852417
+
+ftS_smard_load_sl336_ll48_pl336_LSTM_dm512_lr0.0001_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.10327690839767456, mae:0.23022699356079102
+
+ftS_smard_load_sl336_ll48_pl24_TSMixer_dm256_lr0.0001_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.06296902894973755, mae:0.19186481833457947
+
+ftS_smard_load_sl336_ll48_pl24_TSMixer_dm256_lr0.0001_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.07205886393785477, mae:0.20663192868232727
+
+ftS_smard_load_sl336_ll48_pl24_TSMixer_dm256_lr0.0001_bs32_nh8_el6.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.05277862399816513, mae:0.17071980237960815
+
+ftS_smard_load_sl336_ll48_pl24_TSMixer_dm128_lr0.0001_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.049553774297237396, mae:0.1651162952184677
+
+ftS_smard_load_sl336_ll48_pl24_TSMixer_dm512_lr0.0001_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.04389039799571037, mae:0.15502837300300598
+
+ftS_smard_load_sl336_ll48_pl24_TSMixer_dm256_lr0.001_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.03849836066365242, mae:0.1459890753030777
+
+ftS_smard_load_sl336_ll48_pl24_TSMixer_dm256_lr0.0005_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.03873143717646599, mae:0.14709804952144623
+
+ftS_smard_load_sl336_ll48_pl24_TSMixer_dm256_lr5e-05_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.09103943407535553, mae:0.235394686460495
+
+ftS_smard_load_sl96_ll48_pl24_TSMixer_dm256_lr0.0001_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.06029759719967842, mae:0.1859540194272995
+
+ftS_smard_load_sl336_ll48_pl336_TSMixer_dm256_lr0.0001_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.1962699294090271, mae:0.35005098581314087
+
+ftS_smard_load_sl336_ll48_pl336_TSMixer_dm256_lr0.0001_bs32_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.21980753540992737, mae:0.3861895799636841
+
+ftS_smard_load_sl336_ll48_pl336_TSMixer_dm256_lr0.0001_bs32_nh8_el6.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.1471588909626007, mae:0.2984554171562195
+
+ftS_smard_load_sl336_ll48_pl336_TSMixer_dm128_lr0.0001_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.1835089772939682, mae:0.3410491347312927
+
+ftS_smard_load_sl336_ll48_pl336_TSMixer_dm512_lr0.0001_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.1694953739643097, mae:0.316385954618454
+
+ftS_smard_load_sl336_ll48_pl336_TSMixer_dm256_lr0.001_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.1407753825187683, mae:0.2815873324871063
+
+ftS_smard_load_sl336_ll48_pl336_TSMixer_dm256_lr0.0005_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.16539296507835388, mae:0.3065641224384308
+
+ftS_smard_load_sl336_ll48_pl336_TSMixer_dm256_lr5e-05_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.2271910458803177, mae:0.3842867910861969
+
+ftS_smard_load_sl96_ll48_pl336_TSMixer_dm256_lr0.0001_bs32_nh8_el4.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.23314215242862701, mae:0.3895762264728546
+
+ftS_smard_load_sl336_ll48_pl24_DLinear_dm512_lr0.005_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.062431421130895615, mae:0.17206363379955292
+
+ftS_smard_load_sl336_ll48_pl24_DLinear_dm512_lr0.01_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.05724851414561272, mae:0.16102349758148193
+
+ftS_smard_load_sl336_ll48_pl24_DLinear_dm512_lr0.001_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.050598155707120895, mae:0.14658083021640778
+
+ftS_smard_load_sl336_ll48_pl24_DLinear_dm512_lr0.0005_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.0516912117600441, mae:0.14904826879501343
+
+ftS_smard_load_sl336_ll48_pl24_DLinear_dm512_lr0.0001_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.06223691254854202, mae:0.17153792083263397
+
+ftS_smard_load_sl96_ll48_pl24_DLinear_dm512_lr0.005_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.17650900781154633, mae:0.2957976460456848
+
+ftS_smard_load_sl336_ll48_pl336_DLinear_dm512_lr0.005_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.1365301012992859, mae:0.26399415731430054
+
+ftS_smard_load_sl336_ll48_pl336_DLinear_dm512_lr0.01_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.13269144296646118, mae:0.25586241483688354
+
+ftS_smard_load_sl336_ll48_pl336_DLinear_dm512_lr0.001_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.12670429050922394, mae:0.24616804718971252
+
+ftS_smard_load_sl336_ll48_pl336_DLinear_dm512_lr0.0005_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.12720705568790436, mae:0.2470366507768631
+
+ftS_smard_load_sl336_ll48_pl336_DLinear_dm512_lr0.0001_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.1338990032672882, mae:0.25876283645629883
+
+ftS_smard_load_sl96_ll48_pl336_DLinear_dm512_lr0.005_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
+mse:0.21155448257923126, mae:0.3260323405265808
+
