@@ -17,15 +17,15 @@ def main():
     dirs = [dirnames for dipath, dirnames, filenames in os.walk(root_dir)][0]
 
     # Pick directories that are from the relevant experiment
-    dirs = [dir for dir in dirs if args.exp_name in dir]
+    #dirs = [dir for dir in dirs if args.exp_name in dir] TODO: Check if okay to comment out
 
     ##################### Create empty MultiIndex DataFrame ################################
-    param_name_map = {"learning_rate": "lr", "batch_size": "bs", "e_layers": "el", "d_layers": "dl", "d_model": "dm", "seq_len": "sl"}
+    param_name_map = {"learning_rate": "lr", "batch_size": "bs", "e_layers": "el", "d_layers": "dl", "d_model": "dm", "seq_len": "sl", "pred_len": "pl"}
     inv_param_name_map = {v: k for k, v in param_name_map.items()}
     column_metrics_index = ["MSE", "MAE", "Epochs", "Time[min]", "Params[Mio.]", "Max_mem[MB]"]
 
     # columns for the hpo table in the order that they will be displayed
-    column_param_index = ["learning_rate", "batch_size", "e_layers", "d_layers", "d_model", "seq_len"]
+    column_param_index = ["learning_rate", "batch_size", "e_layers", "d_layers", "d_model", "seq_len", "pred_len"]
 
     column_index = column_param_index + column_metrics_index
         
