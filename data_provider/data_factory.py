@@ -1,8 +1,9 @@
-from data_provider.data_loader import SMARD, Dataset_Pred
+from data_provider.data_loader import SMARD, SMARD_w_WEATHER #, Dataset_Pred
 from torch.utils.data import DataLoader
 
 data_dict = {
     'smard': SMARD,
+    'smard_w_weather': SMARD_w_WEATHER,
 }
 
 

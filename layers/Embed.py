@@ -68,7 +68,7 @@ class TokenEmbedding(nn.Module):
 
     def forward(self, x):
         # Permute x of shape (B, L, C_in) --> (B, C_in, L) for Conv1d see official docs
-        x = self.tokenConv(x.permute(0, 2, 1)).transpose(1, 2) # (B, L, C_in)
+        x = self.tokenConv(x.permute(0, 2, 1)).transpose(1, 2) # (B, L, d_model)
         return x
 
 
@@ -128,7 +128,7 @@ class TimeFeatureEmbedding(nn.Module):
     def __init__(self, d_model, embed_type='timeF', freq='h'):
         super(TimeFeatureEmbedding, self).__init__()
 
-        freq_map = {'h': 9, 't': 5, 's': 6, 'm': 1, 'a': 1, 'w': 2, 'd': 3, 'b': 3}
+        freq_map = {'h': 69, 't': 5, 's': 6, 'm': 1, 'a': 1, 'w': 2, 'd': 3, 'b': 3} # TODO: Change freq for smard (9)
         d_inp = freq_map[freq]
         self.embed = nn.Linear(d_inp, d_model, bias=False)
 
