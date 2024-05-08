@@ -152,7 +152,11 @@ class DecoderLayer(nn.Module):
 
         # Position-wise feed forward
         y = x = self.norm2(x)
+        #print("-----------------")
+        #print("y", y.shape)
+        #print("y.T",y.transpose(-1,1).shape)
         y = self.dropout(self.activation(self.conv1(y.transpose(-1, 1))))
+        #print("y", y.shape)
         y = self.dropout(self.conv2(y).transpose(-1, 1))
         
         return self.norm3(x + y)

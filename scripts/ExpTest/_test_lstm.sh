@@ -6,11 +6,12 @@ python3 -u run.py \
   --root_path ./data/preproc/ \
   --data_path smard_plus_weather_without_LUandAT.csv \
   --model_id 'load' \
-  --model Transformer \
+  --model DLinear \
   --data smard_w_weather \
+  --including_weather 1 \
   --features M \
   --seq_len 96 \
-  --label_len 12 \
+  --label_len 0 \
   --pred_len 50 \
   --e_layers 3 \
   --d_layers 1 \
@@ -21,6 +22,6 @@ python3 -u run.py \
   --d_model 24 \
   --d_ff 48 \
   --target "load_DE" \
-  --learning_rate 0.001 \
+  --learning_rate 0.0005 \
   --itr 1 \
-  --train_epochs 1\
+  --train_epochs 3\

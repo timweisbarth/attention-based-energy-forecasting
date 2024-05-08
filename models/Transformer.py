@@ -16,9 +16,9 @@ class Model(nn.Module):
 
         # Embedding
         self.enc_embedding = DataEmbedding(configs.enc_in, configs.d_model, configs.embed, configs.freq,
-                                           configs.dropout)
+                                           configs.dropout, configs.including_weather)
         self.dec_embedding = DataEmbedding(configs.dec_in, configs.d_model, configs.embed, configs.freq,
-                                           configs.dropout)
+                                           configs.dropout, configs.including_weather)
         # Encoder
         self.encoder = Encoder(
             [
@@ -67,7 +67,7 @@ class Model(nn.Module):
         
         dec_out = self.dec_embedding(x_dec, x_mark_dec) # (batch_size, ll+pl, d_model)
         dec_out = self.decoder(dec_out, enc_out, x_mask=dec_self_mask, cross_mask=dec_enc_mask) # (batch_size, ll+pl, c_out)
-        print(x_enc.shape, x_mark_enc.shape, x_dec.shape, x_mark_dec.shape)
+        #print(x_enc.shape, x_mark_enc.shape, x_dec.shape, x_mark_dec.shape)
         if self.output_attention:
             return dec_out[:, -self.pred_len:, :], attns
         else:

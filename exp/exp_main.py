@@ -290,7 +290,7 @@ class Exp_Main(Exp_Basic):
                         pd = np.concatenate((input[0, :, -j], pred[0, :, -j]), axis=0)
                         np.save(os.path.join(subfolder_path, str(i) + '_' + str(j) + '_gt.npy'), gt)
                         np.save(os.path.join(subfolder_path, str(i) + '_' + str(j) + '_pd.npy'), pd)
-                        visual(gt, pd, os.path.join(subfolder_path, str(i) + '_' + str(j) + '.pdf'))
+                        #visual(gt, pd, os.path.join(subfolder_path, str(i) + '_' + str(j) + '.pdf'))
 
         preds = np.concatenate(preds, axis=0)
         trues = np.concatenate(trues, axis=0)

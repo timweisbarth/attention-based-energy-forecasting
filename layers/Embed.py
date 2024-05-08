@@ -125,10 +125,13 @@ class TemporalEmbedding(nn.Module):
 
 class TimeFeatureEmbedding(nn.Module):
     """TemporalEmbedding via linear layer, to be used if embed_type = timeF"""
-    def __init__(self, d_model, embed_type='timeF', freq='h'):
+    def __init__(self, d_model, embed_type='timeF', freq='h', including_weather=False):
         super(TimeFeatureEmbedding, self).__init__()
-
-        freq_map = {'h': 69, 't': 5, 's': 6, 'm': 1, 'a': 1, 'w': 2, 'd': 3, 'b': 3} # TODO: Change freq for smard (9)
+        if including_weather:
+            freq_map = {'h': 69}
+        else:
+            freq_map = {'h': 9, 't': 5, 's': 6, 'm': 1, 'a': 1, 'w': 2, 'd': 3, 'b': 3}
+            
         d_inp = freq_map[freq]
         self.embed = nn.Linear(d_inp, d_model, bias=False)
 
@@ -138,7 +141,7 @@ class TimeFeatureEmbedding(nn.Module):
 
 class DataEmbedding(nn.Module):
     """Full data embedding"""
-    def __init__(self, c_in, d_model, embed_type='fixed', freq='h', dropout=0.1):
+    def __init__(self, c_in, d_model, embed_type='fixed', freq='h', dropout=0.1, including_weather=False):
         super(DataEmbedding, self).__init__()
 
         # Conv1d over input channels to create out_channels = d_model
@@ -150,7 +153,7 @@ class DataEmbedding(nn.Module):
         # Linear layer if embed_type == timeF
         self.temporal_embedding = TemporalEmbedding(d_model=d_model, embed_type=embed_type,
                                                     freq=freq) if embed_type != 'timeF' else TimeFeatureEmbedding(
-            d_model=d_model, embed_type=embed_type, freq=freq)
+            d_model=d_model, embed_type=embed_type, freq=freq, including_weather=including_weather)
         self.dropout = nn.Dropout(p=dropout)
 
     def forward(self, x, x_mark):

@@ -3973,3 +3973,6 @@ mse:0.1338990032672882, mae:0.25876283645629883
 ftS_smard_load_sl96_ll48_pl336_DLinear_dm512_lr0.005_bs32_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp2.10_iter0  
 mse:0.21155448257923126, mae:0.3260323405265808
 
+ftM_smard_w_weather_load_sl96_ll12_pl50_Transformer_dm24_lr0.0005_bs32_nh8_el3.0_dl1_df48_fc3_ebtimeF_dtTrue_Testt_iter0  
+mse:0.1427869349718094, mae:0.2696324288845062
+

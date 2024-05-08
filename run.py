@@ -112,6 +112,8 @@ def main():
     parser.add_argument('--devices', type=str, default='0,1,2,3', help='device ids of multile gpus')
     # Caution: PatchTST has test_flop (default not used) and embed_type (default: 0, which means no positional encoding)
 
+    parser.add_argument('--including_weather', type=bool, default=False, help='Whether there is weather data is included(u100, v100, t2m, d2m, ssrd)')
+
     args = parser.parse_args()
 
     args.use_gpu = True if torch.cuda.is_available() and args.use_gpu else False

@@ -18,8 +18,13 @@ class Model(nn.Module):
         self.pred_len = configs.pred_len
         self.output_attention = configs.output_attention
         self.use_norm = configs.use_norm
+        self.including_weather = configs.including_weather
         # Embedding
-        self.enc_embedding = DataEmbedding_inverted(configs.seq_len, configs.d_model, configs.embed, configs.freq,
+        if self.including_weather:
+            self.enc_embedding = DataEmbedding_inverted(configs.seq_len + configs.pred_len, configs.d_model, configs.embed, configs.freq,
+                                                    configs.dropout)
+        else:
+            self.enc_embedding = DataEmbedding_inverted(configs.seq_len, configs.d_model, configs.embed, configs.freq,
                                                     configs.dropout)
         self.class_strategy = configs.class_strategy
         # Encoder-only architecture
@@ -40,6 +45,15 @@ class Model(nn.Module):
         self.projector = nn.Linear(configs.d_model, configs.pred_len, bias=True)
 
     def forecast(self, x_enc, x_mark_enc, x_dec, x_mark_dec):
+
+        #print("------------------")
+        #print(x_enc.shape, x_mark_enc.shape, x_dec.shape, x_mark_dec.shape)
+        if self.including_weather:
+            x_enc = torch.cat([x_enc, x_dec], dim=1)
+            x_mark_enc = torch.cat([x_mark_enc, x_mark_dec], dim=1)
+            #print(x_enc.shape, x_mark_enc.shape)
+
+        
         if self.use_norm:
             # Normalization from Non-stationary Transformer
             means = x_enc.mean(1, keepdim=True).detach()
@@ -51,6 +65,7 @@ class Model(nn.Module):
         # B: batch_size;    E: d_model; 
         # L: seq_len;       S: pred_len;
         # N: number of variate (tokens), can also includes covariates
+       
 
         # Embedding
         # B L N -> B N E                (B L N -> B L E in the vanilla Transformer)

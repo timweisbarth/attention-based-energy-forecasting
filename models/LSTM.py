@@ -12,15 +12,26 @@ class Model(nn.Module):
         self.pred_len = configs.pred_len
         self.c_out = configs.c_out
         self.device = device
+        self.including_weather = configs.including_weather
 
-        # Embedding of data
-        self.enc_embedding = DataEmbedding(configs.enc_in, configs.d_model, configs.embed, configs.freq,
+     
+
+        if self.including_weather:
+            #TODO!
+            self.dec_embedding = DataEmbedding(configs.dec_in , configs.d_model, configs.embed, configs.freq,
+                                           configs.dropout)
+            self.dec_lstm = nn.LSTM(
+                configs.d_model, configs.d_model, self.e_layers, batch_first=True, dropout=configs.dropout
+            )
+        else:
+            # Embedding of data
+            self.enc_embedding = DataEmbedding(configs.enc_in, configs.d_model, configs.embed, configs.freq,
                                            configs.dropout)
 
-        # LSTM layers
-        self.lstm = nn.LSTM(
-            configs.d_model, configs.d_model, self.e_layers, batch_first=True, dropout=configs.dropout
-        )
+            # LSTM layers
+            self.lstm = nn.LSTM(
+                configs.d_model, configs.d_model, self.e_layers, batch_first=True, dropout=configs.dropout
+            )
 
         # Fully connected layer
         self.fc = nn.Linear(configs.d_model, configs.pred_len * configs.c_out)
@@ -42,13 +53,15 @@ class Model(nn.Module):
         # Detaching is not strictly necessary but doesn't hurt aswell
         out, (hn, cn) = self.lstm(x, (h0.detach(), c0.detach()))
 
-        
-        out = out[:, -1, :]
+        if self.including_weather:
+            ...
+        else:
+            out = out[:, -1, :]
         
 
-        # Convert the final state to our desired output shape (batch_size, output_dim)
-        out = self.fc(out)
+            # Convert the final state to our desired output shape (batch_size, output_dim)
+            out = self.fc(out)
         
-        out = out.view(out.shape[0], self.pred_len, self.c_out)
+            out = out.view(out.shape[0], self.pred_len, self.c_out)
         
         return out
