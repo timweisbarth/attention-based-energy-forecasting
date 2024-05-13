@@ -44,7 +44,7 @@ def preproc1_nans(df):
     """
 
     # Solar column
-    if df["solar_gen"].isna().any():
+    if ("solar_gen" in df.columns) and (df["solar_gen"].isna().any()):
         print("Dealing with NaNs in solar_gen")
         nan_rows_solar = df["solar_gen"][df["solar_gen"].isna()]
 
@@ -55,7 +55,7 @@ def preproc1_nans(df):
                 df.loc[i, "solar_gen"] = (df.loc[i-24, "solar_gen"] + df.loc[i+24, "solar_gen"]) / 2
 
     # Wind column
-    if df["wind_gen"].isna().any():
+    if ("wind_gen" in df.columns) and df["wind_gen"].isna().any():
         print("Dealing with NaNs in wind_gen")
         df["wind_gen"] = df["wind_gen"].interpolate(limit_area='inside', method="quadratic")  # Interpolate for inside NaNs
         df.loc[0, "wind_gen"] = df.loc[1, "wind_gen"]
@@ -63,7 +63,7 @@ def preproc1_nans(df):
     # Load column
 
     
-    if df["load"].isna().any():
+    if ("load" in df.columns) and df["load"].isna().any():
         print("Dealing with NaNs in load")
         df.loc[0, "load"] = df.loc[1, "load"]
 
@@ -128,6 +128,7 @@ def train_val_test_split(df, w):
     
 
     df_train = df[df["year"] < 2021] # 7 years
+    print("df_train", df_train.shape)
 
     # Validation set consists of years 2021 and 2022
     # We can take last w elements from train set without information leakage
@@ -298,16 +299,26 @@ def make_supervised(df_train, df_val, df_test, targets, h, w, stride, cols_to_la
         
         for col in cols_to_lag:
             # get window_size-1 many lags --> -1 due to current lag
-            for lag in range(1,w):
-                
-                lagged_columns[f"{col}_lag{lag}"] = df[f"{col}"].shift(lag)
+            if "_lon" in col and "lat" in col:
+                for lag in range(1,h+1):
+                    lagged_columns[f"{col}_future_weather_{lag}"] = df[f"{col}"].shift(-lag)
+                df.drop(columns=[f"{col}"], inplace=True)
+            else:
+                for lag in range(1,w):
+                    lagged_columns[f"{col}_lag{lag}"] = df[f"{col}"].shift(lag)
 
         for col in targets:
             for shift in range(1,h+1):
                 shifted_columns[f"{col}_next_{shift}"] = df[col].shift(-shift)
 
+        print("lagged", pd.DataFrame(lagged_columns).shape)
+        print("shifted", pd.DataFrame(shifted_columns).shape)
+        print(df.shape)
+
         # Concatenate lagged and shifted columns to the DataFrame
         df = pd.concat([df, pd.DataFrame(lagged_columns), pd.DataFrame(shifted_columns)], axis=1)
+        print(df.shape)
+        print("---------------------")
         df.dropna(axis=0, inplace=True)     
 
         # Split df in X,y at the forward shiftet locations

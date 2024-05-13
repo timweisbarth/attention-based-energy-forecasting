@@ -54,6 +54,7 @@ class Model(nn.Module):
         out, (hn, cn) = self.lstm(x, (h0.detach(), c0.detach()))
 
         if self.including_weather:
+            #TODO!
             ...
         else:
             out = out[:, -1, :]

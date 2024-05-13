@@ -82,7 +82,8 @@ def pipeline(args):
                     (X_train, y_train), (X_val, y_val), (X_test, y_test) = \
                     pp.make_supervised(df_train, df_val, df_test, t, h, args.window_size, args.stride, args.cols_to_lag)
 
-
+                    print("X_train", X_train.shape)
+                    print("X_val", X_val.shape)
                     start_time = time.time()
 
                     # Train and predict
