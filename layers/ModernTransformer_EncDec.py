@@ -77,7 +77,7 @@ class DecoderLayer(nn.Module):
     def forward(self, x, cross, x_mask=None, cross_mask=None):
 
         # x is (batch_size, ll+pl, d_model), cross is (batch_size, sl, d_model)
-        
+        x = self.norm1(x)
         
         # Self attention (only need first element of tuple with is x)
     
@@ -86,7 +86,7 @@ class DecoderLayer(nn.Module):
             attn_mask=x_mask
         )[0]) # x is (batch_size, ll+pl, d_model)
         
-        x = self.norm1(x)
+        x = self.norm2(x)
         
         # Cross attention
         x = x + self.dropout(self.cross_attention(
@@ -95,15 +95,13 @@ class DecoderLayer(nn.Module):
         )[0])
 
         # Position-wise feed forward
-        y = x = self.norm2(x)
-        #print("-----------------")
-        #print("y", y.shape)
-        #print("y.T",y.transpose(-1,1).shape)
+        y = x = self.norm3(x)
+    
         y = self.dropout(self.activation(self.conv1(y.transpose(-1, 1))))
-        #print("y", y.shape)
+
         y = self.dropout(self.conv2(y).transpose(-1, 1))
         
-        return self.norm3(x + y)
+        return x + y
 
 
 class PreLNDecoder(nn.Module):

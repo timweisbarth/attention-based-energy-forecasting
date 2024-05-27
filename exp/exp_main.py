@@ -167,8 +167,8 @@ class Exp_Main(Exp_Basic):
                 batch_y_mark = batch_y_mark.float().to(self.device)
 
                 outputs, batch_y = self._predict(batch_x, batch_y, batch_x_mark, batch_y_mark)
-
                 loss = criterion(outputs, batch_y)
+
                 train_batch_losses.append(loss.item())
 
                 if (i + 1) % 200 == 0:
@@ -181,10 +181,6 @@ class Exp_Main(Exp_Basic):
                     print('\tspeed: {:.4f}s/iter; \t left time: {:.4f}s \tmax_memory: {:.2f}MB'.format(speed, left_time, max_memory))
                     iter_count = 0
                     time_now = time.time()
-                    #device_properties = torch.cuda.get_device_properties()
-                    #print("Memory capacity: ", device_properties.total_memory / (1024**3))
-                    #for param_group in model_optim.param_groups:
-                    #    print(param_group['lr'])
 
                 if self.args.use_amp:
                     scaler.scale(loss).backward()

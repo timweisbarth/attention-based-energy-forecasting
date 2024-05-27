@@ -82,8 +82,8 @@ def main():
 
         
         # metrics_df
-        metrics_df.loc[(target, horizon), (model, 'MAE')] = round(sum(maes)/len(maes), 3)
-        metrics_df.loc[(target, horizon), (model, 'MSE')] = round(sum(mses)/len(mses), 3)
+        metrics_df.loc[(target, horizon), (model, 'MAE')] = round(sum(maes)/len(maes), 4)
+        metrics_df.loc[(target, horizon), (model, 'MSE')] = round(sum(mses)/len(mses), 4)
 
         # epoch_train_time_df
         avg_epochs_for_training = sum(number_of_epochs_for_trainings)/len(number_of_epochs_for_trainings)

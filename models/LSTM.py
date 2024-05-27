@@ -14,32 +14,28 @@ class Model(nn.Module):
         self.device = device
         self.including_weather = configs.including_weather
 
+        # Embedding of data
+        self.enc_embedding = DataEmbedding(configs.enc_in, configs.d_model, configs.embed, configs.freq,
+                                           configs.dropout, self.including_weather)
+
+        # LSTM layers
+        self.lstm = nn.LSTM(
+            configs.d_model, configs.d_model, self.e_layers, batch_first=True, dropout=configs.dropout
+        )
      
 
         if self.including_weather:
-            #TODO!
-            self.dec_embedding = DataEmbedding(configs.dec_in , configs.d_model, configs.embed, configs.freq,
-                                           configs.dropout)
+            self.dec_embedding = nn.Linear(69, configs.d_model)
             self.dec_lstm = nn.LSTM(
                 configs.d_model, configs.d_model, self.e_layers, batch_first=True, dropout=configs.dropout
             )
+            self.fc = nn.Linear(configs.d_model, configs.c_out)
         else:
-            # Embedding of data
-            self.enc_embedding = DataEmbedding(configs.enc_in, configs.d_model, configs.embed, configs.freq,
-                                           configs.dropout)
-
-            # LSTM layers
-            self.lstm = nn.LSTM(
-                configs.d_model, configs.d_model, self.e_layers, batch_first=True, dropout=configs.dropout
-            )
-
-        # Fully connected layer
-        self.fc = nn.Linear(configs.d_model, configs.pred_len * configs.c_out)
+            # Fully connected layer
+            self.fc = nn.Linear(configs.d_model, configs.pred_len * configs.c_out)
 
     def forward(self, x_enc, x_mark_enc, x_dec, x_mark_dec,
                 enc_self_mask=None, dec_self_mask=None, dec_enc_mask=None):
-        
-        
         
         # Embed input 
         x = self.enc_embedding(x_enc, x_mark_enc) # (B, T, d_model)
@@ -54,15 +50,15 @@ class Model(nn.Module):
         out, (hn, cn) = self.lstm(x, (h0.detach(), c0.detach()))
 
         if self.including_weather:
-            #TODO!
-            ...
+            x_mark_dec = x_mark_dec[:,-self.pred_len:,:]
+            x_dec = self.dec_embedding(x_mark_dec)
+            out, (hn, cn) = self.dec_lstm(x_dec, (hn, cn))
+            out = self.fc(out)
+
         else:
             out = out[:, -1, :]
-        
-
             # Convert the final state to our desired output shape (batch_size, output_dim)
             out = self.fc(out)
-        
             out = out.view(out.shape[0], self.pred_len, self.c_out)
         
         return out

@@ -30,14 +30,12 @@ class Model(nn.Module):
             )
     
     def forward(self, x_enc, x_mark_enc, x_dec, x_mark_dec):
-        #print("------------------")
-        #print(x_enc.shape, x_mark_enc.shape, x_dec.shape, x_mark_dec.shape)
+
         if self.including_weather:
             x_enc = torch.cat([x_enc, x_dec], dim=1)
             x_mark_enc = torch.cat([x_mark_enc, x_mark_dec], dim=1)
             x = torch.cat([x_enc, x_mark_enc], dim=-1)
-            #print(x_enc.shape, x_mark_enc.shape)
-            #print("x.shape", x.shape)
+
         else:
             x = torch.cat([x_enc, x_mark_enc], dim=-1)
 

@@ -44,6 +44,7 @@ class Model(nn.Module):
         # Embedding
         self.enc_embedding = ModernDataEmbedding(configs.d_model, self.patch_len, self.stride, self.enc_pad_len)
         self.dec_embedding = ModernDataEmbedding(configs.d_model, self.patch_len, self.stride, self.dec_pad_len)
+        self.cross_att_embedding = ...
 
         # Encoder
         self.encoder = PreLNEncoder(
@@ -95,7 +96,11 @@ class Model(nn.Module):
         #x_dec = create_patched_version(x_dec, P=self.patch_len, S=self.stride, pad_len=self.dec_pad_len, new_sl=self.dec_new_sl)
         #x_mark_dec = create_patched_version(x_mark_dec, P=self.patch_len, S=self.stride, pad_len=self.dec_pad_len, new_sl=self.dec_new_sl)
 
-        #print(x_enc.shape, x_mark_enc.shape, x_dec.shape, x_mark_dec.shape)
+        # Cross Attention embedding: Watch out for masking, 
+        #self.dropout(self.cross_attention(
+        #    x, cross, cross,
+        #    attn_mask=cross_mask
+        #)[0])
 
         x_enc = pd.concat([x_enc, x_mark_enc], axis=2)
         enc_out = self.enc_embedding(x_enc) # (batch_size, enc_new_sl, d_model)
@@ -103,6 +108,8 @@ class Model(nn.Module):
         
 
         # TODO!: Decoder dec_new_sl != pred_len due to patching
+        # TODO Masking, Cross Attention, individual embeddings for each similar data (Verify via not normalized data), bias or no for embedding? (Add time first such that not only zeros)
+        # TODO: Which transformer architecture exactely?
         x_dec = pd.concat([x_dec, x_mark_dec], axis=2)
         dec_out = self.dec_embedding(x_dec) # (batch_size, dec_new_sl, d_model)
         dec_out = self.decoder(dec_out, enc_out, x_mask=dec_self_mask, cross_mask=dec_enc_mask) # (batch_size, ll+pl, c_out)

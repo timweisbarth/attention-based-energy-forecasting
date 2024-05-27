@@ -196,15 +196,9 @@ class SMARD_w_WEATHER(Dataset):
 
         ###### Create numpy data based on type of forecasting and scaler ###
         if self.features == 'M' or self.features == 'MS':
-            #print(df_raw.columns.shape)
             cols_weather = [col for col in df_raw.columns if any(ele in col for ele in ['_u100', '_v100', '_t2m', '_d2m', '_ssrd'])]
             cols_data = df_raw.drop(cols_weather, axis=1).columns[1:] 
-            #print(cols_weather)
-            #print(len(cols_weather))
-            #print(cols_data.shape)
-            #print(cols_data)
             df_weather = df_raw[cols_weather]
-            #cols_data = df_raw.columns[1:]
             df_data = df_raw[cols_data]
         elif self.features == 'S':
             df_data = df_raw[[self.target]]
@@ -245,14 +239,11 @@ class SMARD_w_WEATHER(Dataset):
 
         ############## Put weather data into data_stamp ####################
 
-        #data_weather = data[border1:border2, 1:5]
 
         self.data_x = data[border1:border2]
         self.data_y = data[border1:border2]
-        #print("data stamp", data_stamp.shape)
-        #print("weather", weather[border1:border2].shape)
         self.data_stamp = np.concatenate((data_stamp, weather[border1:border2]), axis=1)
-        #print("data_stamp comb", self.data_stamp.shape)
+
 
     def __getitem__(self, index):
 

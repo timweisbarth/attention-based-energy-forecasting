@@ -78,14 +78,10 @@ class Model(nn.Module):
         if self.norm is not None:
             out = self.norm(out)
 
-        
-        #print(out.shape)
         # (batch_size, sl, d_model) -> (batch_size, d_model, pred_len) -> (batch_size, pred_len, d_model)
         out = self.projection(out.permute(0, 2, 1)).permute(0, 2, 1) 
 
-        #print(out.shape)
         out = self.projection2(out) # (batch_size, pred_len, c_out)
-        #print(out.shape)
         
 
         if self.output_attention:
