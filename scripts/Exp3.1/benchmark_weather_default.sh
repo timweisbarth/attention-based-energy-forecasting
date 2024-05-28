@@ -42,7 +42,7 @@ for hpo in "24 128 3" "96 128 3" "192 256 6" "336 256 6" "720 256 6"; do
     --enc_in 15 \
     --dec_in 15 \
     --c_out 15 \
-    --target "load" \
+    --target "load_DE" \
     --itr 1 \
     --train_epochs 30 \
     --patience 6 \
@@ -75,7 +75,7 @@ for hpo in "24 256" "96 256" "192 256" "336 256" "720 512"; do
     --enc_in 15 \
     --dec_in 15 \
     --c_out 15 \
-    --target "load" \
+    --target "load_DE" \
     --itr 1 \
     --train_epochs 30 \
     --patience 6 \
@@ -105,7 +105,7 @@ for hpo in "24 512 2" "96 512 2" "192 512 2" "336 512 2" "720 512 2"; do
     --enc_in 15 \
     --dec_in 15 \
     --c_out 15 \
-    --target "load" \
+    --target "load_DE" \
     --itr 1 \
     --train_epochs 30 \
     --patience 6 \
