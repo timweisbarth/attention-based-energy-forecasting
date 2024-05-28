@@ -6,7 +6,7 @@ python3 -u run.py \
   --root_path ./data/preproc/ \
   --data_path smard_plus_weather_without_LUandAT.csv \
   --model_id 'load' \
-  --model LSTM \
+  --model iTransformer \
   --data smard_w_weather \
   --including_weather 1 \
   --features M \

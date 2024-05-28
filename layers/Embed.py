@@ -128,7 +128,7 @@ class TimeFeatureEmbedding(nn.Module):
     def __init__(self, d_model, embed_type='timeF', freq='h', including_weather=False):
         super(TimeFeatureEmbedding, self).__init__()
         if including_weather:
-            freq_map = {'h': 69}
+            freq_map = {'h': 57}
         else:
             freq_map = {'h': 9, 't': 5, 's': 6, 'm': 1, 'a': 1, 'w': 2, 'd': 3, 'b': 3}
             

@@ -84,6 +84,9 @@ def main():
         # metrics_df
         metrics_df.loc[(target, horizon), (model, 'MAE')] = round(sum(maes)/len(maes), 4)
         metrics_df.loc[(target, horizon), (model, 'MSE')] = round(sum(mses)/len(mses), 4)
+        if model == "Linear Regression" and target =="multi":
+            print(dir)
+            print(horizon, mses, maes)
 
         # epoch_train_time_df
         avg_epochs_for_training = sum(number_of_epochs_for_trainings)/len(number_of_epochs_for_trainings)
@@ -102,6 +105,7 @@ def main():
         std_df.loc[(target, horizon), (model, 'std_MSE')] = round(np.std(mses), 3) if len(mses) > 1 else np.nan
 
 
+    #print(metrics_df)
     # Save df as .csv and .tex
     latex_table = metrics_df.to_latex()
     
@@ -168,6 +172,8 @@ def main():
     file_path_csv_modelsize_maxmemory = "./results/benchmark_table_{}_modelsize_maxmemory.csv".format(args.exp_name)
     file_path_csv_std = "./results/benchmark_table_{}_std.csv".format(args.exp_name)
     file_path_tex_std_formatted = "./results/benchmark_table_{}_std_formatted.tex".format(args.exp_name)
+
+    print(metrics_df)
 
     metrics_df.to_csv(file_path_csv_metrics, header=True, index=True)
     epoch_time_df.to_csv(file_path_csv_epoch_time, header=True, index=True)

@@ -16,8 +16,8 @@ nvidia-smi # only if you requested any gpus
 current_folder="Exp3.1"
 
 #Transformer
-for hpo in "24 128 3 32"  "96 128 3 32" "192 256 6 64" "336 256 6 64" "720 256 6 64"; do
-    read pred_len d_model layers bs <<< $hpo
+for hpo in "24 128 3" "96 128 3" "192 256 6" "336 256 6" "720 256 6"; do
+    read pred_len d_model layers <<< $hpo
 
     --is_training 1 \
     --des $current_folder \
@@ -38,19 +38,19 @@ for hpo in "24 128 3 32"  "96 128 3 32" "192 256 6 64" "336 256 6 64" "720 256 6
     --d_ff $(($d_model * 4)) \
     --n_heads 8 \
     --learning_rate 0.0005 \
-    --batch_size $bs \
+    --batch_size 64 \
     --enc_in 15 \
     --dec_in 15 \
     --c_out 15 \
     --target "load" \
     --itr 1 \
     --train_epochs 30 \
-    --patience 5 \
+    --patience 6 \
 
 done
 
 # iTransformer
-for hpo in "24 256"  "96 256" "192 256" "336 256" "720 512"; do
+for hpo in "24 256" "96 256" "192 256" "336 256" "720 512"; do
     read pred_len d_model <<< $hpo
 
     --is_training 1 \
@@ -71,19 +71,19 @@ for hpo in "24 256"  "96 256" "192 256" "336 256" "720 512"; do
     --d_ff $d_model \
     --n_heads 8 \
     --learning_rate 0.001 \
-    --batch_size 32 \
+    --batch_size 64 \
     --enc_in 15 \
     --dec_in 15 \
     --c_out 15 \
     --target "load" \
     --itr 1 \
     --train_epochs 30 \
-    --patience 5 \
+    --patience 6 \
     
 done
 
 # LSTM
-for hpo in "24 512 1"  "96 512 1" "192 1024 2" "336 1024 2" "720 1024 2"; do
+for hpo in "24 512 2" "96 512 2" "192 512 2" "336 512 2" "720 512 2"; do
     read pred_len d_model layers <<< $hpo
 
     --is_training 1 \
@@ -101,14 +101,14 @@ for hpo in "24 512 1"  "96 512 1" "192 1024 2" "336 1024 2" "720 1024 2"; do
     --e_layers $layers \
     --d_model $d_model \
     --learning_rate 0.0001 \
-    --batch_size 32 \
+    --batch_size 64 \
     --enc_in 15 \
     --dec_in 15 \
     --c_out 15 \
     --target "load" \
     --itr 1 \
     --train_epochs 30 \
-    --patience 5 \
+    --patience 6 \
 
 done
 

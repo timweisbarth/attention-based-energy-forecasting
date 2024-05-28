@@ -82,13 +82,13 @@ def pipeline(args):
                     (X_train, y_train), (X_val, y_val), (X_test, y_test) = \
                     pp.make_supervised(df_train, df_val, df_test, t, h, args.window_size, args.stride, args.cols_to_lag)
 
-                    print("X_train", X_train.shape)
-                    print("X_val", X_val.shape)
+                    #print("X_train", X_train.shape)
+                    #print("X_val", X_val.shape)
                     start_time = time.time()
 
                     # Train and predict
 
-                    model = o.train(X_train, y_train, X_val, y_val, args.model_name, device)
+                    model = o.train(X_train, y_train, X_val, y_val, args.model_name, device, args.train_params)
 
                     if args.model_name == "xgb":
                         dval = xgb.DMatrix(X_val)
@@ -106,7 +106,7 @@ def pipeline(args):
                 #Not really used
                 metrics.append({"target": t[0], "horizon": h, "mae":mae, "mse": mse})
 
-                setting = "ft{}_{}_{}_sl{}_ll{}_pl{}_{}_eb{}_{}_iter{}".format(
+                setting = "ft{}_{}_{}_sl{}_ll{}_pl{}_{}_hpo{}_eb{}_{}_iter{}".format(
                     "S" if len(t) == 1 else "M",
                     "smard",
                     t[0] if len(t) == 1 else "",
@@ -114,6 +114,7 @@ def pipeline(args):
                     0,
                     h,
                     args.model_name,
+                    args.train_params.run,
                     "timeF",
                     args.experiment_name,
                     ii
@@ -168,6 +169,9 @@ if __name__ == "__main__":
     args.itr = 3
     # TODO: check horizon and target args
 
+    # 1 run means run in default setting, multiple runs means test different HPOs as defined in otimization.py
+    number_of_runs = 1
+
     # Data loading
     args.file_name = "smard_data.csv"
 
@@ -186,7 +190,7 @@ if __name__ == "__main__":
     args.stride = 1 # Has to be <= min(window_size, forecast_horizon) and stride * integer = window_size,
     # and stride * integer2 = forecast_horizon
     args.lead_time = 0 # TODO: Not working yet
-    args.forecast_horizons = [24] # [24, 96, 192, 336, 720]
+    args.forecast_horizons = [24, 96, 192, 336, 720]
 
     # Plotting
     args.plot = True
@@ -201,5 +205,7 @@ if __name__ == "__main__":
     args.path = f"./data/preproc/{args.file_name}"
     args.scaler = {"std":StandardScaler()}[args.scaler_name]
 
-    pipeline(args)
+    for i in range(number_of_runs):
+        args.train_params.run = i
+        pipeline(args)
         

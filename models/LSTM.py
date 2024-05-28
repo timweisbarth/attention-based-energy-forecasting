@@ -25,7 +25,7 @@ class Model(nn.Module):
      
 
         if self.including_weather:
-            self.dec_embedding = nn.Linear(69, configs.d_model)
+            self.dec_embedding = nn.Linear(57, configs.d_model)
             self.dec_lstm = nn.LSTM(
                 configs.d_model, configs.d_model, self.e_layers, batch_first=True, dropout=configs.dropout
             )

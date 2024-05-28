@@ -31,7 +31,7 @@ class LastValueNaiveRegressor(BaseEstimator, RegressorMixin):
         return out
 
 
-def train(X_train, y_train, X_val, y_val, model_name, device):
+def train(X_train, y_train, X_val, y_val, model_name, device, train_params):
     
     if model_name == "linreg":
         model = LinearRegression()
@@ -54,9 +54,21 @@ def train(X_train, y_train, X_val, y_val, model_name, device):
             'eval_metric': ['rmse'] 
         }
 
+        add_params = [{},
+                      {"learning_rate": 0.15}, {"learning_rate": 0.45}, 
+                      {"max_depth": 3}, {"max_depth": 9},
+                      {"subsample": 0.5}, {"subsample": 0.75}, 
+                      {"colsample_bytree": 0.5}, {"colsample_bytree": 0.75}, 
+                      {"lambda": 0.1}, {"lambda": 10}, 
+                      {"alpha": 0.1}, {"alpha": 1}]
+        
+        add_params = [elem.update({"early_stopping_rounds":50}, {"num_boost_round":1000}) for elem in add_params]
+        
+        params.update(add_params[train_params.run])
+
         # Train the model
         # num_boost_round is the number of boosting rounds or trees to build, early_stopping determines how many will actually be built
-        model = xgb.train(params, dtrain, evals=[(dtrain, 'train'), (dval, 'val')], num_boost_round=1000, early_stopping_rounds=50, verbose_eval=False)
+        model = xgb.train(params, dtrain, evals=[(dtrain, 'train'), (dval, 'val')], verbose_eval=False)
 
         ############################ scikit-learn interface ##################        
         
