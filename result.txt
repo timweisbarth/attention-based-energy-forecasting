@@ -3976,3 +3976,30 @@ mse:0.21155448257923126, mae:0.3260323405265808
 ftM_smard_w_weather_load_sl96_ll12_pl50_Transformer_dm24_lr0.0005_bs32_nh8_el3.0_dl1_df48_fc3_ebtimeF_dtTrue_Testt_iter0  
 mse:0.1427869349718094, mae:0.2696324288845062
 
+ftM_smard_w_weather_load_sl336_ll168_pl24_Transformer_dm128_lr0.0005_bs64_nh8_el3.0_dl3_df512_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.0633169412612915, mae:0.17069169878959656
+
+ftM_smard_w_weather_load_sl336_ll168_pl96_Transformer_dm128_lr0.0005_bs64_nh8_el3.0_dl3_df512_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.07314250618219376, mae:0.18222907185554504
+
+ftM_smard_w_weather_load_sl336_ll168_pl192_Transformer_dm256_lr0.0005_bs64_nh8_el6.0_dl6_df1024_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.069167360663414, mae:0.17336463928222656
+
+ftM_smard_w_weather_load_sl336_ll168_pl336_Transformer_dm256_lr0.0005_bs64_nh8_el6.0_dl6_df1024_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.0693100094795227, mae:0.1751433163881302
+
+ftM_smard_w_weather_load_sl96_ll48_pl24_LSTM_dm512_lr0.0001_bs64_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.06866166740655899, mae:0.17961229383945465
+
+ftM_smard_w_weather_load_sl96_ll48_pl96_LSTM_dm512_lr0.0001_bs64_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.09550740569829941, mae:0.2154519110918045
+
+ftM_smard_w_weather_load_sl96_ll48_pl192_LSTM_dm512_lr0.0001_bs64_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.10976686328649521, mae:0.23217177391052246
+
+ftM_smard_w_weather_load_sl96_ll48_pl336_LSTM_dm512_lr0.0001_bs64_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.10886036604642868, mae:0.23132893443107605
+
+ftM_smard_w_weather_load_sl96_ll48_pl720_LSTM_dm512_lr0.0001_bs64_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.11057683825492859, mae:0.23398324847221375
+
