@@ -62,7 +62,8 @@ def pipeline(args):
                 else:
                     device = "cpu"
 
-
+            
+                
                 if args.model_type == "deepl":
                     # Reshape data into inout sequence for nn.lstm module
                     (X_train, y_train), (X_val, y_val), (X_test, y_test) = \
@@ -80,10 +81,10 @@ def pipeline(args):
                 else:
                     # Reshape data into supervised problem for sklearn module
                     (X_train, y_train), (X_val, y_val), (X_test, y_test) = \
-                    pp.make_supervised(df_train, df_val, df_test, t, h, args.window_size, args.stride, args.cols_to_lag)
-
-                    #print("X_train", X_train.shape)
-                    #print("X_val", X_val.shape)
+                    pp.make_supervised(df_train, df_val, df_test, t, h, args.window_size, args.stride, args.cols_to_lag, args.point_forecast)
+                    print("-----------------")
+                    print("X_train", X_train.shape)
+                    print("y_train", y_train.shape)
                     start_time = time.time()
 
                     # Train and predict
@@ -164,16 +165,15 @@ if __name__ == "__main__":
     args.model_params = dotdict({})
     args.train_params = dotdict({})
 
-    args.experiment_name = "Exp2"
+    args.experiment_name = "Exp3.1"
     args.fix_seed = 2024
-    args.itr = 3
-    # TODO: check horizon and target args
+    args.itr = 1
 
     # 1 run means run in default setting, multiple runs means test different HPOs as defined in otimization.py
     number_of_runs = 1
 
     # Data loading
-    args.file_name = "smard_data.csv"
+    args.file_name = "smard_plus_weather_without_LUandAT.csv"
 
     # Preprocessing
     args.scaler_name = "std"
@@ -184,16 +184,40 @@ if __name__ == "__main__":
     args.train_params = None
 
     # Prediction
-    args.cols_to_lag = ['load', 'solar_gen', 'wind_gen']
-    args.targets = [["load"]]#[['load'], ['solar_gen'], ['wind_gen'], ['load', 'solar_gen', 'wind_gen']]
-    args.window_size = 336
+    args.point_forecast = True
+    args.forecast_setting = "both"
+    args.cols_to_lag = [
+        'load_DE', 'solar_gen_DE', 'wind_gen_DE',
+        'lat54.125_lon7.375_u100', 'lat54.125_lon7.375_v100', 'lat54.125_lon7.375_t2m', 'lat54.125_lon7.375_ssrd',
+        'lat54.125_lon10.375_u100', 'lat54.125_lon10.375_v100', 'lat54.125_lon10.375_t2m', 'lat54.125_lon10.375_ssrd',
+        'lat54.125_lon13.375_u100', 'lat54.125_lon13.375_v100', 'lat54.125_lon13.375_t2m', 'lat54.125_lon13.375_ssrd',
+        'lat52.125_lon7.375_u100', 'lat52.125_lon7.375_v100', 'lat52.125_lon7.375_t2m', 'lat52.125_lon7.375_ssrd',
+        'lat52.125_lon10.375_u100', 'lat52.125_lon10.375_v100', 'lat52.125_lon10.375_t2m', 'lat52.125_lon10.375_ssrd',
+        'lat52.125_lon13.375_u100', 'lat52.125_lon13.375_v100', 'lat52.125_lon13.375_t2m', 'lat52.125_lon13.375_ssrd',
+        'lat50.125_lon7.375_u100', 'lat50.125_lon7.375_v100', 'lat50.125_lon7.375_t2m', 'lat50.125_lon7.375_ssrd',
+        'lat50.125_lon10.375_u100', 'lat50.125_lon10.375_v100', 'lat50.125_lon10.375_t2m', 'lat50.125_lon10.375_ssrd',
+        'lat50.125_lon13.375_u100', 'lat50.125_lon13.375_v100', 'lat50.125_lon13.375_t2m', 'lat50.125_lon13.375_ssrd',
+        'lat48.125_lon7.375_u100', 'lat48.125_lon7.375_v100', 'lat48.125_lon7.375_t2m', 'lat48.125_lon7.375_ssrd', 
+        'lat48.125_lon10.375_u100', 'lat48.125_lon10.375_v100', 'lat48.125_lon10.375_t2m', 'lat48.125_lon10.375_ssrd',
+        'lat48.125_lon13.375_u100', 'lat48.125_lon13.375_v100', 'lat48.125_lon13.375_t2m', 'lat48.125_lon13.375_ssrd',
+        'load_DE_50Hertz', 'load_DE_Amprion', 'load_DE_TenneT', 'load_DE_TransnetBW', 
+        'solar_gen_DE_50Hertz',  'solar_gen_DE_Amprion', 'solar_gen_DE_TenneT', 'solar_gen_DE_TransnetBW',
+        'wind_gen_DE_50Hertz', 'wind_gen_DE_Amprion', 'wind_gen_DE_TenneT', 'wind_gen_DE_TransnetBW'
+    ]
+    args.targets = [[
+        'load_DE', 'solar_gen_DE', 'wind_gen_DE',
+        'load_DE_50Hertz', 'load_DE_Amprion', 'load_DE_TenneT', 'load_DE_TransnetBW',
+        'solar_gen_DE_50Hertz', 'solar_gen_DE_Amprion', 'solar_gen_DE_TenneT',  'solar_gen_DE_TransnetBW', 
+        'wind_gen_DE_50Hertz', 'wind_gen_DE_Amprion',  'wind_gen_DE_TenneT', 'wind_gen_DE_TransnetBW'
+    ]]
+    args.window_size = 96
     args.stride = 1 # Has to be <= min(window_size, forecast_horizon) and stride * integer = window_size,
     # and stride * integer2 = forecast_horizon
     args.lead_time = 0 # TODO: Not working yet
     args.forecast_horizons = [24, 96, 192, 336, 720]
 
     # Plotting
-    args.plot = True
+    args.plot = False
     args.plot_date = '2021-07-01'
     args.days = 10
 

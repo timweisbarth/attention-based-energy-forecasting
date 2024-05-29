@@ -1,4 +1,4 @@
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.dummy import DummyRegressor
 import xgboost as xgb
 from model_lstm import LSTMModel
@@ -34,7 +34,8 @@ class LastValueNaiveRegressor(BaseEstimator, RegressorMixin):
 def train(X_train, y_train, X_val, y_val, model_name, device, train_params):
     
     if model_name == "linreg":
-        model = LinearRegression()
+        #model = LinearRegression()
+        model= Ridge(alpha=1)
         model.fit(X_train, y_train)
 
         return model
@@ -54,6 +55,7 @@ def train(X_train, y_train, X_val, y_val, model_name, device, train_params):
             'eval_metric': ['rmse'] 
         }
 
+
         add_params = [{},
                       {"learning_rate": 0.15}, {"learning_rate": 0.45}, 
                       {"max_depth": 3}, {"max_depth": 9},
@@ -62,13 +64,14 @@ def train(X_train, y_train, X_val, y_val, model_name, device, train_params):
                       {"lambda": 0.1}, {"lambda": 10}, 
                       {"alpha": 0.1}, {"alpha": 1}]
         
-        add_params = [elem.update({"early_stopping_rounds":50}, {"num_boost_round":1000}) for elem in add_params]
+        #add_params = [elem.update({"num_boost_round":1000}) for elem in add_params]
+        #add_params = [elem.update({"early_stopping_rounds":50}) for elem in add_params]
         
         params.update(add_params[train_params.run])
 
         # Train the model
         # num_boost_round is the number of boosting rounds or trees to build, early_stopping determines how many will actually be built
-        model = xgb.train(params, dtrain, evals=[(dtrain, 'train'), (dval, 'val')], verbose_eval=False)
+        model = xgb.train(params, dtrain, evals=[(dtrain, 'train'), (dval, 'val')], verbose_eval=False, num_boost_round = 1000, early_stopping_rounds = 50)
 
         ############################ scikit-learn interface ##################        
         

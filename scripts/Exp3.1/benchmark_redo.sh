@@ -16,7 +16,7 @@ nvidia-smi # only if you requested any gpus
 current_folder="Exp3.1"
 
 #Transformer
-for hpo in "24 128 3" "96 128 3" "192 256 6" "336 256 6" "720 256 6"; do
+for hpo in "720 256 6"; do
     read pred_len d_model layers <<< $hpo
     srun python3 -u run.py \
     --is_training 1 \
@@ -30,7 +30,7 @@ for hpo in "24 128 3" "96 128 3" "192 256 6" "336 256 6" "720 256 6"; do
     --including_weather 1 \
     --features M \
     --seq_len 336 \
-    --label_len 168 \
+    --label_len 96 \
     --pred_len $pred_len \
     --e_layers $layers \
     --d_layers $layers \
@@ -82,34 +82,5 @@ for hpo in "24 256" "96 256" "192 256" "336 256" "720 512"; do
     
 done
 
-# LSTM
-for hpo in "24 512 2" "96 512 2" "192 512 2" "336 512 2" "720 512 2"; do
-    read pred_len d_model layers <<< $hpo
-    srun python3 -u run.py \
-    --is_training 1 \
-    --des $current_folder \
-    --checkpoints ./checkpoints/$current_folder \
-    --root_path ./data/preproc/ \
-    --data_path smard_plus_weather_without_LUandAT.csv \
-    --model_id 'load' \
-    --model LSTM \
-    --data smard_w_weather \
-    --including_weather 1 \
-    --features M \
-    --seq_len 96 \
-    --pred_len $pred_len \
-    --e_layers $layers \
-    --d_model $d_model \
-    --learning_rate 0.0001 \
-    --batch_size 64 \
-    --enc_in 15 \
-    --dec_in 15 \
-    --c_out 15 \
-    --target "load_DE" \
-    --itr 1 \
-    --train_epochs 40 \
-    --patience 6 \
-
-done
 
 
