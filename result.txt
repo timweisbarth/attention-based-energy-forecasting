@@ -4003,3 +4003,18 @@ mse:0.10886036604642868, mae:0.23132893443107605
 ftM_smard_w_weather_load_sl96_ll48_pl720_LSTM_dm512_lr0.0001_bs64_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
 mse:0.11057683825492859, mae:0.23398324847221375
 
+ftM_smard_w_weather_load_sl336_ll0_pl24_iTransformer_dm256_lr0.001_bs64_nh8_el3.0_dl1_df256_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.1348392218351364, mae:0.22138865292072296
+
+ftM_smard_w_weather_load_sl336_ll0_pl96_iTransformer_dm256_lr0.001_bs64_nh8_el3.0_dl1_df256_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.20713301002979279, mae:0.287056028842926
+
+ftM_smard_w_weather_load_sl336_ll0_pl192_iTransformer_dm256_lr0.001_bs64_nh8_el3.0_dl1_df256_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.2521451711654663, mae:0.32508376240730286
+
+ftM_smard_w_weather_load_sl336_ll0_pl336_iTransformer_dm256_lr0.001_bs64_nh8_el3.0_dl1_df256_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.291286438703537, mae:0.35006460547447205
+
+ftM_smard_w_weather_load_sl336_ll0_pl720_iTransformer_dm512_lr0.001_bs64_nh8_el3.0_dl1_df512_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.33313366770744324, mae:0.3786502182483673
+
