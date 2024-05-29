@@ -111,67 +111,67 @@ def main():
     
 
     ########## Apply formatting to the metrics DataFrame ####################
-    metrics_df_for_latex_formatting = metrics_df.copy()
-    def apply_formatting(val, lowest, second_lowest):
-        if val == lowest:
-            return r'\textbf{' + str(val) + '}'
-        elif val == second_lowest:
-            return r'\underline{' + str(val) + '}'
-        else:
-            return str(val)
-    
-    for row in metrics_df_for_latex_formatting.index:
-        for metric in metrics:
-            values = metrics_df_for_latex_formatting.loc[row, (slice(None), metric)]
-            sorted_values = values.sort_values()
-            if len(sorted_values) > 1:
-                lowest, second_lowest = sorted_values[:2]
-                formatted_values = values.apply(lambda x: apply_formatting(x, lowest, second_lowest))
-                metrics_df_for_latex_formatting.loc[row, (slice(None), metric)] = formatted_values
-   
-    stacked_df = metrics_df_for_latex_formatting.stack(level=0)
-
-    # Step 3: Unstack the previously stacked level
-    final_df = stacked_df.unstack(level=0)
-    # TODO Also doesnt work as expected.. (For git reversion: 25 Apr 10o'clock, one hour prior it was working)
-    final_df = final_df.swaplevel(axis=1).sort_index(axis=1)
-    final_df = final_df.swaplevel(axis=0).sort_index(axis=0)
-    latex_table_formatted = final_df.to_latex(escape=False)
+    #metrics_df_for_latex_formatting = metrics_df.copy()
+    #def apply_formatting(val, lowest, second_lowest):
+    #    if val == lowest:
+    #        return r'\textbf{' + str(val) + '}'
+    #    elif val == second_lowest:
+    #        return r'\underline{' + str(val) + '}'
+    #    else:
+    #        return str(val)
+    #
+    #for row in metrics_df_for_latex_formatting.index:
+    #    for metric in metrics:
+    #        values = metrics_df_for_latex_formatting.loc[row, (slice(None), metric)]
+    #        sorted_values = values.sort_values()
+    #        if len(sorted_values) > 1:
+    #            lowest, second_lowest = sorted_values[:2]
+    #            formatted_values = values.apply(lambda x: apply_formatting(x, lowest, second_lowest))
+    #            metrics_df_for_latex_formatting.loc[row, (slice(None), metric)] = formatted_values
+   #
+    #stacked_df = metrics_df_for_latex_formatting.stack(level=0)
+#
+    ## Step 3: Unstack the previously stacked level
+    #final_df = stacked_df.unstack(level=0)
+    ## TODO Also doesnt work as expected.. (For git reversion: 25 Apr 10o'clock, one hour prior it was working)
+    #final_df = final_df.swaplevel(axis=1).sort_index(axis=1)
+    #final_df = final_df.swaplevel(axis=0).sort_index(axis=0)
+    #latex_table_formatted = final_df.to_latex(escape=False)
     ###############################################################
 
 
     ########## Apply formatting to the std DataFrame ####################
     # TODO Doesnt work as expected
-    std_df_for_latex_formatting = std_df.copy()
-    
-    for row in std_df_for_latex_formatting.index:
-        for metric in ["std_MAE", "std_MSE"]:
-            values = std_df_for_latex_formatting.loc[row, (slice(None), metric)]
-            sorted_values = values.sort_values()
-            if len(sorted_values) > 1:
-                highest, second_highest = sorted_values[-2:]
-                formatted_values = values.apply(lambda x: apply_formatting(x, highest, second_highest))
-                std_df_for_latex_formatting.loc[row, (slice(None), metric)] = formatted_values
-   
-    stacked_df = std_df_for_latex_formatting.stack(level=0)
-
-    # Step 3: Unstack the previously stacked level
-    final_df = stacked_df.unstack(level=0)
-
-    final_df = final_df.swaplevel(axis=1).sort_index(axis=1)
-    final_df = final_df.swaplevel(axis=0).sort_index(axis=0)
-    latex_std_table_formatted = final_df.to_latex(escape=False)
+    #std_df_for_latex_formatting = std_df.copy()
+    #
+    #for row in std_df_for_latex_formatting.index:
+    #    for metric in ["std_MAE", "std_MSE"]:
+    #        values = std_df_for_latex_formatting.loc[row, (slice(None), metric)]
+    #        sorted_values = values.sort_values()
+    #        if len(sorted_values) > 1:
+    #            highest, second_highest = sorted_values[-2:]
+    #            formatted_values = values.apply(lambda x: apply_formatting(x, highest, second_highest))
+    #            std_df_for_latex_formatting.loc[row, (slice(None), metric)] = formatted_values
+   #
+    #stacked_df = std_df_for_latex_formatting.stack(level=0)
+#
+    ## Step 3: Unstack the previously stacked level
+    #final_df = stacked_df.unstack(level=0)
+#
+    #final_df = final_df.swaplevel(axis=1).sort_index(axis=1)
+    #final_df = final_df.swaplevel(axis=0).sort_index(axis=0)
+    #latex_std_table_formatted = final_df.to_latex(escape=False)
     ###############################################################
 
 
     # Save the tables
     file_path_csv_metrics = "./results/benchmark_table_{}_metrics.csv".format(args.exp_name)
     file_path_tex_metrics = "./results/benchmark_table_{}_metrics.tex".format(args.exp_name)
-    file_path_tex_metrics_formatted = "./results/benchmark_table_{}_metrics_formatted.tex".format(args.exp_name)
+    #file_path_tex_metrics_formatted = "./results/benchmark_table_{}_metrics_formatted.tex".format(args.exp_name)
     file_path_csv_epoch_time = "./results/benchmark_table_{}_epoch_time.csv".format(args.exp_name)
     file_path_csv_modelsize_maxmemory = "./results/benchmark_table_{}_modelsize_maxmemory.csv".format(args.exp_name)
     file_path_csv_std = "./results/benchmark_table_{}_std.csv".format(args.exp_name)
-    file_path_tex_std_formatted = "./results/benchmark_table_{}_std_formatted.tex".format(args.exp_name)
+    #file_path_tex_std_formatted = "./results/benchmark_table_{}_std_formatted.tex".format(args.exp_name)
 
     print(metrics_df)
 
@@ -182,10 +182,10 @@ def main():
 
     with open(file_path_tex_metrics, 'w') as file:
         file.write(latex_table)
-    with open(file_path_tex_metrics_formatted, 'w') as file:
-        file.write(latex_table_formatted)
-    with open(file_path_tex_std_formatted, 'w') as file:
-        file.write(latex_std_table_formatted)
+    #with open(file_path_tex_metrics_formatted, 'w') as file:
+    #    file.write(latex_table_formatted)
+    #with open(file_path_tex_std_formatted, 'w') as file:
+    #    file.write(latex_std_table_formatted)
 
 if __name__ == "__main__":
     main()

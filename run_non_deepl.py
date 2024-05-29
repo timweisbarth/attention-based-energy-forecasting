@@ -181,7 +181,7 @@ if __name__ == "__main__":
     # Model and its hyperparameters
     args.model_name = "xgb"
     args.model_params = None
-    args.train_params = None
+    #args.train_params = None
 
     # Prediction
     args.point_forecast = True
