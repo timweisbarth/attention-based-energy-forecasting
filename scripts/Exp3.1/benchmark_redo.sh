@@ -2,7 +2,7 @@
 #SBATCH --job-name="ftM_benchmark_weather_default_3_1"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=a100-galvani
-#SBATCH --time 0-01:00:00 #
+#SBATCH --time 0-02:30:00 #
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=/mnt/qb/work/ludwig/lqb853/slurm_logs/%x-%j.out  # cannot use $WORK 
@@ -16,7 +16,7 @@ nvidia-smi # only if you requested any gpus
 current_folder="Exp3.1"
 
 #Transformer
-for hpo in "720 256 3"; do
+for hpo in "720 256 5"; do
     read pred_len d_model layers <<< $hpo
     srun python3 -u run.py \
     --is_training 1 \
