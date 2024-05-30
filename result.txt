@@ -4018,3 +4018,6 @@ mse:0.291286438703537, mae:0.35006460547447205
 ftM_smard_w_weather_load_sl336_ll0_pl720_iTransformer_dm512_lr0.001_bs64_nh8_el3.0_dl1_df512_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
 mse:0.33313366770744324, mae:0.3786502182483673
 
+ftM_smard_w_weather_load_sl336_ll96_pl720_Transformer_dm256_lr0.0005_bs64_nh8_el5.0_dl5_df1024_fc1_ebtimeF_dtTrue_Exp3.1_iter0  
+mse:0.07434771209955215, mae:0.18536047637462616
+
