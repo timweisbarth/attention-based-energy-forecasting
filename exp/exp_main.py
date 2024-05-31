@@ -54,8 +54,13 @@ class Exp_Main(Exp_Basic):
         data_set, data_loader = data_provider(self.args, flag)
         return data_set, data_loader
 
-    def _select_optimizer(self):
-        model_optim = optim.Adam(self.model.parameters(), lr=self.args.learning_rate)
+    def _select_optimizer(self, optimizer_name):
+        if optimizer_name == 'adam':
+            model_optim = optim.Adam(self.model.parameters(), lr=self.args.learning_rate)
+        elif optimizer_name == 'adamW':
+            model_optim = optim.AdamW(self.model.parameters(), lr=self.args.learning_rate)
+        else:
+            raise ValueError('Not supported optimizer: {0}'.format(optimizer_name))
         return model_optim
 
     def _select_criterion(self):
@@ -135,7 +140,7 @@ class Exp_Main(Exp_Basic):
         print("train_steps", train_steps)
         early_stopping = EarlyStopping(patience=self.args.patience, verbose=True)
 
-        model_optim = self._select_optimizer()
+        model_optim = self._select_optimizer(self.args.optim)
         criterion = self._select_criterion()
 
         scheduler = lr_scheduler.OneCycleLR(optimizer = model_optim,

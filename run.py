@@ -93,6 +93,7 @@ def main():
     parser.add_argument('--output_attention', action='store_true', help='whether to output attention in encoder')
     parser.add_argument('--do_predict', action='store_true', help='whether to predict unseen future data')
     # optimization
+    parser.add_argument('--optim', type=str, default='adam', help='optimizer')
     parser.add_argument('--num_workers', type=int, default=10, help='data loader num workers')
     parser.add_argument('--itr', type=int, default=2, help='experiments times')
     parser.add_argument('--train_epochs', type=int, default=15, help='train epochs') # Caution changed from Autoformer to 15, 100 for PatchTST, iTrans 10
@@ -132,7 +133,7 @@ def main():
     if args.is_training:
         for ii in range(args.itr):
             # setting record of experiments
-            setting = 'ft{}_{}_{}_sl{}_ll{}_pl{}_{}_dm{}_lr{}_bs{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_iter{}'.format(
+            setting = 'ft{}_{}_{}_sl{}_ll{}_pl{}_{}_op{}_ls{}_dm{}_lr{}_bs{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_iter{}'.format(
                 args.features,
                 args.data,
                 args.model_id,
@@ -141,6 +142,8 @@ def main():
                 args.pred_len,
 
                 args.model,
+                args.optim,
+                args.lradj,
                 
                 args.d_model,
                 args.learning_rate,

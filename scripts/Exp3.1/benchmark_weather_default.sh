@@ -16,7 +16,7 @@ nvidia-smi # only if you requested any gpus
 current_folder="Exp3.1"
 
 #Transformer
-for hpo in "24 128 3" "96 128 3" "192 256 6" "336 256 6" "720 256 6"; do
+for hpo in "24 128 3" "96 128 3" "192 256 6" "336 256 6" "720 256 5"; do
     read pred_len d_model layers <<< $hpo
     srun python3 -u run.py \
     --is_training 1 \
