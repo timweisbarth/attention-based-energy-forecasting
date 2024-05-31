@@ -6,7 +6,7 @@ python3 -u run.py \
   --root_path ./data/preproc/ \
   --data_path smard_plus_weather_without_LUandAT.csv \
   --model_id 'load' \
-  --model iTransformer \
+  --model Transformer \
   --data smard_w_weather \
   --including_weather 1 \
   --features M \
@@ -25,6 +25,8 @@ python3 -u run.py \
   --learning_rate 0.0005 \
   --itr 1 \
   --train_epochs 3\
+  --optim "adamW" \
+  --lradj "TST" \
 
 #  python3 -u run.py \
 #  --is_training 1 \

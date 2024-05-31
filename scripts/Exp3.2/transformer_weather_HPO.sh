@@ -16,7 +16,7 @@ nvidia-smi # only if you requested any gpus
 current_folder="Exp3.2"
 
 #Transformer
-for optim in "adam" "adamw";do
+for optim in "adam" "adamW";do
     for lradj in "type1" "TST";do
         for lr in 0.0005 0.001;do
             srun python3 -u run.py \
