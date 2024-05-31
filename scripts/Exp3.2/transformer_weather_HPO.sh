@@ -45,7 +45,7 @@ for optim in "adam" "adamw";do
             --c_out 15 \
             --target "load_DE" \
             --itr 1 \
-            --train_epochs 20 \
+            --train_epochs 15 \
             --patience 6 \
             --optim $optim \
             --lradj $lradj \
