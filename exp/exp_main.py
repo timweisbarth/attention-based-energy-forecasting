@@ -276,7 +276,7 @@ class Exp_Main(Exp_Basic):
 
                 preds.append(pred)
                 trues.append(true)
-                if i % 150 == 0:
+                if i % 300 == 30:
                     # If features is M, then only the target will be plotted
                     input = batch_x.detach().cpu().numpy()
                     if self.args.features == 'M':
