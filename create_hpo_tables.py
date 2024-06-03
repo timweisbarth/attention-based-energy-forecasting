@@ -20,12 +20,12 @@ def main():
     #dirs = [dir for dir in dirs if args.exp_name in dir] TODO: Check if okay to comment out
 
     ##################### Create empty MultiIndex DataFrame ################################
-    param_name_map = {"learning_rate": "lr", "batch_size": "bs", "e_layers": "el", "d_layers": "dl", "d_model": "dm", "seq_len": "sl", "pred_len": "pl"}
+    param_name_map = {"learning_rate": "lr", "batch_size": "bs", "e_layers": "el", "d_layers": "dl", "d_model": "dm", "seq_len": "sl", "pred_len": "pl", "optim": "op", "lradj": "ls"}
     inv_param_name_map = {v: k for k, v in param_name_map.items()}
     column_metrics_index = ["MSE", "MAE", "Epochs", "Time[min]", "Params[Mio.]", "Max_mem[MB]"]
 
     # columns for the hpo table in the order that they will be displayed
-    column_param_index = ["learning_rate", "batch_size", "e_layers", "d_layers", "d_model", "seq_len", "pred_len"]
+    column_param_index = ["learning_rate", "batch_size", "e_layers", "d_layers", "d_model", "seq_len", "pred_len", "optim", "lradj"]
 
     column_index = column_param_index + column_metrics_index
         
@@ -52,7 +52,7 @@ def main():
                 if len(current_param) > 0:
                     _, value = subdir_param.split(f'{current_param[0]}')
                     key, _ = subdir_param.split(f'{value}')
-                    param_values_dict[key] = float(value) if key == "lr" else int(float(value))
+                    param_values_dict[key] = float(value) if key == "lr" else int(float(value)) if (key != "op" and key != "ls") else value
 
             params_values_dict = {inv_param_name_map[k]: [v] for k, v in param_values_dict.items()}
             metrics_values_dict = {"MSE": metrics_vals[1], "MAE": metrics_vals[0], 

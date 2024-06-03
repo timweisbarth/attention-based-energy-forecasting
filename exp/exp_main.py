@@ -56,9 +56,9 @@ class Exp_Main(Exp_Basic):
 
     def _select_optimizer(self, optimizer_name):
         if optimizer_name == 'adam':
-            model_optim = optim.Adam(self.model.parameters(), lr=self.args.learning_rate)
+            model_optim = optim.Adam(self.model.parameters(), lr=self.args.learning_rate, weight_decay=self.args.weight_decay)
         elif optimizer_name == 'adamW':
-            model_optim = optim.AdamW(self.model.parameters(), lr=self.args.learning_rate)
+            model_optim = optim.AdamW(self.model.parameters(), lr=self.args.learning_rate, weight_decay=self.args.weight_decay)
         else:
             raise ValueError('Not supported optimizer: {0}'.format(optimizer_name))
         return model_optim
