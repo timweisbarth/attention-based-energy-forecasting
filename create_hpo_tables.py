@@ -20,7 +20,7 @@ def main():
     #dirs = [dir for dir in dirs if args.exp_name in dir] TODO: Check if okay to comment out
 
     ##################### Create empty MultiIndex DataFrame ################################
-    param_name_map = {"learning_rate": "lr", "batch_size": "bs", "e_layers": "el", "d_layers": "dl", "d_model": "dm", "seq_len": "sl", "pred_len": "pl", "optim": "op", "lradj": "ls"}
+    param_name_map = {"learning_rate": "lr", "batch_size": "bs", "e_layers": "el", "d_layers": "dl", "d_model": "dm", "seq_len": "sl", "pred_len": "pl", "optim": "op", "lradj": "ls", "dropout": "do", "weight_decay": "wd"}
     inv_param_name_map = {v: k for k, v in param_name_map.items()}
     column_metrics_index = ["MSE", "MAE", "Epochs", "Time[min]", "Params[Mio.]", "Max_mem[MB]"]
 
