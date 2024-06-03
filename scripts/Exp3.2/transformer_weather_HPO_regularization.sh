@@ -18,7 +18,7 @@ current_folder="Exp3.2"
 
 #TODO: Choose correct optim!
 #Regularization ca 6h
-# Combination of 0.05 and 0.01 is already test in Exp3.2
+# Combination of 0.05 and 0.01 is already tested in other shell script
 for hpo in "0.05 0.1" "0.2 0.01" "0.2 0.1";do
     for lradj in "type1" "TST";do
         read dropout weight_decay <<< $hpo
