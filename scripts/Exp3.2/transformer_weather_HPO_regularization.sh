@@ -95,7 +95,7 @@ for heads in 16;do
 done
 
 #DoubleDescent? ca4h
-    srun python3 -u run.py \
+srun python3 -u run.py \
     --is_training 1 \
     --des $current_folder \
     --checkpoints ./checkpoints/$current_folder \
