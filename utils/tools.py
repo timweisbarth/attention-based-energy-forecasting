@@ -17,7 +17,6 @@ def adjust_learning_rate(optimizer, scheduler, epoch, args, printout=True):
         }
     elif args.lradj == 'TST':
         lr_adjust = {epoch: scheduler.get_last_lr()[0]}
-
     if epoch in lr_adjust.keys():
         lr = lr_adjust[epoch]
         for param_group in optimizer.param_groups:

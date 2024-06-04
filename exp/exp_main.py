@@ -196,7 +196,10 @@ class Exp_Main(Exp_Basic):
                     model_optim.step()
                     
                 if self.args.lradj == 'TST':
-                    adjust_learning_rate(model_optim, scheduler, epoch + 1, self.args, printout=False)
+                    if (i + 1) % 400 == 0:
+                        adjust_learning_rate(model_optim, scheduler, epoch + 1, self.args, printout=True)
+                    else:
+                        adjust_learning_rate(model_optim, scheduler, epoch + 1, self.args, printout=False)
                     scheduler.step()
             # Fore each epoch, do
             print("Epoch train: {} cost time: {}".format(epoch + 1, time.time() - epoch_time))
