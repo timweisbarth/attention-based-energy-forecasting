@@ -26,7 +26,7 @@ python3 -u run.py \
   --itr 1 \
   --train_epochs 3\
   --optim "adamW" \
-  --lradj "TST" \
+  --lradj TST \
 
 #  python3 -u run.py \
 #  --is_training 1 \

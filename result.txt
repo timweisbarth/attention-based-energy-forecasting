@@ -4051,3 +4051,6 @@ mse:0.1744876652956009, mae:0.3014855980873108
 ftM_smard_w_weather_load_sl336_ll168_pl192_Transformer_opadam_lsTST_wd0.01_do0.05_dm256_lr0.0005_bs64_nh8_el6.0_dl6_df1024_fc1_ebtimeF_dtTrue_Exp3.2_iter0  
 mse:0.13302190601825714, mae:0.2518937885761261
 
+ftM_smard_w_weather_load_sl96_ll0_pl50_Transformer_opadamW_lsTST_wd0.0_do0.05_dm24_lr0.0005_bs32_nh8_el3.0_dl1_df48_fc3_ebtimeF_dtTrue_Testt_iter0  
+mse:0.13609611988067627, mae:0.2612951993942261
+
