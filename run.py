@@ -134,7 +134,7 @@ def main():
     if args.is_training:
         for ii in range(args.itr):
             # setting record of experiments
-            setting = 'ft{}_{}_{}_sl{}_ll{}_pl{}_{}_op{}_ls{}_wd{}_do{}_dm{}_lr{}_bs{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_iter{}'.format(
+            setting = 'ft{}_{}_{}_sl{}_ll{}_pl{}_{}_op{}_ls{}_wd{}_do{}_ep{}_dm{}_lr{}_bs{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_iter{}'.format(
                 args.features,
                 args.data,
                 args.model_id,
@@ -147,6 +147,7 @@ def main():
                 args.lradj,
                 args.weight_decay,
                 args.dropout,
+                args.train_epochs,
                 
                 args.d_model,
                 args.learning_rate,

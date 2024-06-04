@@ -25,7 +25,7 @@ def main():
     column_metrics_index = ["MSE", "MAE", "Epochs", "Time[min]", "Params[Mio.]", "Max_mem[MB]"]
 
     # columns for the hpo table in the order that they will be displayed
-    column_param_index = ["learning_rate", "batch_size", "e_layers", "d_layers", "d_model", "seq_len", "pred_len", "optim", "lradj"]
+    column_param_index = ["learning_rate", "batch_size", "e_layers", "d_layers", "d_model", "seq_len", "pred_len", "optim", "lradj", "dropout", "weight_decay"]
 
     column_index = column_param_index + column_metrics_index
         
@@ -52,7 +52,7 @@ def main():
                 if len(current_param) > 0:
                     _, value = subdir_param.split(f'{current_param[0]}')
                     key, _ = subdir_param.split(f'{value}')
-                    param_values_dict[key] = float(value) if key == "lr" else int(float(value)) if (key != "op" and key != "ls") else value
+                    param_values_dict[key] = float(value) if (key == "lr" or key == "do" or key == "wd") else int(float(value)) if (key != "op" and key != "ls") else value
 
             params_values_dict = {inv_param_name_map[k]: [v] for k, v in param_values_dict.items()}
             metrics_values_dict = {"MSE": metrics_vals[1], "MAE": metrics_vals[0], 
