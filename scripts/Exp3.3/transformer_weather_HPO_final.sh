@@ -52,6 +52,7 @@ for d_model in "64 6" "128 6" "256 3" "64 3"; do
         --dropout 0.05 \
         --weight_decay 0.01 \
 
+    done
 done
 
 #DoubleDescent? ca3h
