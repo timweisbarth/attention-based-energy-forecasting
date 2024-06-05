@@ -1,0 +1,2 @@
+,learning_rate,batch_size,e_layers,d_layers,d_model,seq_len,pred_len,optim,lradj,dropout,weight_decay,MSE,MAE,Epochs,Time[min],Params[Mio.],Max_mem[MB]
+0,0.0001,64,6,6,256,336,192,adamW,TST,0.05,0.1,0.07393792271614075,0.17764903604984283,30,139,11.12,15530.59

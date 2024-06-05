@@ -16,7 +16,7 @@ nvidia-smi # only if you requested any gpus
 current_folder="Exp3.3"
 
 
-for d_model in "64 6" "128 6" "256 3" "64 3"; do
+for hpo in "64 6" "128 6" "256 3" "64 3"; do
     for lr in "0.0005" "0.0001"; do
         read d_model layers <<< $hpo
         srun python3 -u run.py \
@@ -56,37 +56,37 @@ for d_model in "64 6" "128 6" "256 3" "64 3"; do
 done
 
 #DoubleDescent? ca3h
-srun python3 -u run.py \
-    --is_training 1 \
-    --des $current_folder \
-    --checkpoints ./checkpoints/$current_folder \
-    --root_path ./data/preproc/ \
-    --data_path smard_plus_weather_without_LUandAT.csv \
-    --model_id 'multi' \
-    --model Transformer \
-    --data smard_w_weather \
-    --including_weather 1 \
-    --features M \
-    --seq_len 336 \
-    --label_len 168 \
-    --pred_len 192 \
-    --e_layers 6 \
-    --d_layers 6 \
-    --d_model 256 \
-    --d_ff 1024 \
-    --n_heads 8 \
-    --learning_rate 0.0001 \
-    --batch_size 64 \
-    --enc_in 15 \
-    --dec_in 15 \
-    --c_out 15 \
-    --target "load_DE" \
-    --itr 1 \
-    --train_epochs 30 \
-    --patience 30 \
-    --optim adamW \
-    --lradj TST \
-    --dropout 0.05 \
-    --weight_decay 0.1 \
-    --pct_start 0.05 \
+#srun python3 -u run.py \
+#    --is_training 1 \
+#    --des $current_folder \
+#    --checkpoints ./checkpoints/$current_folder \
+#    --root_path ./data/preproc/ \
+#    --data_path smard_plus_weather_without_LUandAT.csv \
+#    --model_id 'multi' \
+#    --model Transformer \
+#    --data smard_w_weather \
+#    --including_weather 1 \
+#    --features M \
+#    --seq_len 336 \
+#    --label_len 168 \
+#    --pred_len 192 \
+#    --e_layers 6 \
+#    --d_layers 6 \
+#    --d_model 256 \
+#    --d_ff 1024 \
+#    --n_heads 8 \
+#    --learning_rate 0.0001 \
+#    --batch_size 64 \
+#    --enc_in 15 \
+#    --dec_in 15 \
+#    --c_out 15 \
+#    --target "load_DE" \
+#    --itr 1 \
+#    --train_epochs 30 \
+#    --patience 30 \
+#    --optim adamW \
+#    --lradj TST \
+#    --dropout 0.05 \
+#    --weight_decay 0.1 \
+#    --pct_start 0.05 \
 
