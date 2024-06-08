@@ -23,8 +23,13 @@ def data_provider(args, flag):
         freq = args.freq
         Data = Dataset_Pred
     else:
-        shuffle_flag = True
-        drop_last = True
+        print(args.final_run_train_on_train_and_val)
+        if args.final_run_train_on_train_and_val and flag == 'val':
+            shuffle_flag = False
+            drop_last = False
+        else:
+            shuffle_flag = True
+            drop_last = True
         batch_size = args.batch_size
         freq = args.freq
 
@@ -36,7 +41,8 @@ def data_provider(args, flag):
         features=args.features,
         target=args.target,
         timeenc=timeenc,
-        freq=freq
+        freq=freq,
+        final_run=args.final_run_train_on_train_and_val
     )
     print(flag, len(data_set))
     data_loader = DataLoader(

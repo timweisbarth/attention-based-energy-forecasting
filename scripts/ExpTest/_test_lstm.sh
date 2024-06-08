@@ -11,23 +11,26 @@ for gucci in 24;do
     --data smard_w_weather \
     --including_weather 1 \
     --features M \
-    --seq_len 96 \
+    --seq_len 8 \
     --label_len 0 \
-    --pred_len 50 \
+    --pred_len 16 \
     --e_layers 3 \
     --d_layers 1 \
     --factor 3 \
     --enc_in 15 \
     --dec_in 15 \
     --c_out 15 \
-    --d_model 24 \
-    --d_ff $(($d_model * 4)) \
+    --d_model 16 \
+    --batch_size 16 \
+    --n_heads 2 \
+    --d_ff 16 \
     --target "load_DE" \
     --learning_rate 0.0005 \
     --itr 1 \
-    --train_epochs 3\
+    --train_epochs 2 \
     --optim "adamW" \
     --lradj TST \
+    --final_run_train_on_train_and_val \
 
 done
 

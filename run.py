@@ -115,9 +115,11 @@ def main():
     # Caution: PatchTST has test_flop (default not used) and embed_type (default: 0, which means no positional encoding)
 
     parser.add_argument('--including_weather', type=bool, default=False, help='Whether there is weather data is included(u100, v100, t2m, d2m, ssrd)')
+    #test
+    parser.add_argument('--final_run_train_on_train_and_val', action='store_true', help='Whether to test on the test set or on the val set')
 
     args = parser.parse_args()
-
+    print("From run", args.final_run_train_on_train_and_val)
     args.use_gpu = True if torch.cuda.is_available() and args.use_gpu else False
 
     if args.use_gpu and args.use_multi_gpu:
@@ -169,6 +171,7 @@ def main():
             exp.train(setting)
 
             print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
+
             exp.test(setting, flag='val')
 
             #if args.do_predict:

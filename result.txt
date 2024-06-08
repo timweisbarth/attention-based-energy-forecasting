@@ -4279,3 +4279,6 @@ mse:0.10065626353025436, mae:0.21866926550865173
 ftM_smard_w_weather_ftM_sl96_ll48_pl192_LSTM_opadamW_lstype1_wd0.1_do0.2_ep15_dm1024_lr0.0001_bs64_nh8_el2.0_dl1_df2048_fc1_ebtimeF_dtTrue_Exp3.5_iter0  
 mse:0.09577243775129318, mae:0.2162962704896927
 
+ftM_smard_w_weather_load_sl8_ll0_pl16_Transformer_opadamW_lsTST_wd0.0_do0.05_ep2_dm16_lr0.0005_bs16_nh2_el3.0_dl1_df16_fc3_ebtimeF_dtTrue_Testt_iter0  
+mse:0.18375752866268158, mae:0.30429425835609436
+

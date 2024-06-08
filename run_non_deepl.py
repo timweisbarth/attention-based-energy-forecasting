@@ -165,15 +165,15 @@ if __name__ == "__main__":
     args.model_params = dotdict({})
     args.train_params = dotdict({})
 
-    args.experiment_name = "Exp3.1"
+    
     args.fix_seed = 2024
     args.itr = 1
 
     # 1 run means run in default setting, multiple runs means test different HPOs as defined in otimization.py
     number_of_runs = 1
 
-    # Data loading
-    args.file_name = "smard_plus_weather_without_LUandAT.csv"
+    
+   
 
     # Preprocessing
     args.scaler_name = "std"
@@ -186,6 +186,12 @@ if __name__ == "__main__":
     # Prediction
     args.point_forecast = True
     args.forecast_setting = "both"
+
+
+    # Exp3.1 and 4 (MultiXL) TODO: Test set
+    #args.experiment_name = "Exp3.1"
+    args.experiment_name = "Exp4"
+    args.file_name = "smard_plus_weather_without_LUandAT.csv"
     args.cols_to_lag = [
         'load_DE', 'solar_gen_DE', 'wind_gen_DE',
         'lat54.125_lon7.375_u100', 'lat54.125_lon7.375_v100', 'lat54.125_lon7.375_t2m', 'lat54.125_lon7.375_ssrd',
@@ -211,6 +217,18 @@ if __name__ == "__main__":
         'wind_gen_DE_50Hertz', 'wind_gen_DE_Amprion',  'wind_gen_DE_TenneT', 'wind_gen_DE_TransnetBW'
     ]]
     args.window_size = 96
+
+    #Exp4 (Load)
+    #args.experiment_name = "Exp4"
+    #args.file_name = "smard_data_DE.csv"
+    #args.cols_to_lag = [
+    #    'load', 'solar_gen', 'wind_gen',
+    #]
+    #args.targets = [[
+    #    'load'
+    #]]
+    #args.window_size = 96
+
     args.stride = 1 # Has to be <= min(window_size, forecast_horizon) and stride * integer = window_size,
     # and stride * integer2 = forecast_horizon
     args.lead_time = 0 # TODO: Not working yet

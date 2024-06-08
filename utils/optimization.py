@@ -34,7 +34,12 @@ class LastValueNaiveRegressor(BaseEstimator, RegressorMixin):
 def train(X_train, y_train, X_val, y_val, model_name, device, train_params):
     
     if model_name == "linreg":
-        #model = LinearRegression()
+        model = LinearRegression()
+        model.fit(X_train, y_train)
+
+        return model
+    
+    elif model_name == "ridge":
         model= Ridge(alpha=1)
         model.fit(X_train, y_train)
 

@@ -138,6 +138,7 @@ class Exp_Main(Exp_Basic):
 
         train_steps = len(train_loader)
         print("train_steps", train_steps)
+        print("val_steps", len(vali_loader))
         early_stopping = EarlyStopping(patience=self.args.patience, verbose=True)
 
         model_optim = self._select_optimizer(self.args.optim)
