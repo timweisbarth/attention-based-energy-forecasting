@@ -11,7 +11,7 @@ warnings.filterwarnings('ignore')
 class SMARD(Dataset):
     def __init__(self, root_path, flag='train', size=None,
                  features='S', data_path='ETTh1.csv',
-                 target='OT', scale=True, timeenc=0, freq='h'):
+                 target='OT', scale=True, timeenc=0, freq='h', final_run=False):
         # size [seq_len, label_len, pred_len]
         # info
         if size == None:
@@ -35,6 +35,9 @@ class SMARD(Dataset):
 
         self.root_path = root_path
         self.data_path = data_path
+
+        self.final_run = final_run
+
         self.__read_data__()
 
     def __read_data__(self):
@@ -63,11 +66,18 @@ class SMARD(Dataset):
 
         assert num_test > 0
         assert num_train  > num_vali > num_test
-        print("num_vali", num_vali)
+
         border1s = [0, num_train - self.seq_len, len(df_raw) - num_test - self.seq_len]
         border2s = [num_train, num_train + num_vali, len(df_raw)]
-        border1 = border1s[self.set_type]
-        border2 = border2s[self.set_type]
+
+
+        if self.final_run:
+            border1 = border1s[self.set_type if self.set_type == 0 else self.set_type + 1]
+            border2 = border2s[self.set_type + 1]
+        else:
+            border1 = border1s[self.set_type]
+            border2 = border2s[self.set_type]
+
         ########################################
 
         ###### Create numpy data based on type of forecasting and scaler ###
@@ -189,17 +199,17 @@ class SMARD_w_WEATHER(Dataset):
 
         assert num_test > 0
         assert num_train  > num_vali > num_test
-        #print("num_vali", num_vali)
+
         border1s = [0, num_train - self.seq_len, len(df_raw) - num_test - self.seq_len]
         border2s = [num_train, num_train + num_vali, len(df_raw)]
+
         if self.final_run:
-            print("set_type", self.set_type)
             border1 = border1s[self.set_type if self.set_type == 0 else self.set_type + 1]
             border2 = border2s[self.set_type + 1]
         else:
             border1 = border1s[self.set_type]
             border2 = border2s[self.set_type]
-        print(border1, border2)
+
         ########################################
 
         ###### Create numpy data based on type of forecasting and scaler ###

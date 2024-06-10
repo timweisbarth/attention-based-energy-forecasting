@@ -101,8 +101,8 @@ def main():
         modelsize_maxmemory_df.loc[(target, horizon), (model, 'max_mem[MB]')] = int(avg_max_memory) if not np.isnan(avg_max_memory) else np.nan
 
         # std_df
-        std_df.loc[(target, horizon), (model, 'std_MAE')] = round(np.std(maes), 3) if len(maes) > 1 else np.nan
-        std_df.loc[(target, horizon), (model, 'std_MSE')] = round(np.std(mses), 3) if len(mses) > 1 else np.nan
+        std_df.loc[(target, horizon), (model, 'std_MAE')] = round(np.std(maes), 4) if len(maes) > 1 else np.nan
+        std_df.loc[(target, horizon), (model, 'std_MSE')] = round(np.std(mses), 4) if len(mses) > 1 else np.nan
 
 
     #print(metrics_df)

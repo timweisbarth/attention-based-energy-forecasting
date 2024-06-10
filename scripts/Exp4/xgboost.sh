@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name="ftS_and_M_xgboost_1"
+#SBATCH --job-name="TestSet_xgboost_load"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=2080-galvani
 #SBATCH --time 1-20:00:00 #

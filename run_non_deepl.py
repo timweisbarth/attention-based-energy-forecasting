@@ -190,44 +190,44 @@ if __name__ == "__main__":
 
     # Exp3.1 and 4 (MultiXL)
     #args.experiment_name, args.final_run_train_on_train_and_val = "Exp3.1", False
-    args.experiment_name, args.final_run_train_on_train_and_val = "Exp4", True
-    args.file_name = "smard_plus_weather_without_LUandAT.csv"
-    args.cols_to_lag = [
-        'load_DE', 'solar_gen_DE', 'wind_gen_DE',
-        'lat54.125_lon7.375_u100', 'lat54.125_lon7.375_v100', 'lat54.125_lon7.375_t2m', 'lat54.125_lon7.375_ssrd',
-        'lat54.125_lon10.375_u100', 'lat54.125_lon10.375_v100', 'lat54.125_lon10.375_t2m', 'lat54.125_lon10.375_ssrd',
-        'lat54.125_lon13.375_u100', 'lat54.125_lon13.375_v100', 'lat54.125_lon13.375_t2m', 'lat54.125_lon13.375_ssrd',
-        'lat52.125_lon7.375_u100', 'lat52.125_lon7.375_v100', 'lat52.125_lon7.375_t2m', 'lat52.125_lon7.375_ssrd',
-        'lat52.125_lon10.375_u100', 'lat52.125_lon10.375_v100', 'lat52.125_lon10.375_t2m', 'lat52.125_lon10.375_ssrd',
-        'lat52.125_lon13.375_u100', 'lat52.125_lon13.375_v100', 'lat52.125_lon13.375_t2m', 'lat52.125_lon13.375_ssrd',
-        'lat50.125_lon7.375_u100', 'lat50.125_lon7.375_v100', 'lat50.125_lon7.375_t2m', 'lat50.125_lon7.375_ssrd',
-        'lat50.125_lon10.375_u100', 'lat50.125_lon10.375_v100', 'lat50.125_lon10.375_t2m', 'lat50.125_lon10.375_ssrd',
-        'lat50.125_lon13.375_u100', 'lat50.125_lon13.375_v100', 'lat50.125_lon13.375_t2m', 'lat50.125_lon13.375_ssrd',
-        'lat48.125_lon7.375_u100', 'lat48.125_lon7.375_v100', 'lat48.125_lon7.375_t2m', 'lat48.125_lon7.375_ssrd', 
-        'lat48.125_lon10.375_u100', 'lat48.125_lon10.375_v100', 'lat48.125_lon10.375_t2m', 'lat48.125_lon10.375_ssrd',
-        'lat48.125_lon13.375_u100', 'lat48.125_lon13.375_v100', 'lat48.125_lon13.375_t2m', 'lat48.125_lon13.375_ssrd',
-        'load_DE_50Hertz', 'load_DE_Amprion', 'load_DE_TenneT', 'load_DE_TransnetBW', 
-        'solar_gen_DE_50Hertz',  'solar_gen_DE_Amprion', 'solar_gen_DE_TenneT', 'solar_gen_DE_TransnetBW',
-        'wind_gen_DE_50Hertz', 'wind_gen_DE_Amprion', 'wind_gen_DE_TenneT', 'wind_gen_DE_TransnetBW'
-    ]
-    args.targets = [[
-        'load_DE', 'solar_gen_DE', 'wind_gen_DE',
-        'load_DE_50Hertz', 'load_DE_Amprion', 'load_DE_TenneT', 'load_DE_TransnetBW',
-        'solar_gen_DE_50Hertz', 'solar_gen_DE_Amprion', 'solar_gen_DE_TenneT',  'solar_gen_DE_TransnetBW', 
-        'wind_gen_DE_50Hertz', 'wind_gen_DE_Amprion',  'wind_gen_DE_TenneT', 'wind_gen_DE_TransnetBW'
-    ]]
-    args.window_size = 96
-
-    #Exp4 (Load)
     #args.experiment_name, args.final_run_train_on_train_and_val = "Exp4", True
-    #args.file_name = "smard_data_DE.csv"
+    #args.file_name = "smard_plus_weather_without_LUandAT.csv"
     #args.cols_to_lag = [
-    #    'load', 'solar_gen', 'wind_gen',
+    #    'load_DE', 'solar_gen_DE', 'wind_gen_DE',
+    #    'lat54.125_lon7.375_u100', 'lat54.125_lon7.375_v100', 'lat54.125_lon7.375_t2m', 'lat54.125_lon7.375_ssrd',
+    #    'lat54.125_lon10.375_u100', 'lat54.125_lon10.375_v100', 'lat54.125_lon10.375_t2m', 'lat54.125_lon10.375_ssrd',
+    #    'lat54.125_lon13.375_u100', 'lat54.125_lon13.375_v100', 'lat54.125_lon13.375_t2m', 'lat54.125_lon13.375_ssrd',
+    #    'lat52.125_lon7.375_u100', 'lat52.125_lon7.375_v100', 'lat52.125_lon7.375_t2m', 'lat52.125_lon7.375_ssrd',
+    #    'lat52.125_lon10.375_u100', 'lat52.125_lon10.375_v100', 'lat52.125_lon10.375_t2m', 'lat52.125_lon10.375_ssrd',
+    #    'lat52.125_lon13.375_u100', 'lat52.125_lon13.375_v100', 'lat52.125_lon13.375_t2m', 'lat52.125_lon13.375_ssrd',
+    #    'lat50.125_lon7.375_u100', 'lat50.125_lon7.375_v100', 'lat50.125_lon7.375_t2m', 'lat50.125_lon7.375_ssrd',
+    #    'lat50.125_lon10.375_u100', 'lat50.125_lon10.375_v100', 'lat50.125_lon10.375_t2m', 'lat50.125_lon10.375_ssrd',
+    #    'lat50.125_lon13.375_u100', 'lat50.125_lon13.375_v100', 'lat50.125_lon13.375_t2m', 'lat50.125_lon13.375_ssrd',
+    #    'lat48.125_lon7.375_u100', 'lat48.125_lon7.375_v100', 'lat48.125_lon7.375_t2m', 'lat48.125_lon7.375_ssrd', 
+    #    'lat48.125_lon10.375_u100', 'lat48.125_lon10.375_v100', 'lat48.125_lon10.375_t2m', 'lat48.125_lon10.375_ssrd',
+    #    'lat48.125_lon13.375_u100', 'lat48.125_lon13.375_v100', 'lat48.125_lon13.375_t2m', 'lat48.125_lon13.375_ssrd',
+    #    'load_DE_50Hertz', 'load_DE_Amprion', 'load_DE_TenneT', 'load_DE_TransnetBW', 
+    #    'solar_gen_DE_50Hertz',  'solar_gen_DE_Amprion', 'solar_gen_DE_TenneT', 'solar_gen_DE_TransnetBW',
+    #    'wind_gen_DE_50Hertz', 'wind_gen_DE_Amprion', 'wind_gen_DE_TenneT', 'wind_gen_DE_TransnetBW'
     #]
     #args.targets = [[
-    #    'load'
+    #    'load_DE', 'solar_gen_DE', 'wind_gen_DE',
+    #    'load_DE_50Hertz', 'load_DE_Amprion', 'load_DE_TenneT', 'load_DE_TransnetBW',
+    #    'solar_gen_DE_50Hertz', 'solar_gen_DE_Amprion', 'solar_gen_DE_TenneT',  'solar_gen_DE_TransnetBW', 
+    #    'wind_gen_DE_50Hertz', 'wind_gen_DE_Amprion',  'wind_gen_DE_TenneT', 'wind_gen_DE_TransnetBW'
     #]]
     #args.window_size = 96
+
+    #Exp4 (Load)
+    args.experiment_name, args.final_run_train_on_train_and_val = "Exp4", True
+    args.file_name = "smard_data_DE.csv"
+    args.cols_to_lag = [
+        'load', 'solar_gen', 'wind_gen',
+    ]
+    args.targets = [[
+        'load'
+    ]]
+    args.window_size = 336
 
     args.stride = 1 # Has to be <= min(window_size, forecast_horizon) and stride * integer = window_size,
     # and stride * integer2 = forecast_horizon

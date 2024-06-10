@@ -119,7 +119,6 @@ def main():
     parser.add_argument('--final_run_train_on_train_and_val', action='store_true', help='Whether to test on the test set or on the val set')
 
     args = parser.parse_args()
-    print("From run", args.final_run_train_on_train_and_val)
     args.use_gpu = True if torch.cuda.is_available() and args.use_gpu else False
 
     if args.use_gpu and args.use_multi_gpu:
