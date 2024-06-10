@@ -1,10 +1,10 @@
 Model,,iTransformer,iTransformer,PatchTST,PatchTST,Autoformer,Autoformer,Informer,Informer,Transformer,Transformer,TSMixer,TSMixer,DLinear,DLinear,LSTM,LSTM,XGBoost,XGBoost,Ridge,Ridge,Linear Regression,Linear Regression,Dummy,Dummy
 Metric,,epochs,time[min],epochs,time[min],epochs,time[min],epochs,time[min],epochs,time[min],epochs,time[min],epochs,time[min],epochs,time[min],epochs,time[min],epochs,time[min],epochs,time[min],epochs,time[min]
 Target,Horizon,,,,,,,,,,,,,,,,,,,,,,,,
-multi,24,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,0,-,-,-,-
-multi,96,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,1,-,-,-,-
-multi,192,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,1,-,-,-,-
-multi,336,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,0,-,-,-,-
+multi,24,-,-,-,-,-,-,-,-,7,15,-,-,-,-,-,-,,62,,0,-,-,-,-
+multi,96,-,-,-,-,-,-,-,-,9,23,-,-,-,-,-,-,-,-,,1,-,-,-,-
+multi,192,-,-,-,-,-,-,-,-,6,34,-,-,-,-,-,-,-,-,,1,-,-,-,-
+multi,336,-,-,-,-,-,-,-,-,6,45,-,-,-,-,-,-,-,-,,0,-,-,-,-
 multi,720,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,0,-,-,-,-
 load,24,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,0,,0,-,-
 load,96,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,0,,0,-,-

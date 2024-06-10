@@ -1,10 +1,10 @@
 Model,,iTransformer,iTransformer,PatchTST,PatchTST,Autoformer,Autoformer,Informer,Informer,Transformer,Transformer,TSMixer,TSMixer,DLinear,DLinear,LSTM,LSTM,XGBoost,XGBoost,Ridge,Ridge,Linear Regression,Linear Regression,Dummy,Dummy
 Metric,,params[Mio.],max_mem[MB],params[Mio.],max_mem[MB],params[Mio.],max_mem[MB],params[Mio.],max_mem[MB],params[Mio.],max_mem[MB],params[Mio.],max_mem[MB],params[Mio.],max_mem[MB],params[Mio.],max_mem[MB],params[Mio.],max_mem[MB],params[Mio.],max_mem[MB],params[Mio.],max_mem[MB],params[Mio.],max_mem[MB]
 Target,Horizon,,,,,,,,,,,,,,,,,,,,,,,,
-multi,24,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,,-,-,-,-
-multi,96,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,,-,-,-,-
-multi,192,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,,-,-,-,-
-multi,336,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,,-,-,-,-
+multi,24,-,-,-,-,-,-,-,-,5.6,5204,-,-,-,-,-,-,,0,,,-,-,-,-
+multi,96,-,-,-,-,-,-,-,-,5.6,6289,-,-,-,-,-,-,-,-,,,-,-,-,-
+multi,192,-,-,-,-,-,-,-,-,11.1,15530,-,-,-,-,-,-,-,-,,,-,-,-,-
+multi,336,-,-,-,-,-,-,-,-,11.1,21356,-,-,-,-,-,-,-,-,,,-,-,-,-
 multi,720,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,,-,-,-,-
 load,24,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,,,,-,-
 load,96,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,,,,,-,-

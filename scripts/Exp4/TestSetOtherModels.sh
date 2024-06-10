@@ -43,7 +43,7 @@ for pred_len in 24 96 192 336 720; do
     --train_epochs 10 \
     --patience 3 \
     --optim adamW \
-    --lradj "OneCycle" \
+    --lradj "TST" \
     --weight_decay 0.01 \
     --dropout 0.05 \
     --pct_start 0.05 \
