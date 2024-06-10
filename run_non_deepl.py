@@ -40,7 +40,7 @@ def pipeline(args):
 
 
                 # General preprocessing
-                df_train, df_val, df_test = pp.all_preproc_steps(df, t, args.scaler, args.window_size)
+                df_train, df_val, df_test = pp.all_preproc_steps(df, t, args.scaler, args.window_size, args.final_run_train_on_train_and_val)
 
 
                 # Check if CUDA is available
@@ -189,8 +189,8 @@ if __name__ == "__main__":
 
 
     # Exp3.1 and 4 (MultiXL) TODO: Test set
-    #args.experiment_name = "Exp3.1"
-    args.experiment_name = "Exp4"
+    #args.experiment_name, args.final_run_train_on_train_and_val = "Exp3.1", False
+    args.experiment_name, args.final_run_train_on_train_and_val = "Exp4", True
     args.file_name = "smard_plus_weather_without_LUandAT.csv"
     args.cols_to_lag = [
         'load_DE', 'solar_gen_DE', 'wind_gen_DE',
@@ -219,7 +219,7 @@ if __name__ == "__main__":
     args.window_size = 96
 
     #Exp4 (Load)
-    #args.experiment_name = "Exp4"
+    #args.experiment_name, args.final_run_train_on_train_and_val = "Exp4", True
     #args.file_name = "smard_data_DE.csv"
     #args.cols_to_lag = [
     #    'load', 'solar_gen', 'wind_gen',
@@ -233,6 +233,7 @@ if __name__ == "__main__":
     # and stride * integer2 = forecast_horizon
     args.lead_time = 0 # TODO: Not working yet
     args.forecast_horizons = [24, 96, 192, 336, 720]
+    
 
     # Plotting
     args.plot = False

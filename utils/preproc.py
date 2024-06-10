@@ -11,7 +11,7 @@ import timefeatures as tf
 
 
 
-def all_preproc_steps(df, cols_to_predict, scaler, w):
+def all_preproc_steps(df, cols_to_predict, scaler, w, final_run_train_on_train_and_val):
     """Apply all preprocessing steps. See docs of individual functions."""
 
     
@@ -19,7 +19,7 @@ def all_preproc_steps(df, cols_to_predict, scaler, w):
     df = preproc1_nans(df)
     df = preproc2_time_features(df)
     
-    df_train, df_val, df_test = train_val_test_split(df, w)
+    df_train, df_val, df_test = train_val_test_split(df, w, final_run_train_on_train_and_val)
     df_train, df_val, df_test = scale_data(scaler, df_train, df_val, df_test, cols_to_predict)
 
     return df_train, df_val, df_test
@@ -110,7 +110,7 @@ def preproc2_time_features(df):
 
     return df
 
-def train_val_test_split(df, w):
+def train_val_test_split(df, w, final_run_train_on_train_and_val=False):
     """
     Split the df in a Train (2015-2017), Validation (2018) 
     and Test (2019) set
@@ -125,14 +125,20 @@ def train_val_test_split(df, w):
     tuple pd.DataFrame, pd.DataFrame, pd.DataFrame 
         Train, validation and test data
     """
-    
+    if final_run_train_on_train_and_val:
+        last_year_train_set = 2022
+    else:
+        last_year_train_set = 2020
 
-    df_train = df[df["year"] < 2021] # 7 years
+    df_train = df[df["year"] <= last_year_train_set] 
 
     # Validation set consists of years 2021 and 2022
     # We can take last w elements from train set without information leakage
     df_val1 = df_train[-w:]
-    df_val2 = df[(df["year"] == 2021) | (df["year"] == 2022)] # 2 years
+    if final_run_train_on_train_and_val:
+        df_val2 = df[df["year"] > 2022] # 1 year
+    else:
+        df_val2 = df[(df["year"] == 2021) | (df["year"] == 2022)] # 2 years
     df_val = pd.concat((df_val1, df_val2), axis=0)
 
     # Test set consists of year 2023
