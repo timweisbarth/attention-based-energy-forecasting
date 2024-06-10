@@ -40,8 +40,9 @@ def train(X_train, y_train, X_val, y_val, model_name, device, train_params):
         return model
     
     elif model_name == "ridge":
-        model= Ridge(alpha=1)
+        model= Ridge(alpha=10)
         model.fit(X_train, y_train)
+        print("Training Ridge")
 
         return model
     
