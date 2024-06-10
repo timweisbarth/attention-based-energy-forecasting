@@ -188,7 +188,7 @@ if __name__ == "__main__":
     args.forecast_setting = "both"
 
 
-    # Exp3.1 and 4 (MultiXL) TODO: Test set
+    # Exp3.1 and 4 (MultiXL)
     #args.experiment_name, args.final_run_train_on_train_and_val = "Exp3.1", False
     args.experiment_name, args.final_run_train_on_train_and_val = "Exp4", True
     args.file_name = "smard_plus_weather_without_LUandAT.csv"

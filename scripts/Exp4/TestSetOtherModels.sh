@@ -15,7 +15,6 @@ nvidia-smi # only if you requested any gpus
 #current_folder=$(echo "${0}" | awk -F'/' '{for(i=1; i<=NF; i++) if($i ~ /^Exp/) print $i}')
 current_folder="Exp4"
 
-# Watch out for Scheduler and epoch number! & Epochs
 
 # Multi XL, LSTM, epochs reduced due to OneCycle (reduction according to Exp3.5)
 for pred_len in 24 96 192 336 720; do
