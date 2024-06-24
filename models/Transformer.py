@@ -60,10 +60,14 @@ class Model(nn.Module):
         # x_enc (batch_size, sl, enc_in), x_mark_enc (batch_size, sl, time_f)
         # x_dec (batch_size, ll+pl, dec_in), x_mark_dec (batch_size, ll+pl, time_f)
         # masks = None, None, None
-        
-        
+        #print("x_enc")
+        #print(x_enc.shape)
+        #print(x_mark_enc.shape)
         enc_out = self.enc_embedding(x_enc, x_mark_enc) # (batch_size, sl, d_model)
         enc_out, attns = self.encoder(enc_out, attn_mask=enc_self_mask) # (batch_size, sl, d_model)
+        #print("x_dec")
+        #print(x_dec.shape)
+        #print(x_mark_dec.shape)
         
         dec_out = self.dec_embedding(x_dec, x_mark_dec) # (batch_size, ll+pl, d_model)
         dec_out = self.decoder(dec_out, enc_out, x_mask=dec_self_mask, cross_mask=dec_enc_mask) # (batch_size, ll+pl, c_out)

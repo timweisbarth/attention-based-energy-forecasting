@@ -58,6 +58,7 @@ class Model(nn.Module):
             x_enc /= stdev
 
         _, _, N = x_enc.shape # B L N
+        #print(N)
         # B: batch_size;    E: d_model; 
         # L: seq_len;       S: pred_len;
         # N: number of variate (tokens), can also includes covariates
@@ -84,4 +85,5 @@ class Model(nn.Module):
 
     def forward(self, x_enc, x_mark_enc, x_dec, x_mark_dec, mask=None):
         dec_out = self.forecast(x_enc, x_mark_enc, x_dec, x_mark_dec)
+        #print(dec_out.shape)
         return dec_out[:, -self.pred_len:, :]  # [B, L, D]
