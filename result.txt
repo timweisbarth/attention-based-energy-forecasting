@@ -4408,3 +4408,6 @@ mse:0.9928662776947021, mae:0.7964046597480774
 ftMS_smard_load_sl24_ll0_pl24_iTransformer_opadam_lstype1_wd0.0_do0.0_ep5_dm64_lr0.0005_bs32_nh4_el3.0_dl3_df64_fc3_ebtimeF_dtTrue_Exp2.7.1_iter0  
 mse:0.13697689771652222, mae:0.2929116189479828
 
+ftMS_smard_load_sl24_ll24_pl24_Autoformer_opadam_lstype1_wd0.0_do0.0_ep5_dm64_lr0.0005_bs32_nh4_el3.0_dl3_df64_fc3_ebtimeF_dtTrue_Exp2.7.1_iter0  
+mse:0.09432496130466461, mae:0.24458475410938263
+
