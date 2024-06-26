@@ -1,48 +1,27 @@
+#!/bin/bash
+#SBATCH --job-name="ftS_patchtst_HPO_192"
+#SBATCH --gres=gpu:1
+#SBATCH --partition=2080-galvani
+#SBATCH --time 1-23:00:00 #
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --output=/mnt/qb/work/ludwig/lqb853/slurm_logs/%x-%j.out  # cannot use $WORK 
+#SBATCH --error=/mnt/qb/work/ludwig/lqb853/slurm_logs/%x_%j.err
 
+# useful for debugging
+scontrol show job $SLURM_JOB_ID
+nvidia-smi # only if you requested any gpus
 
-current_folder=$(echo "${0}" | awk -F'/' '{for(i=1; i<=NF; i++) if($i ~ /^Exp/) print $i}')
-
-
-#python3 -u run.py \
-#    --is_training 1 \
-#    --des $current_folder \
-#    --checkpoints ./checkpoints/$current_folder \
-#    --root_path ./data/preproc/ \
-#    --data_path covariates.csv \
-#    --model_id 'load' \
-#    --model TSMixer\
-#    --data smard \
-#    --features MS \
-#    --seq_len 24 \
-#    --label_len 24 \
-#    --pred_len 24 \
-#    --e_layers 3 \
-#    --d_layers 3 \
-#    --d_model 16 \
-#    --d_ff  32 \
-#    --n_heads 4 \
-#    --learning_rate 0.0005 \
-#    --batch_size 32 \
-#    --factor 3 \
-#    --enc_in 3 \
-#    --dec_in 3\
-#    --c_out 1 \
-#    --target "load" \
-#    --itr 1 \
-#    --train_epochs 5 \
-#    --patience 2 \
-
-
-#current_folder="ExpTest"
+current_folder="Exp2.11"
 
 # lr: larger because training took pretty long
 for pred_len in 192; do
     for layers in "3" "6"; do
-        for hpo in "32 4" "128 16" "256 16"; do
+        for hpo in "64 8" "128 16" "256 16"; do
             for seq_len in 336 512; do
                 for lr in 0.001 0.0005; do
                     read d_model n_heads <<< $hpo
-                    python3 -u run.py \
+                    srun python3 -u run.py \
                       --is_training 1 \
                       --des $current_folder \
                       --checkpoints ./checkpoints/$current_folder \
