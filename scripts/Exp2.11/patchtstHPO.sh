@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name="ftS_patchtst_HPO_192"
-#SBATCH --gres=gpu:2080:1
+#SBATCH --gres=gpu:1
 #SBATCH --partition=2080-galvani
 #SBATCH --time 1-23:00:00 #
 #SBATCH --nodes=1
