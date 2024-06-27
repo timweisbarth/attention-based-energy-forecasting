@@ -26,12 +26,12 @@ for pred_len in 24 96 192 336 720; do
       --model PatchTST \
       --data smard \
       --features S \
-      --seq_len $seq_len \
+      --seq_len 512 \
       --pred_len $pred_len \
-      --e_layers $layers \
-      --n_heads $n_heads \
-      --d_model $d_model \
-      --d_ff $(($d_model * 2))  \
+      --e_layers 3 \
+      --n_heads 16 \
+      --d_model 128 \
+      --d_ff 256  \
       --enc_in 1 \
       --c_out 1 \
       --dropout 0.2 \
