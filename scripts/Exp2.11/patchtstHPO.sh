@@ -17,7 +17,7 @@ current_folder="Exp2.11"
 # lr: larger because training took pretty long
 for pred_len in 192; do
     for layers in "3" "6"; do
-        for hpo in "64 8" "128 16" "256 16"; do
+        for hpo in "32 4" "512 16"; do
             for seq_len in 336 512; do
                 for lr in 0.001 0.0005; do
                     read d_model n_heads <<< $hpo
@@ -55,3 +55,10 @@ for pred_len in 192; do
         done
     done
 done
+
+
+#for pred_len in 192; do
+#    for layers in "3" "6"; do
+#        for hpo in "64 8" "128 16" "256 16"; do
+#            for seq_len in 336 512; do
+#                for lr in 0.001 0.0005; do
