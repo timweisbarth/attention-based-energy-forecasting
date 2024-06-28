@@ -4591,3 +4591,18 @@ mse:0.07509975135326385, mae:0.19019857048988342
 ftS_smard_load_sl512_ll48_pl192_PatchTST_opadam_lsTST_wd0.0_do0.2_ep50_dm512_lr0.0001_bs32_nh16_el6.0_dl1_df1024_fc1_ebtimeF_dtTrue_Exp2.11_iter0  
 mse:0.07168886065483093, mae:0.1891106814146042
 
+ftS_smard_load_sl512_ll48_pl24_PatchTST_opadam_lsTST_wd0.0_do0.2_ep50_dm128_lr0.001_bs32_nh16_el3.0_dl1_df256_fc1_ebtimeF_dtTrue_Exp4_iter0  
+mse:0.02483849786221981, mae:0.10569082200527191
+
+ftS_smard_load_sl512_ll48_pl96_PatchTST_opadam_lsTST_wd0.0_do0.2_ep50_dm128_lr0.001_bs32_nh16_el3.0_dl1_df256_fc1_ebtimeF_dtTrue_Exp4_iter0  
+mse:0.05508268624544144, mae:0.1603071540594101
+
+ftS_smard_load_sl512_ll48_pl192_PatchTST_opadam_lsTST_wd0.0_do0.2_ep50_dm128_lr0.001_bs32_nh16_el3.0_dl1_df256_fc1_ebtimeF_dtTrue_Exp4_iter0  
+mse:0.07319216430187225, mae:0.1841852217912674
+
+ftS_smard_load_sl512_ll48_pl336_PatchTST_opadam_lsTST_wd0.0_do0.2_ep50_dm128_lr0.001_bs32_nh16_el3.0_dl1_df256_fc1_ebtimeF_dtTrue_Exp4_iter0  
+mse:0.06377369910478592, mae:0.17426328361034393
+
+ftS_smard_load_sl512_ll48_pl720_PatchTST_opadam_lsTST_wd0.0_do0.2_ep50_dm128_lr0.001_bs32_nh16_el3.0_dl1_df256_fc1_ebtimeF_dtTrue_Exp4_iter0  
+mse:0.0636892169713974, mae:0.17497138679027557
+
