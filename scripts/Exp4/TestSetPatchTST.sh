@@ -2,7 +2,7 @@
 #SBATCH --job-name="ftS_patchtst_HPO_192"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=2080-galvani
-#SBATCH --time 1-23:00:00 #
+#SBATCH --time 0-14:00:00 #
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=/mnt/qb/work/ludwig/lqb853/slurm_logs/%x-%j.out  # cannot use $WORK 
@@ -41,7 +41,7 @@ for pred_len in 24 96 192 336 720; do
       --lradj 'TST' \
       --pct_start 0.2 \
       --batch_size 32 \
-      --learning_rate $lr \
+      --learning_rate 0.001 \
       --target "load" \
       --itr 1 \
       --final_run_train_on_train_and_val \
