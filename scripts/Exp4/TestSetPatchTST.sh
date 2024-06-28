@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name="ftS_patchtst_HPO_192"
+#SBATCH --job-name="ftS_patchtst_test_set"
 #SBATCH --gres=gpu:1
 #SBATCH --partition=2080-galvani
 #SBATCH --time 0-14:00:00 #
