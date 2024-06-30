@@ -27,9 +27,11 @@ The ./scripts/Expxx.../ folder contains shell scripts and IPython notebooks with
 |                               | Exp3.5_.../analysis_HPO_LSTM_EED.ipynb            |                   | Table 3.9 |
 | Chapter 4: Test set           | Exp4_.../analysis_benchmark_test_set.ipynb        | Figure 3.12       | Table 3.10|
 
+The checkpoints folder contains the checkpoints of the model parameters (if saved). However in most cases it only contains the train vs. val loss plot of each model run. The results folder contains the forecast and ground truth of each experiment. The naming convention of the folders can be found in the setting variable of run.py which is based on the parser arguments of the run.py file. 
+
 # How to use
 
-Each shell scripts can be executed on the cluster via the sbatch command in order to reproduce an experiment. The IPython notebooks can be executet on a local machine. New experiment can be conducted following the convention of existing shell scripts. For this create a new folder in ./scritps/ following the naming convention Expxx_xx_xx and execute it from the thesis2 folder. Experiments on new data require a new class in the data_loader.py file.
+In order to reproduce an experiment, executed the ./Expxx_.../....sh file via sbatch on the cluster. The IPython notebooks can be executed on a local machine. New experiment can be conducted following the convention of existing shell scripts. For this create a new folder in ./scritps/ following the naming convention Expxx_... . Experiments on new data require a new class in the data_loader.py file.
 
 The results of the experiment can be loaded in an csv file. If the experiment contains different models, run python3 create_benchmark_tables.py --exp_name "Expxx". If multiple runs for one model are conducted, run python3 create_hpo_tables.py --exp_name "Expxx". These created csv files can be analysed as shown in the ./scripts/Expxx folders.
 
@@ -41,9 +43,7 @@ The analysis IPython files may raise errors due to certain features present/abse
 
 # Details
 
-This project contains two pipelines. The pytorch architectures (Attention-based models, DLinear, LSTM and TSMixer) are exectuted via shell scripts that call run.py which in turn calls exp_main.py. The second pipeline is for XGBoost and Linear Regression and is executed through shell scripts or IPython notebooks that call run_non_deepl.py. The checkpoints folder contains the checkpoints of the model parameters (if saved). However in most cases it only contains the train vs. val loss plot of each model run. The results folder contains the forecast and ground truth of each experiment. The naming convention of the folders can be found in the setting variable of run.py which is based on the parser arguments of the same document. 
-
-# Map chapters to experiments, figures and tables
+This project contains two pipelines. The pytorch architectures (Attention-based models, DLinear, LSTM and TSMixer) are exectuted via shell scripts that call run.py which in turn calls exp_main.py. The second pipeline is for XGBoost and Linear Regression and is executed through shell scripts or IPython notebooks that call run_non_deepl.py.
 
 
 
