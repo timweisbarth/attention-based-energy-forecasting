@@ -1,0 +1,1 @@
+Check how repeat model performs on wind data to potentially support argument that wind is too stochastic
