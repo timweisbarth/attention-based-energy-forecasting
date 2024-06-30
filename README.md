@@ -1,31 +1,10 @@
-# Thesis
+# "Attention-Based Multi-Horizon Energy Forecasting: A Case Study on the German Transmission Grid"
 
-This is the repository of my thesis "Attention-Based Multi-Horizon Energy Forecasting: A Case Study on the Transmission Grid" and is based on the Github repository of Autoformer. 
+This is the repository of my thesis "Attention-Based Multi-Horizon Energy Forecasting: A Case Study on the German Transmission Grid" and is based on the Github repository of Autoformer. 
 
 ## Overview
 
-The ./scripts/Expxx.../ folder contains shell scripts and IPython notebooks with the configurations of each model run. It also contains an IPython notebook with the analysis. The mapping between the repositories folders and the thesis' chapters, figures and tables can be found below.
-
-| Thesis chapter  | Repository folder ./scripts/... | Figure | Tables |
-| ----------------------------- | ------------------------------------------------- | ----------------- | --------- |
-| Chapter 2.4: Data             | Exp0_.../data_exploration_smard_DE.ipynb          | Figure 2.6        |           |
-| Chapter 3.1: Benchmark        | Exp1_.../analysis_default_benchmark_ED.ipynb      | Figure 3.1        | Table 3.1 |
-|                               | Exp1.2_...                                        |                   |           |
-|                               | Exp2_...                                          |                   |           |
-| Chapter 3.2: HPO for Benchmark| Exp0_.../data_exploration_smard_DE.ipynb          | Figure 3.2        |           |
-|                               | Exp2.xx_.../....sh scripts                        |                   | Table 3.2 |
-|                               | Exp2.5_.../analysis_HPO_transformer_h24_ED.ipynb  | Figure 3.3, 3.4   | Table 3.3 |
-|                               | Exp2.6_.../analysis_HPO_transformer_h336_ED.ipynb | Figure 3.3, 3.4   | Table 3.3 |
-|                               | Exp2.8_.../analysis_HPO_itransformer_h24_ED.ipynb | Figure 3.5, 3.6   | Table 3.4 |
-|                               | Exp2.9_.../analysis_HPO_itransformer_h336_ED.ipynb| Figure 3.5, 3.6   | Table 3.4 |
-|                               | Exp2.11_.../analysis_HPO_patchtst_h192_ED.ipynb   | Figure 3.7        | Table 3.5 |
-|                               | Exp2.10_.../analysis_HPO_baselines_ED.ipynb       | Table 3.6         |           |
-| Chapter 3.3: Benchmark EED    | Exp3.1_.../analysis_experiments_weather_EED.ipynb | Figure 3.9        | Table 3.7 |
-| Chapter 3.4: HPO EED          | Exp3.2_.../analysis_HPO_transformer_EED.ipynb     | Figure 3.10       |           |
-|                               | Exp3.3_.../analysis_HPO_transformer_2_EED.ipynb   | Figure 3.10       |           |
-|                               | Exp3.4_.../analysis_HPO_itransformer_EED.ipynb    |                   | Table 3.8 |
-|                               | Exp3.5_.../analysis_HPO_LSTM_EED.ipynb            |                   | Table 3.9 |
-| Chapter 4: Test set           | Exp4_.../analysis_benchmark_test_set.ipynb        | Figure 3.12       | Table 3.10|
+The ./scripts/Expxx.../ folder contains shell scripts and IPython notebooks with the configurations of each model run. It also contains an IPython notebook with the analysis. The mapping between the thesis' chapters, figures and tables to the repositories folders can be found in the file mapping.md.
 
 The checkpoints folder contains the checkpoints of the model parameters (if saved). However in most cases it only contains the train vs. val loss plot of each model run. The results folder contains the forecast and ground truth of each experiment. The naming convention of the folders can be found in the setting variable of run.py which is based on the parser arguments of the run.py file. 
 
