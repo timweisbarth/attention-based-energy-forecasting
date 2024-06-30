@@ -4,9 +4,9 @@ This is the repository of my thesis "Attention-Based Multi-Horizon Energy Foreca
 
 ## Overview
 
-The ./scripts/Expxx.../ folder contains shell scripts and IPython notebooks with the configurations of each model run. It also contains an IPython notebook with the analysis. The mapping between the repositories folders and the thesis' chapters, figures and tables can be found below
+The ./scripts/Expxx.../ folder contains shell scripts and IPython notebooks with the configurations of each model run. It also contains an IPython notebook with the analysis. The mapping between the repositories folders and the thesis' chapters, figures and tables can be found below.
 
-| Thesis chapter  | Repository folder | Figure | Tables |
+| Thesis chapter  | Repository folder ./scripts/... | Figure | Tables |
 | ----------------------------- | ------------------------------------------------- | ----------------- | --------- |
 | Chapter 2.4: Data             | Exp0_.../data_exploration_smard_DE.ipynb          | Figure 2.6        |           |
 | Chapter 3.1: Benchmark        | Exp1_.../analysis_default_benchmark_ED.ipynb      | Figure 3.1        | Table 3.1 |
