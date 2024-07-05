@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-def plot_prediction_vs_truths(preds, truths, window_size, forecast_horizon, cols_to_pred, index, plot_date, days, stride, folder_path):
+def plot_prediction_vs_truths(preds, truths, window_size, forecast_horizon, 
+                              cols_to_pred, index, plot_date, days, stride, folder_path):
     """Plot the truths vs predictions"""
     
     # Select the first column if in multivariate setting
@@ -19,7 +20,7 @@ def plot_prediction_vs_truths(preds, truths, window_size, forecast_horizon, cols
     
     preds = preds.flatten()
     truths = truths.flatten()
-    
+
     # Slice index such that it aligns with truths and preds
     index = index[:preds.shape[0]]
 

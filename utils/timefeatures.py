@@ -32,8 +32,10 @@ class MinuteOfHour(TimeFeature):
         return index.minute / 59.0 - 0.5
 
 # Make hourofday, dayofweek and dayofyear cyclic
-# Need two dimensions (sin and cos) because only one would be ambgious (e.g. sin has y=0.5 at two locations)
-# period of sin(bx) or cos(bx) is p = 2*pi / b. We want p to be period of 24 (hour), 7 (daysofweek) or 366(year incl. leap year)
+# Need two dimensions (sin and cos) because only one would be 
+# ambgious (e.g. sin has y=0.5 at two locations) period of 
+# sin(bx) or cos(bx) is p = 2*pi / b. We want p to be period of 24 (hour), 
+# 7 (daysofweek) or 366(year incl. leap year)
 class HourOfDay(TimeFeature):
     """Cyclic hour of day encoding"""
 

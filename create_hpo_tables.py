@@ -10,7 +10,8 @@ def main():
     """
     ############################# Parse arguments ##########################################
     parser = argparse.ArgumentParser(description='Autoformer & Transformer family for Time Series Forecasting')
-    parser.add_argument('--exp_name', type=str, required=True, default="Exp0", help='Which experiment do you want to create the table of?')
+    parser.add_argument('--exp_name', type=str, required=True, default="Exp0", \
+                        help='Which experiment do you want to create the table of?')
     parser.add_argument('--hpo', type=bool, default=False, help='Is it a HPO experiment of one model only?')
     args = parser.parse_args()
 
@@ -20,12 +21,15 @@ def main():
     dirs = [dirnames for dipath, dirnames, filenames in os.walk(root_dir)][0]
 
     ##################### Create empty MultiIndex DataFrame ################################
-    param_name_map = {"learning_rate": "lr", "batch_size": "bs", "e_layers": "el", "d_layers": "dl", "d_model": "dm", "seq_len": "sl", "pred_len": "pl", "optim": "op", "lradj": "ls", "dropout": "do", "weight_decay": "wd"}
+    param_name_map = {"learning_rate": "lr", "batch_size": "bs", "e_layers": "el",
+                      "d_layers": "dl", "d_model": "dm", "seq_len": "sl", "pred_len": "pl", 
+                      "optim": "op", "lradj": "ls", "dropout": "do", "weight_decay": "wd"}
     inv_param_name_map = {v: k for k, v in param_name_map.items()}
     column_metrics_index = ["MSE", "MAE", "Epochs", "Time[min]", "Params[Mio.]", "Max_mem[MB]"]
 
     # columns for the hpo table in the order that they will be displayed
-    column_param_index = ["learning_rate", "batch_size", "e_layers", "d_layers", "d_model", "seq_len", "pred_len", "optim", "lradj", "dropout", "weight_decay"]
+    column_param_index = ["learning_rate", "batch_size", "e_layers", "d_layers", "d_model", 
+                          "seq_len", "pred_len", "optim", "lradj", "dropout", "weight_decay"]
 
     column_index = column_param_index + column_metrics_index
         
@@ -50,7 +54,8 @@ def main():
                 if len(current_param) > 0:
                     _, value = subdir_param.split(f'{current_param[0]}')
                     key, _ = subdir_param.split(f'{value}')
-                    param_values_dict[key] = float(value) if (key == "lr" or key == "do" or key == "wd") else int(float(value)) if (key != "op" and key != "ls") else value
+                    param_values_dict[key] = float(value) if (key == "lr" or key == "do" or key == "wd") \
+                                                else int(float(value)) if (key != "op" and key != "ls") else value
 
             # Create a dictionary with the parameter values and the metrics
             params_values_dict = {inv_param_name_map[k]: [v] for k, v in param_values_dict.items()}

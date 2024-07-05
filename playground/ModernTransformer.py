@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from layers.ModernTransformer_EncDec import PreLNDecoder, DecoderLayer, PreLNEncoder, EncoderLayer
+from playground.ModernTransformer_EncDec import PreLNDecoder, DecoderLayer, PreLNEncoder, EncoderLayer
 from layers.SelfAttention_Family import FullAttention, AttentionLayer
 from layers.Embed import DataEmbedding
 import torch.nn.functional as F

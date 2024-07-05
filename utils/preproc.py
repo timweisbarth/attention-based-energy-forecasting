@@ -27,7 +27,8 @@ def all_preproc_steps(df, cols_to_predict, scaler, w, final_run_train_on_train_a
 def preproc0_rename(df):
     """Rename the columns of the DataFrame df"""
 
-    df = df.rename(columns={"DE_solar_generation_actual": "solar_gen", "DE_wind_generation_actual": "wind_gen", "DE_load_actual_entsoe_transparency": "load"})
+    df = df.rename(columns={"DE_solar_generation_actual": "solar_gen", 
+                            "DE_wind_generation_actual": "wind_gen", "DE_load_actual_entsoe_transparency": "load"})
 
     return df
 

@@ -10,7 +10,8 @@ def main():
 
     ############################# Parse arguments ##########################################
     parser = argparse.ArgumentParser(description='Autoformer & Transformer family for Time Series Forecasting')
-    parser.add_argument('--exp_name', type=str, required=True, default="Exp0", help='Which experiment do you want to create the table of?')
+    parser.add_argument('--exp_name', type=str, required=True, default="Exp0", 
+                        help='Which experiment do you want to create the table of?')
     args = parser.parse_args()
 
     ####################### Get directories of experiment results #########################
@@ -28,7 +29,8 @@ def main():
     horizons = ['24', '96', '192', '336', '720'] 
 
     # Define the levels for the MultiIndex of the columns
-    models = ['iTransformer', 'PatchTST', 'Autoformer', 'Informer', 'Transformer', 'TSMixer', "DLinear", "LSTM", "XGBoost", "Ridge", "Linear Regression", "Dummy"]  
+    models = ['iTransformer', 'PatchTST', 'Autoformer', 'Informer', 'Transformer',
+               'TSMixer', "DLinear", "LSTM", "XGBoost", "Ridge", "Linear Regression", "Dummy"]  
     metrics = ['MSE', 'MAE'] 
 
     # Create the MultiIndex for the rows
@@ -98,14 +100,17 @@ def main():
         # epoch_train_time_df
         avg_epochs_for_training = sum(number_of_epochs_for_trainings)/len(number_of_epochs_for_trainings)
         avg_total_train_time = sum(total_train_times)/len(total_train_times)
-        epoch_time_df.loc[(target, horizon), (model, 'epochs')] = int(avg_epochs_for_training) if not np.isnan(avg_epochs_for_training) else np.nan
+        epoch_time_df.loc[(target, horizon), (model, 'epochs')] = int(avg_epochs_for_training) \
+                if not np.isnan(avg_epochs_for_training) else np.nan
         epoch_time_df.loc[(target, horizon), (model, 'time[min]')] = round(avg_total_train_time / 60)
 
         # modelsize_maxmemory_df
         avg_modelsize = sum(modelsizes)/len(modelsizes)
         avg_max_memory = sum(max_memorys)/len(max_memorys)
-        modelsize_maxmemory_df.loc[(target, horizon), (model, 'params[Mio.]')] = round(avg_modelsize/10**6,1) if not np.isnan(avg_modelsize) else np.nan
-        modelsize_maxmemory_df.loc[(target, horizon), (model, 'max_mem[MB]')] = int(avg_max_memory) if not np.isnan(avg_max_memory) else np.nan
+        modelsize_maxmemory_df.loc[(target, horizon), (model, 'params[Mio.]')] = round(avg_modelsize/10**6,1) \
+            if not np.isnan(avg_modelsize) else np.nan
+        modelsize_maxmemory_df.loc[(target, horizon), (model, 'max_mem[MB]')] = int(avg_max_memory) \
+            if not np.isnan(avg_max_memory) else np.nan
 
         # std_df
         std_df.loc[(target, horizon), (model, 'std_MAE')] = round(np.std(maes), 4) if len(maes) > 1 else np.nan

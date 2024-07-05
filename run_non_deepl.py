@@ -43,7 +43,9 @@ def pipeline(args):
             for h in args.forecast_horizons:
 
                 # General preprocessing
-                df_train, df_val, df_test = pp.all_preproc_steps(df, t, args.scaler, args.window_size, args.final_run_train_on_train_and_val)
+                df_train, df_val, df_test = pp.all_preproc_steps(df, t, args.scaler, 
+                                                                 args.window_size, 
+                                                                 args.final_run_train_on_train_and_val)
 
                 # Get device
                 if torch.cuda.is_available():
@@ -55,14 +57,16 @@ def pipeline(args):
                 
                 # Reshape data into supervised problem for sklearn module
                 (X_train, y_train), (X_val, y_val), (X_test, y_test) = \
-                pp.make_supervised(df_train, df_val, df_test, t, h, args.window_size, args.stride, args.cols_to_lag, args.point_forecast)
+                pp.make_supervised(df_train, df_val, df_test, t, h, args.window_size, 
+                                   args.stride, args.cols_to_lag, args.point_forecast)
                 print("-----------------")
                 print("X_train", X_train.shape)
                 print("y_train", y_train.shape)
                 start_time = time.time()
 
                 # Train and predict
-                model = o.train(X_train, y_train, X_val, y_val, args.model_name, device, args.train_params)
+                model = o.train(X_train, y_train, X_val, y_val, 
+                                args.model_name, device, args.train_params)
                 if args.model_name == "xgb":
                     dval = xgb.DMatrix(X_val)
                     preds = model.predict(dval)
@@ -122,7 +126,9 @@ def pipeline(args):
                     # Recover datetime index, undo scaling
                     index = df_val.index[args.window_size:]
                     preds, truths = eval.inverse_transformations(preds, truths, args.scaler, h)
-                    v.plot_prediction_vs_truths(preds, truths, args.window_size, h, t, index, args.plot_date, args.days, args.stride, folder_path)
+                    v.plot_prediction_vs_truths(preds, truths, args.window_size, 
+                                                h, t, index, args.plot_date, 
+                                                args.days, args.stride, folder_path)
                 
                 # Reset torch memory
                 if torch.cuda.is_available():
