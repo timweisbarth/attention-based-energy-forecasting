@@ -42,38 +42,36 @@ def inverse_transformations(preds, truths, scaler, h):
     truths: ndarray
         Ground truth of shape (number of samples, prediction_horizon) 
 
+    scalar: sklearn.preprocessing.StandardScaler
+        The scaler used to scale the data
+    h: int
+        The prediction horizon
+
     Returns:
     --------
     tuple of ndarrays
         Originally scaled predictions and truths
     """
 
-    #preds = scaler.inverse_transform(preds)
     truths = truths.to_numpy()
     preds_inv = np.copy(preds)
     truths_inv = np.copy(truths)
     
     
     for i in range(h):
-        
         preds_inv[:,i::h] = scaler.inverse_transform(preds[:,i::h])
-        
         truths_inv[:,i::h] = scaler.inverse_transform(truths[:,i::h])
-    #truths_inv = scaler.inverse_transform(truths)
     
     return preds_inv, truths_inv
 
-def print_and_save_benchmark_table(metrics, args):
+def print_and_save_benchmark_table(metrics):
     """
-    Prints the benchmark table to the console. If args.save_benchmark = True, 
-    it is also saved to the models folder.
+    Prints the benchmark table to the console.
 
     Parameters:
     -----------
     metrics: dict
         Contains the target variable, the horizon, the mae and rmse
-    args: dotdict
-        Contains all the arguments of the current run of the pipeline
     """
 
     # Set a MultiIndex of 'target' and 'horizon'

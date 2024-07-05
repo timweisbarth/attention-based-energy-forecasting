@@ -2,8 +2,8 @@ from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.dummy import DummyRegressor
 import xgboost as xgb
 from model_lstm import LSTMModel
-#from optimization import Optimization
-from model_transformer import Transformer
+
+
 import torch.optim as optim
 import torch
 import torch.nn as nn
