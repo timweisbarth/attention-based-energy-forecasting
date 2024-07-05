@@ -1,6 +1,6 @@
 # "Attention-Based Multi-Horizon Energy Forecasting: A Case Study on the German Transmission Grid"
 
-This is the repository of my thesis "Attention-Based Multi-Horizon Energy Forecasting: A Case Study on the German Transmission Grid" and is based on the Github repository of Autoformer.
+Repository of my thesis "Attention-Based Multi-Horizon Energy Forecasting: A Case Study on the German Transmission Grid", supervised by Dr. Nicole Ludwig from the Machine Learning in Sustainable Energy Systems group at the University of Tuebingen.
 
 ## Overview
 
