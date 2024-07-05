@@ -7,12 +7,8 @@ import random
 import numpy as np
 import os
 import time
-import argparse
 from sklearn.preprocessing import StandardScaler
 import xgboost as xgb
-#from numba import cuda
-
-
 
 #Modules of src folder
 import preproc as pp
@@ -23,7 +19,14 @@ import eval as eval
 import visualizations as v
 
 def pipeline(args):
-    """Run the entire pipeline as specified by the args"""
+    """
+    Run the entire pipeline as specified by the args.
+    Called from .ipynb files in ./scripts/Expxx_.../ 
+    for Linear Regression, Ridge, Naive, Repeat.
+    Called as main() from .sh scripts in 
+    ./scripts/Expxx_.../ for XGBoost. (see below)
+
+    """
     # Fix seed for reproducibility
     fix_seed = args.fix_seed
     random.seed(fix_seed)
@@ -32,81 +35,49 @@ def pipeline(args):
     df = dl.load_data(args.path)
     metrics = []
 
+    # Run ii times in case of HPO
     for ii in range(args.itr):
         # Run pipeline for each target and each horizon
         for t in args.targets:
             print(f"------- Starting to train {args.model_name} on {t} for horizons {args.forecast_horizons} ----------", )
             for h in args.forecast_horizons:
 
-
                 # General preprocessing
                 df_train, df_val, df_test = pp.all_preproc_steps(df, t, args.scaler, args.window_size, args.final_run_train_on_train_and_val)
 
-
-                # Check if CUDA is available
-                #if cuda.is_available():
-                #    # List all available CUDA devices
-                #    for device in cuda.list_devices():
-                #        print("Found CUDA Device: ", device.name)
-                #    # Set to use the first CUDA device, if available
-                #    device = "cuda:0"
-                #else:
-                #    print("CUDA is not available. Using CPU instead.")
-                #    device = "cpu"
-
-
+                # Get device
                 if torch.cuda.is_available():
                     os.environ["CUDA_VISIBLE_DEVICES"] = str(0) 
                     device = torch.device('cuda:{}'.format(0))
                     print('Use GPU: cuda:{}'.format(0))
                 else:
                     device = "cpu"
-
-            
                 
-                if args.model_type == "deepl":
-                    # Reshape data into inout sequence for nn.lstm module
-                    (X_train, y_train), (X_val, y_val), (X_test, y_test) = \
-                        pp.create_inout_sequence(df_train, df_val, df_test, t[0], h,  args.window_size, args.stride)
+                # Reshape data into supervised problem for sklearn module
+                (X_train, y_train), (X_val, y_val), (X_test, y_test) = \
+                pp.make_supervised(df_train, df_val, df_test, t, h, args.window_size, args.stride, args.cols_to_lag, args.point_forecast)
+                print("-----------------")
+                print("X_train", X_train.shape)
+                print("y_train", y_train.shape)
+                start_time = time.time()
 
-                    train_loader, val_loader, test_loader, val_loader_one = \
-                        pp.create_data_loaders(X_train, y_train, X_val, y_val, X_test, y_test, args.train_params.batch_size)
-
-                    # Train and predict
-                    args.model_params.output_dim = h
-                    opt = o.Optimization(args, train_loader, val_loader)
-                    opt.train()
-                    preds, truths = opt.predict(val_loader)
-
+                # Train and predict
+                model = o.train(X_train, y_train, X_val, y_val, args.model_name, device, args.train_params)
+                if args.model_name == "xgb":
+                    dval = xgb.DMatrix(X_val)
+                    preds = model.predict(dval)
                 else:
-                    # Reshape data into supervised problem for sklearn module
-                    (X_train, y_train), (X_val, y_val), (X_test, y_test) = \
-                    pp.make_supervised(df_train, df_val, df_test, t, h, args.window_size, args.stride, args.cols_to_lag, args.point_forecast)
-                    print("-----------------")
-                    print("X_train", X_train.shape)
-                    print("y_train", y_train.shape)
-                    start_time = time.time()
-
-                    # Train and predict
-
-                    model = o.train(X_train, y_train, X_val, y_val, args.model_name, device, args.train_params)
-
-                    if args.model_name == "xgb":
-                        dval = xgb.DMatrix(X_val)
-                        preds = model.predict(dval)
-                    else:
-                        preds = model.predict(X_val)
-                    truths = y_val
-
-
+                    preds = model.predict(X_val)
+                truths = y_val
 
                 train_time = time.time() - start_time
+
                 # Evaluate
                 mae, mse = eval.calc_metrics(preds, truths)
 
-                #Not really used
-                metrics.append({"target": t[0], "horizon": h, "mae":mae, "mse": mse})
+                metrics.append({"target": t[0], "horizon": h, "mae":mae, "mse": mse}) #legacy, used for print at bottom
 
+                # Setting for saving and plotting
                 setting = "ft{}_{}_{}_sl{}_ll{}_pl{}_{}_hpo{}_eb{}_{}_iter{}".format(
                     "S" if len(t) == 1 else "M",
                     "smard",
@@ -130,11 +101,13 @@ def pipeline(args):
                         os.makedirs(folder_path)
                     dump(model, folder_path + 'checkpoint.joblib')
 
+                # Create folder if plot or save_benchmark is True
                 if args.save_benchmark or args.plot:
                     folder_path = "./results/" + args.experiment_name + '/' + setting.split("_iter", 1)[0] + '/' + setting + '/'
                     if not os.path.exists(folder_path):
                         os.makedirs(folder_path)
 
+                # Save benchmark
                 if args.save_benchmark:
                     if torch.cuda.is_available():
                         max_memory = torch.cuda.max_memory_allocated()
@@ -143,8 +116,6 @@ def pipeline(args):
                     model_size =np.nan
                     epochs= np.nan
                     np.save(folder_path + '_metrics.npy', np.array([mae, mse, model_size, max_memory, epochs, train_time]))
-                    #np.save(folder_path + '_pred.npy', preds)
-                    #np.save(folder_path + '_true.npy', truths)
 
                 # Plot
                 if args.plot:
@@ -152,11 +123,14 @@ def pipeline(args):
                     index = df_val.index[args.window_size:]
                     preds, truths = eval.inverse_transformations(preds, truths, args.scaler, h)
                     v.plot_prediction_vs_truths(preds, truths, args.window_size, h, t, index, args.plot_date, args.days, args.stride, folder_path)
+                
+                # Reset torch memory
                 if torch.cuda.is_available():
                     torch.cuda.empty_cache()
                     torch.cuda.reset_max_memory_allocated()
+
             # Save summary metrics
-            eval.print_and_save_benchmark_table(metrics, args)
+            eval.print_and_save_benchmark_table(metrics)
 
 if __name__ == "__main__":
 
@@ -165,15 +139,11 @@ if __name__ == "__main__":
     args.model_params = dotdict({})
     args.train_params = dotdict({})
 
-    
     args.fix_seed = 2024
     args.itr = 1
 
     # 1 run means run in default setting, multiple runs means test different HPOs as defined in otimization.py
     number_of_runs = 1
-
-    
-   
 
     # Preprocessing
     args.scaler_name = "std"
@@ -187,8 +157,28 @@ if __name__ == "__main__":
     args.point_forecast = True
     args.forecast_setting = "both"
 
+    ########################################################################################
+    ####### Below: Uncomment sectionwise to reproduce the results of the thesis ############
+    ########################################################################################
 
-    # Exp3.1 and 4 (MultiXL)
+    ###################### Exp 1 ##########################
+    args.experiment_name, args.final_run_train_on_train_and_val = "Exp1", False
+
+    args.file_name = "smard_data_DE.csv"
+    args.cols_to_lag = [
+        'load', 'solar_gen', 'wind_gen',
+    ]
+    args.targets = [[
+        'load',
+        'solar_gen',
+        'wind_gen',
+        ['load', 'solar_gen', 'wind_gen'],
+    ]]
+
+    args.window_size = 336
+
+    ################### Exp3.1 and 4 (MultiXL) ##########################
+
     #args.experiment_name, args.final_run_train_on_train_and_val = "Exp3.1", False
     #args.experiment_name, args.final_run_train_on_train_and_val = "Exp4", True
     #args.file_name = "smard_plus_weather_without_LUandAT.csv"
@@ -218,16 +208,22 @@ if __name__ == "__main__":
     #]]
     #args.window_size = 96
 
-    #Exp4 (Load)
-    args.experiment_name, args.final_run_train_on_train_and_val = "Exp4", True
-    args.file_name = "smard_data_DE.csv"
-    args.cols_to_lag = [
-        'load', 'solar_gen', 'wind_gen',
-    ]
-    args.targets = [[
-        'load'
-    ]]
-    args.window_size = 336
+    ########################### Exp4 (Load) ##########################
+    #args.experiment_name, args.final_run_train_on_train_and_val = "Exp4", True
+    #args.file_name = "smard_data_DE.csv"
+    #args.cols_to_lag = [
+    #    'load', 'solar_gen', 'wind_gen',
+    #]
+    #args.targets = [[
+    #    'load'
+    #]]
+
+    #args.window_size = 336
+
+
+    #################################################################
+    ###################### Always the same ##########################
+    #################################################################
 
     args.stride = 1 # Has to be <= min(window_size, forecast_horizon) and stride * integer = window_size,
     # and stride * integer2 = forecast_horizon

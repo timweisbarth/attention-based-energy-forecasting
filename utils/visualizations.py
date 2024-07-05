@@ -5,6 +5,7 @@ import pandas as pd
 def plot_prediction_vs_truths(preds, truths, window_size, forecast_horizon, cols_to_pred, index, plot_date, days, stride, folder_path):
     """Plot the truths vs predictions"""
     
+    # Select the first column if in multivariate setting
     if len(cols_to_pred) > 1:
         
         truths = truths[:,:forecast_horizon]
@@ -18,6 +19,7 @@ def plot_prediction_vs_truths(preds, truths, window_size, forecast_horizon, cols
     
     preds = preds.flatten()
     truths = truths.flatten()
+    
     # Slice index such that it aligns with truths and preds
     index = index[:preds.shape[0]]
 
@@ -28,6 +30,7 @@ def plot_prediction_vs_truths(preds, truths, window_size, forecast_horizon, cols
     start = np.where(index == plot_date)[0][0]
     stop = start + length_of_interval
 
+    # Plotting
     plt.figure(figsize=(15,6))
     plt.plot(index[start:stop], truths[start:stop], label="Actual Values", color='blue', marker='o')
     plt.plot(index[start:stop], preds[start:stop], label="Predicted Values", color='red', linestyle='dashed', marker='x')

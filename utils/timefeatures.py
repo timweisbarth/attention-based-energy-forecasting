@@ -19,7 +19,7 @@ class TimeFeature:
 
 
 class SecondOfMinute(TimeFeature):
-    """Minute of hour encoded as value between [-0.5, 0.5]"""
+    """Second of minute encoded as value between [-0.5, 0.5]"""
 
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
         return index.second / 59.0 - 0.5
@@ -35,7 +35,7 @@ class MinuteOfHour(TimeFeature):
 # Need two dimensions (sin and cos) because only one would be ambgious (e.g. sin has y=0.5 at two locations)
 # period of sin(bx) or cos(bx) is p = 2*pi / b. We want p to be period of 24 (hour), 7 (daysofweek) or 366(year incl. leap year)
 class HourOfDay(TimeFeature):
-    """Hour of day encoded as value between [-0.5, 0.5]"""
+    """Cyclic hour of day encoding"""
 
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
         hours = index.hour.to_numpy()
@@ -46,7 +46,7 @@ class HourOfDay(TimeFeature):
 
 
 class DayOfWeek(TimeFeature):
-    """Hour of day encoded as value between [-0.5, 0.5]"""
+    """Cyclic day of week encoding"""
 
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
         dayofweek = index.dayofweek.to_numpy()
@@ -57,7 +57,7 @@ class DayOfWeek(TimeFeature):
 
 
 class DayOfMonth(TimeFeature):
-    """Day of month encoded as value between [-0.5, 0.5]"""
+    """Day of month encoding"""
 
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
         out = ((index.day - 1) / 30.0 - 0.5).to_numpy()
@@ -66,7 +66,7 @@ class DayOfMonth(TimeFeature):
 
 
 class DayOfYear(TimeFeature):
-    """Day of year encoded as value between [-0.5, 0.5]"""
+    """Cyclic day of year encoding"""
 
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
         dayofyear = index.dayofyear.to_numpy()
@@ -95,11 +95,13 @@ class WeekOfYear(TimeFeature):
 ############## Added classes ##################
 
 class Year(TimeFeature):
+    """Current year"""
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
         out = ((index.year - 2015) / 8.0 - 0.5).to_numpy().reshape(1, -1)
         
         return out
 class IsHoliday(TimeFeature):
+    """1 if there is a holiday in Germany, 0 otherwise."""
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
         years = range(2015,2025,1)
         holidays_GER = [holiday for holiday in holidays.Germany(years=years)]
@@ -109,6 +111,7 @@ class IsHoliday(TimeFeature):
         return out
 
 class IsWeekend(TimeFeature):
+    """1 if it is a Saturday or Sunday, 0 otherwise."""
     def __call__(self, index: pd.DatetimeIndex) -> np.ndarray:
         df_dayofweek = pd.DataFrame(index.dayofweek)
         is_saturday = df_dayofweek.isin([5]).values.astype(int)
@@ -178,5 +181,6 @@ def time_features_from_frequency_str(freq_str: str) -> List[TimeFeature]:
 
 
 def time_features(dates, freq='h'):
+    """Returns a matrix of time features for the given dates and frequency string."""
     out = np.vstack([feat(dates) for feat in time_features_from_frequency_str(freq)])
     return out

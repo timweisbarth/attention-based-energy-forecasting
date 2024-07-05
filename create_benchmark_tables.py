@@ -4,11 +4,16 @@ import argparse
 import pandas as pd
 
 def main():
+    """
+    Creates the benchmark table for all targets, horizons, models and metrics as specified below
+    """
 
+    ############################# Parse arguments ##########################################
     parser = argparse.ArgumentParser(description='Autoformer & Transformer family for Time Series Forecasting')
     parser.add_argument('--exp_name', type=str, required=True, default="Exp0", help='Which experiment do you want to create the table of?')
     args = parser.parse_args()
 
+    ####################### Get directories of experiment results #########################
     root_dir = str(os.getcwd()) + f"/results/{args.exp_name}/"
 
     # Get directories
@@ -43,16 +48,17 @@ def main():
     std_df = metrics_df.copy()
     std_df = std_df.rename(columns={'MAE': 'std_MAE', 'MSE': 'std_MSE'}, level='Metric')
 
-    ##############################################################################
+    ###########################################################################################
 
-    ################ Fill DataFrame with mae and mse #############################
+    ############################# Fill DataFrame with values ##################################
 
     targets_file_name = ['ftM', 'load', 'solar', 'wind']
     horizons_file_name = ['pl24','pl96','pl192','pl336','pl720']
-    models_file_name = ['iTransformer', 'PatchTST', 'Autoformer', 'Informer', 'Transformer', 'TSMixer', 'DLinear', "LSTM", "xgb", "ridge", "linreg", "dummy"]
+    models_file_name = ['iTransformer', 'PatchTST', 'Autoformer', 'Informer', \
+                        'Transformer', 'TSMixer', 'DLinear', "LSTM", "xgb", "ridge", "linreg", "dummy"]
 
+    # Map the directory names to the table names
     for dir in dirs:
-        
         for t, t_file_name in zip(targets, targets_file_name):
             if t_file_name in dir:
                  target = t
@@ -63,7 +69,7 @@ def main():
             if m_file_name in dir:
                  model = m
                  break
-        
+        # Initialize lists of the metrics
         maes = []
         mses = []
         number_of_epochs_for_trainings = []
@@ -71,6 +77,7 @@ def main():
         modelsizes = []
         max_memorys = []
 
+        # Get the values for each model run from the files
         for i, subdir in enumerate([dirnames for dipath, dirnames, filenames in os.walk(root_dir + dir + "/")][0]):
             metrics_vals = np.load(root_dir + dir + "/" + subdir + "/_metrics.npy")
             maes.append(metrics_vals[0])
@@ -105,87 +112,26 @@ def main():
         std_df.loc[(target, horizon), (model, 'std_MSE')] = round(np.std(mses), 4) if len(mses) > 1 else np.nan
 
 
-    #print(metrics_df)
-    # Save df as .csv and .tex
-    latex_table = metrics_df.to_latex()
+    ######################## Print and save the tables ########################################
+    print(metrics_df)
     
 
-    ########## Apply formatting to the metrics DataFrame ####################
-    #metrics_df_for_latex_formatting = metrics_df.copy()
-    #def apply_formatting(val, lowest, second_lowest):
-    #    if val == lowest:
-    #        return r'\textbf{' + str(val) + '}'
-    #    elif val == second_lowest:
-    #        return r'\underline{' + str(val) + '}'
-    #    else:
-    #        return str(val)
-    #
-    #for row in metrics_df_for_latex_formatting.index:
-    #    for metric in metrics:
-    #        values = metrics_df_for_latex_formatting.loc[row, (slice(None), metric)]
-    #        sorted_values = values.sort_values()
-    #        if len(sorted_values) > 1:
-    #            lowest, second_lowest = sorted_values[:2]
-    #            formatted_values = values.apply(lambda x: apply_formatting(x, lowest, second_lowest))
-    #            metrics_df_for_latex_formatting.loc[row, (slice(None), metric)] = formatted_values
-   #
-    #stacked_df = metrics_df_for_latex_formatting.stack(level=0)
-#
-    ## Step 3: Unstack the previously stacked level
-    #final_df = stacked_df.unstack(level=0)
-    ## TODO Also doesnt work as expected.. (For git reversion: 25 Apr 10o'clock, one hour prior it was working)
-    #final_df = final_df.swaplevel(axis=1).sort_index(axis=1)
-    #final_df = final_df.swaplevel(axis=0).sort_index(axis=0)
-    #latex_table_formatted = final_df.to_latex(escape=False)
-    ###############################################################
-
-
-    ########## Apply formatting to the std DataFrame ####################
-    # TODO Doesnt work as expected
-    #std_df_for_latex_formatting = std_df.copy()
-    #
-    #for row in std_df_for_latex_formatting.index:
-    #    for metric in ["std_MAE", "std_MSE"]:
-    #        values = std_df_for_latex_formatting.loc[row, (slice(None), metric)]
-    #        sorted_values = values.sort_values()
-    #        if len(sorted_values) > 1:
-    #            highest, second_highest = sorted_values[-2:]
-    #            formatted_values = values.apply(lambda x: apply_formatting(x, highest, second_highest))
-    #            std_df_for_latex_formatting.loc[row, (slice(None), metric)] = formatted_values
-   #
-    #stacked_df = std_df_for_latex_formatting.stack(level=0)
-#
-    ## Step 3: Unstack the previously stacked level
-    #final_df = stacked_df.unstack(level=0)
-#
-    #final_df = final_df.swaplevel(axis=1).sort_index(axis=1)
-    #final_df = final_df.swaplevel(axis=0).sort_index(axis=0)
-    #latex_std_table_formatted = final_df.to_latex(escape=False)
-    ###############################################################
-
-
-    # Save the tables
+    # Save csv tables
     file_path_csv_metrics = "./results/benchmark_table_{}_metrics.csv".format(args.exp_name)
-    file_path_tex_metrics = "./results/benchmark_table_{}_metrics.tex".format(args.exp_name)
-    #file_path_tex_metrics_formatted = "./results/benchmark_table_{}_metrics_formatted.tex".format(args.exp_name)
     file_path_csv_epoch_time = "./results/benchmark_table_{}_epoch_time.csv".format(args.exp_name)
     file_path_csv_modelsize_maxmemory = "./results/benchmark_table_{}_modelsize_maxmemory.csv".format(args.exp_name)
     file_path_csv_std = "./results/benchmark_table_{}_std.csv".format(args.exp_name)
-    #file_path_tex_std_formatted = "./results/benchmark_table_{}_std_formatted.tex".format(args.exp_name)
-
-    print(metrics_df)
 
     metrics_df.to_csv(file_path_csv_metrics, header=True, index=True)
     epoch_time_df.to_csv(file_path_csv_epoch_time, header=True, index=True)
     modelsize_maxmemory_df.to_csv(file_path_csv_modelsize_maxmemory, header=True, index=True)
     std_df.to_csv(file_path_csv_std, header=True, index=True)
 
+    # Save tex table
+    file_path_tex_metrics = "./results/benchmark_table_{}_metrics.tex".format(args.exp_name)
+    latex_table = metrics_df.to_latex()
     with open(file_path_tex_metrics, 'w') as file:
         file.write(latex_table)
-    #with open(file_path_tex_metrics_formatted, 'w') as file:
-    #    file.write(latex_table_formatted)
-    #with open(file_path_tex_std_formatted, 'w') as file:
-    #    file.write(latex_std_table_formatted)
 
 if __name__ == "__main__":
     main()

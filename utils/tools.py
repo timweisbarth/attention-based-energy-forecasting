@@ -6,15 +6,18 @@ plt.switch_backend('agg')
 
 
 def adjust_learning_rate(optimizer, scheduler, epoch, args, printout=True):
-    # gets called with epoch + 1 i.e. epoch = 1 after the first epoch (and thereby first call)
-    # lr = args.learning_rate * (0.2 ** (epoch // 2))
+    """Learning rate scheduler"""
+
+    # Exponential decay
     if args.lradj == 'type1':
         lr_adjust = {epoch: args.learning_rate * (0.5 ** ((epoch - 1) // 1))}
+    # Step decay
     elif args.lradj == 'type2':
         lr_adjust = {
             2: 5e-5, 4: 1e-5, 6: 5e-6, 8: 1e-6,
             10: 5e-7, 15: 1e-7, 20: 5e-8
         }
+    # According to the scheduler
     elif args.lradj == 'TST':
         lr_adjust = {epoch: scheduler.get_last_lr()[0]}
     if epoch in lr_adjust.keys():
@@ -25,6 +28,11 @@ def adjust_learning_rate(optimizer, scheduler, epoch, args, printout=True):
 
 
 class EarlyStopping:
+    """
+    Early stops the training if validation loss doesn't 
+    improve after a given patience. Save model with best
+    validation loss.
+    """
     def __init__(self, patience=7, verbose=False, delta=0):
         self.patience = patience
         self.verbose = verbose

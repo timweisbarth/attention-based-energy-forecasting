@@ -7,20 +7,6 @@ import torch.nn.functional as F
 import math
 import pandas as pd
 
-#def create_patched_version(x, P, S, pad_len, new_sl):
-#    bs, sl, ch = x.shape
-
-    # Pad the tensor by repeating the last entry
-#    x_padded = F.pad(x, (0, 0, 0, pad_len), mode='replicate')
-#    
-#    # Extract patches
-#    patches = x_padded.unfold(dimension=1, size=P, step=S)
-#    
-#    # Reshape patches to the desired shape (bs, new_sl, P*ch)
-#    patches = patches.reshape(bs, new_sl, P * ch)
-#    
-#    return patches
-
 
 class Model(nn.Module):
     """

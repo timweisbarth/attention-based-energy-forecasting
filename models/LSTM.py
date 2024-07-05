@@ -3,6 +3,14 @@ import torch
 import torch.nn as nn
 
 class Model(nn.Module):
+    """
+    LSTM model for time series forecasting.
+    
+    Encoder-only LSTM for energy forecasting without external features.
+    Encoder-Decoder LSTM for energy forecasting with external features.
+    (including_weather set to true)
+    
+    """
     def __init__(self, configs, device):
         super(Model, self).__init__()
 

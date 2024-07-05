@@ -76,18 +76,8 @@ def preproc2_time_features(df):
     and hour cyclic.
     """
 
-    # Remove unnecessary columns
-    #df = df.drop(columns="cet_cest_timestamp")
-
-
-    
-    # Add time features
-    #df["date"] = pd.to_datetime(df["date"])
-
     df = df.set_index(["date"])
     df.index = pd.to_datetime(df.index)
-    
-    #display(df)
 
     cols = [
         "HourOfDay_sin", "HourOfDay_cos",
@@ -102,11 +92,9 @@ def preproc2_time_features(df):
         columns=cols
     )
 
-    time_features["year"] = df.index.year #trend##
+    time_features["year"] = df.index.year
 
     df = pd.concat((df, time_features), axis=1)
-    #display(df.head(30))
-    #display(df.tail(50))
 
     return df
 
@@ -118,7 +106,11 @@ def train_val_test_split(df, w, final_run_train_on_train_and_val=False):
     Parameters:
     -----------
     df: pd.DataFrame
-        
+        The data that should be split
+    w: int
+        The window size
+    final_run_train_on_train_and_val: bool
+        Influences years used for training
 
     Returns:
     --------
@@ -236,7 +228,6 @@ def create_inout_sequence(df_train, df_val, df_test, target, h, w, stride):
     seq_length = w + h
     
     inout_seqs = []
-    #display(df_train["load"][23:56])
     for df in [df_train.copy(), df_val.copy(), df_test.copy()]:
         length = df.shape[0]
         in_seqs = np.array([])
@@ -245,7 +236,6 @@ def create_inout_sequence(df_train, df_val, df_test, target, h, w, stride):
         for i in range(0, length-seq_length+1, stride):
             
             in_seq = df.iloc[i:i+w].values
-            #if i == 0:
                 
             out_seq = df[target].iloc[i+w:i+w+h].values
 
@@ -279,6 +269,8 @@ def make_supervised(df_train, df_val, df_test, targets, h, w, stride, cols_to_la
         of each inout sequence
     cols_to_lag: list of strings
         The name of the columns that should be lagged
+    point_forecast: bool
+        If True, only a certain subset of the forecast horizon is forecasted
 
     Returns:
     --------
@@ -299,23 +291,16 @@ def make_supervised(df_train, df_val, df_test, targets, h, w, stride, cols_to_la
         
         lagged_columns = {}
         shifted_columns = {}
-        #counter = 0
-        #counter2 = 0
 
-        #point_forecast_stride = {24: 3, 96: 4*3, 192: 8*3, 336: 14*3, 720: 30*3}[h]
-        #point_forecast_stride = {24: 1, 96: 4, 192: 8, 336: 14, 720: 30}[h]
+        # Shorter horizons are fully foecasted, longer horizons are forecasted with a stride
         point_forecast_stride = {24: 1, 96: 1, 192: 2, 336: 4, 720: 8}[h]
-        #point_forecast_stride = {24: 1, 96: 1, 192: 1, 336: 2, 720: 4}[h]
-        #print(len(cols_to_lag))
+
         for col in cols_to_lag:
             # get window_size-1 many lags --> -1 due to current lag
             if "_lon" in col and "lat" in col:
                 if point_forecast:
                     for lag in range(1,h+1)[int(point_forecast_stride/2)::point_forecast_stride]:
                         lagged_columns[f"{col}_future_weather_{lag}"] = df[f"{col}"].shift(-lag)
-                    #print("point forecast")
-                    #counter += 1
-                    #print("1", counter, len(lagged_columns.keys()))
                 else:
                     for lag in range(1,h+1):
                         lagged_columns[f"{col}_future_weather_{lag}"] = df[f"{col}"].shift(-lag)
@@ -324,8 +309,6 @@ def make_supervised(df_train, df_val, df_test, targets, h, w, stride, cols_to_la
             else:
                 for lag in range(1,w):
                     lagged_columns[f"{col}_lag{lag}"] = df[f"{col}"].shift(lag)
-                #counter2 += 1
-                #print("2", counter2, len(lagged_columns.keys()))
 
         for col in targets:
             if point_forecast:
@@ -335,23 +318,15 @@ def make_supervised(df_train, df_val, df_test, targets, h, w, stride, cols_to_la
                 for shift in range(1,h+1):
                     shifted_columns[f"{col}_next_{shift}"] = df[col].shift(-shift)
 
-        #print("lagged", pd.DataFrame(lagged_columns).shape)
-        #print("shifted", pd.DataFrame(shifted_columns).shape)
-        #print(df.shape)
-
         # Concatenate lagged and shifted columns to the DataFrame
         df = pd.concat([df, pd.DataFrame(lagged_columns), pd.DataFrame(shifted_columns)], axis=1)
-        #print(df.shape)
-        #print("---------------------")
+
         df.dropna(axis=0, inplace=True)     
 
         # Split df in X,y at the forward shiftet locations
         col_index = df.columns.get_loc(f"{targets[0]}_next_1")
         X = df.iloc[:, :col_index]
         y = df.iloc[:, col_index:]
-
-        #display(X)
-        #display(y)
         
         X = X[::stride]
         y = y[::stride]
