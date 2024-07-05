@@ -1,6 +1,6 @@
 # "Attention-Based Multi-Horizon Energy Forecasting: A Case Study on the German Transmission Grid"
 
-Repository of my thesis "Attention-Based Multi-Horizon Energy Forecasting: A Case Study on the German Transmission Grid", supervised by Dr. Nicole Ludwig from the Machine Learning in Sustainable Energy Systems group at the University of Tuebingen.
+Repository of my thesis "Attention-Based Multi-Horizon Energy Forecasting: A Case Study on the German Transmission Grid", supervised by Dr. Nicole Ludwig from the [Machine Learning in Sustainable Energy Systems](https://www.mlsustainableenergy.com) group at the University of Tuebingen.
 
 ## Overview
 
