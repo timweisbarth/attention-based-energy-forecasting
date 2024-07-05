@@ -1,6 +1,6 @@
 # "Attention-Based Multi-Horizon Energy Forecasting: A Case Study on the German Transmission Grid"
 
-This is the repository of my thesis "Attention-Based Multi-Horizon Energy Forecasting: A Case Study on the German Transmission Grid" and is based on the Github repository of Autoformer. 
+This is the repository of my thesis "Attention-Based Multi-Horizon Energy Forecasting: A Case Study on the German Transmission Grid" and is based on the Github repository of Autoformer.
 
 ## Overview
 
@@ -23,6 +23,8 @@ The analysis IPython files may raise errors due to certain features present/abse
 # Details
 
 This project contains two pipelines. The pytorch architectures (Attention-based models, DLinear, LSTM and TSMixer) are exectuted via shell scripts that call run.py which in turn calls exp_main.py. The second pipeline is for XGBoost and Linear Regression and is executed through shell scripts or IPython notebooks that call run_non_deepl.py.
+
+The general framework and implementations of Trans- and Autoformer are taken from the official \href{https://github.com/thuml/Autoformer.git} {Autoformer} repository. PatchTST and DLinear are taken from the official \href{https://github.com/yuqinie98/PatchTST.git}{PatchTST} repository. The other models are taken from their respective repository: \href{https://github.com/zhouhaoyi/Informer2020.git}{Informer}, \href{https://github.com/thuml/iTransformer.git}{iTransformer} and \href{https://github.com/ditschuk/pytorch-tsmixer.git}{TSMixer}. The remaining models are implemented by sklearn, xgboost or by hand (LSTM).
 
 
 

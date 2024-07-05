@@ -4606,3 +4606,6 @@ mse:0.06377369910478592, mae:0.17426328361034393
 ftS_smard_load_sl512_ll48_pl720_PatchTST_opadam_lsTST_wd0.0_do0.2_ep50_dm128_lr0.001_bs32_nh16_el3.0_dl1_df256_fc1_ebtimeF_dtTrue_Exp4_iter0  
 mse:0.0636892169713974, mae:0.17497138679027557
 
+ftM_smard_w_weather_load_sl8_ll0_pl16_Transformer_opadamW_lsTST_wd0.0_do0.05_ep2_dm16_lr0.0005_bs16_nh2_el3.0_dl1_df16_fc3_ebtimeF_dtTrue_Testt_iter0  
+mse:0.18375752866268158, mae:0.30429425835609436
+
