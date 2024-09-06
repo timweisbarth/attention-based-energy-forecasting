@@ -6,13 +6,13 @@ Repository of my thesis "Attention-Based Multi-Horizon Energy Forecasting: A Cas
 
 Climate change has triggered a transformation of the German energy grid towards more volatile renewable energies. This requires accurate forecasts of energy  generation and consumption over different time horizons, as the grid still needs to be balanced at all times. It is currently unclear which models, and thereby inductive biases, are best suited for the specific characteristics of energy time series forecasting. This is especially true after a simple linear layer model, called DLinear, outperformed all sophisticated attention-based models in 2022 on common benchmark datasets. Thus, this work compares different generations of attention-based models (PatchTST, iTransformer, Autoformer, Informer and Transformer) against a wide range of baselines (DLinear, Linear Regression, TSMixer, LSTM and XGBoost). This is done in a univariate task and a multivariate task that requires good modeling of covariate effects. The results show that only attention-based models provide the best evaluation metric on the test set. They outperform the best baseline, which is XGBoost, by $25\%$ in the univariate and $15\%$ in the multivariate task. Surprisingly, the (vanilla) Transformer is the best among the attention-based models. Along the way, the benchmarks and optimizations provide valuable insights about model size as well as current research on time series transformers and their limitations.
 
-# Organizational overview
+# How to use
 
 The ./scripts/Expxx.../ folders are the central objects of this repository. They contain shell scripts and IPython notebooks with the configurations of each model run. They also contains an IPython notebook with the analysis. The mapping between the thesis' chapters, figures and tables to the repositories folders can be found in the file mapping.md.
 
 Each Expxx in ./scripts has a corresponding folder in ./checkpoints and ./results. Checkpoints contains the train vs. val plot of each model run and (if saved) the model weights. The results folder contains the forecast and ground truth of each experiment. The naming convention of the subfolders of each experiment can be found in the setting variable of run.py which is based on the parser arguments of the run.py file. 
 
-## How to use
+## Reproduce experiments
 
 In order to reproduce an experiment, execute the .scripts/Expxx_.../....sh file via sbatch on the cluster. The IPython notebooks can be executed on a local machine. New experiment can be conducted following the convention of existing shell scripts. For this create a new folder in ./scritps/ following the naming convention Expxx_... . Experiments on new data require a new class in the data_loader.py file.
 
