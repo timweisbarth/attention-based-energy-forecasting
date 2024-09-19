@@ -10,7 +10,7 @@ Climate change has triggered a transformation of the German energy grid towards 
 
 The ./scripts/Expxx.../ folders are the central objects of this repository. They contain shell scripts and IPython notebooks with the configurations of each model run. They also contains an IPython notebook with the analysis. The mapping between the thesis' chapters, figures and tables to the repositories folders can be found in the file mapping.md.
 
-Each Expxx in ./scripts has a corresponding folder in ./checkpoints and ./results. Checkpoints contains the train vs. val plot of each model run and (if saved) the model weights. The results folder contains the forecast and ground truth of each experiment.
+Each Expxx in ./scripts has a corresponding folder in ./checkpoints and ./results. Checkpoints contains the train vs. val plot of each model run and (if saved) the model weights. The results folder contains the forecast and ground truth of each experiment as well as an aggregation of its evaluation metrics in a single csv file.
 
 ## Details
 
