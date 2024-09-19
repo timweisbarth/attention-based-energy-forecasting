@@ -14,7 +14,7 @@ Each experiment `Expxx...` in `./scripts` has a corresponding folder in `./check
 
 ## Details
 
-This project contains two pipelines. The PyTorch architectures (Attention-based models, DLinear, LSTM and TSMixer) are exectuted via shell scripts that call `run.py` which in turn calls `exp_main.py``. The second pipeline is for XGBoost and Linear Regression and is executed through shell scripts or IPython notebooks that call `run_non_deepl.py`.
+This project contains two pipelines. The PyTorch architectures (Attention-based models, DLinear, LSTM and TSMixer) are exectuted via shell scripts that call `run.py` which in turn calls `exp_main.py`. The second pipeline is for XGBoost and Linear Regression and is executed through shell scripts or IPython notebooks that call `run_non_deepl.py`.
 
 The general framework and implementations of Trans- and Autoformer are taken from the official [Autoformer](https://github.com/thuml/Autoformer.git) repository. PatchTST and DLinear are taken from the official [PatchTST](https://github.com/yuqinie98/PatchTST.git) repository. The other models are taken from their respective repositories: [Informer](https://github.com/zhouhaoyi/Informer2020.git), [iTransformer](https://github.com/thuml/iTransformer.git), and [TSMixer](https://github.com/ditschuk/pytorch-tsmixer.git). The remaining models are implemented by sklearn, xgboost, or by hand (for example the LSTM).
 
